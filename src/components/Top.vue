@@ -25,7 +25,7 @@ export default {
   data: function() {
     return {
       slideId: '',
-      userId: ''
+      userId: '',
     }
   },
 
@@ -36,6 +36,7 @@ export default {
   methods: {
 
     getUserId: function() {
+
       if(!localStorage.userId) {
         localStorage.userId = this.generateUuid()
       }
@@ -50,17 +51,11 @@ export default {
 
       const slideRef = db.collection('slides')
 
-      console.log("aaa")
-      console.log(db)
-      console.log("bbb")
-
-      const newSlide = {
+      slideRef.add({
         slideId: this.slideId,
         userId: this.userId,
-        createdAt: db.FieldValue.serverTimestamp()
-      }
-
-      slideRef.add(newSlide)
+        createdAt: new Date()
+      })
 
       return true
     },
