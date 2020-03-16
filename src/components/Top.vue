@@ -8,11 +8,11 @@
       </div>
       <div class="row">
         <div class="post-slide-container">
-          <input type="text" placeholder="slide id" id="slide-id" v-model="slideId">    
+          <input type="text" placeholder="slide id" id="slide-id" v-model="slideId">
         </div>
       </div>
       <div class="row">
-        <a class="button button-primary" @click.prevent="registSlide" v-bind:href="slidePath">Act</a>
+        <a class="button button-primary" @click.prevent="registSlide">Act</a>
       </div>
     </div>
 </template>
@@ -37,27 +37,33 @@ export default {
 
     getUserId: function() {
 
-      if(!localStorage.userId) {
-        localStorage.userId = this.generateUuid()
-      }
+      // ローカルストレージにユーザーIDが存在しない場合はランダムな文字列で生成
+      if(!localStorage.userId) localStorage.userId = this.generateUuid()
+
+      // ローカルストレージからユーザーIDを取得
       this.userId = localStorage.userId
     },
 
-    registSlide: function() {
+    registSlide: async function() {
 
-      if(this.slideId.length == 0) {
-        return false
-      }
+      // 未入力チェック
+      if(this.slideId.length == 0) return
 
+      // スライド画面で自分のスライドか判定するため
+      // スライドIDとユーザーIDを登録
       const slideRef = db.collection('slides')
-
-      slideRef.add({
+      await slideRef.add({
         slideId: this.slideId,
         userId: this.userId,
         createdAt: new Date()
+      }).then(() => {
+        console.log("success")
+      }).catch((err) => {
+        console.error(err)
       })
 
-      return true
+      // スライド画面に遷移
+      window.location.href = "/" + this.slideId
     },
 
     generateUuid: function() {
@@ -65,13 +71,6 @@ export default {
         .replace(/x/g, () => Math.floor(Math.random() * 16).toString(16))  
         .replace(/y/g, () => (Math.floor(Math.random() * 4) + 8).toString(16))  
         ;
-    }
-  },
-
-  computed: {
-
-    slidePath() {
-      return "/" + this.slideId
     }
   },
 }

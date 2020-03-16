@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <iframe :src="slideUrl" frameborder="0" :width="calcWidth" :height="calcHeight">
-    </iframe>
-  </div>
+  <iframe :src="slideUrl" frameborder="0" class="slide-frame">
+  </iframe>
 </template>
 
 <script>
@@ -19,14 +17,15 @@ export default {
            + this.slideId
            + "/embed?start=false&loop=false&delayms=3000"
     },
-
-    calcWidth() {
-      return window.innerWidth
-    },
-
-    calcHeight() {
-      return window.innerHeight
-    }
   }
 }
 </script>
+
+<style>
+
+.slide-frame {
+  height: 100%;
+  width: 100%;
+}
+
+</style>
