@@ -5,15 +5,19 @@
     </div>
     <div class="message-river">
       <div class="row message-row" v-for="(messageRow, index) in messageGrid" :key="index">
-        <div class="three columns message-float" v-for="(message, index) in messageRow" :key="index">
+        <div class="three columns message-col" v-for="(message, index) in messageRow" :key="index">
           <transition name="fade">
-            <span v-if="message !== ''">{{message}}</span>
+            <div v-if="message !== ''" class="message-float">
+              <div class="message-float-header">Message</div> 
+              {{message}}
+            </div>
           </transition>          
         </div>
       </div>
     </div>
-    <div class="message-container">
-      <input type="text" class="message-box" placeholder="message" id="message" v-model="myMessage" v-on:keydown.enter="floatMessasge($event.keyCode)">
+    <div class="message-box-container row">
+      <div class="message-box-header">Message</div> 
+      <input type="text" class="message-box" id="message" v-model="myMessage" v-on:keydown.enter="addMessage($event.keyCode)">
     </div>
   </div>
 </template>
@@ -30,6 +34,7 @@ export default {
 
   data: function() {
     return {
+      dateOfVisit: new Date(),
       userId:'',
       slideId: '',
       isOthers: false,
@@ -44,10 +49,10 @@ export default {
     this.slideId = this.$route.params.slideId
 
     // 閲覧者か発表者か
-    const slideRef = db.collection('slides')
-                       .where('userId', '==', this.userId)
-                       .where('slideId', '==', this.slideId)
-    slideRef.get().then((doc) => {
+    db.collection('slides')
+      .where('userId', '==', this.userId)
+      .where('slideId', '==', this.slideId)
+      .get().then((doc) => {
       this.isOthers = doc.size == 0
     })
  
@@ -55,70 +60,97 @@ export default {
     for(let row = 0; row < 10; row++){
       this.messageGrid[row] = new Array(4).fill("");
     }
+
+    // メッセージの監視
+    this.observeMessage(this.floatMessage)
   },
 
   methods: {
 
-    addMessage: function() {
-      
-      const messageRef = db.collection('messages')
+    observeMessage: function(floatMessage) {
 
-      messageRef.add({
+      // メッセージの監視
+      db.collection('messages')
+        .where('slideId', '==', this.slideId)
+        .orderBy('createdAt')
+        .startAt(this.dateOfVisit)
+        .onSnapshot(function(snapshot) {
+        snapshot.docChanges().forEach(function(change) {
+          
+          // 新規追加の時のみ、画面に表示する
+          if (change.type === "added") {
+            floatMessage(change.doc.data().message)
+          }
+        });
+      })
+    },
+
+    addMessage: function(keyCode) {
+
+      // 日本語確定Enterを無視
+      if(keyCode !== 13) return
+
+      // 未入力チェック
+      if(this.myMessage.length === 0) return
+      
+      // メッセージの登録
+      db.collection('messages').add({
         slideId: this.slideId,
-        message: this.message,
+        message: this.myMessage,
         createdAt: new Date()
       }).then(() => {
         console.log("success")
       }).catch((err) => {
         console.error(err)
       })
+
+      this.myMessage = ""
     },
 
-    floatMessasge: function(keyCode) {
+    floatMessage: function(message) {
       
-      // 日本語確定Enterを無視
-      if(keyCode !== 13) return
-
-      // 未入力チェック
-      if(this.myMessage.length === 0) return
-
       // メッセージグリッドの最小、最大行列数
       const rowMin = 0
       const rowMax = 9
       const colMin = 0
       const colMax = 3
 
-      // 最初のコメント位置
-      let rowIndex = 5
-      let colIndex = 2
+      // 変数を用意
+      let rowIndex = 0
+      let colIndex = 0
 
       // グリッドのどの位置にメッセージを表示するかランダムで選択
       // すでにメッセージが表示されている場合は、別の位置にする
-      while(this.messageGrid[rowIndex][colIndex].length != 0) {
+      do  {
         rowIndex = Math.floor( Math.random() * (rowMax + 1 - rowMin)) + rowMin
         colIndex = Math.floor( Math.random() * (colMax + 1 - colMin)) + colMin
-      }
+      } while(this.messageGrid[rowIndex][colIndex].length != 0)
       
       // メッセージの表示
-      this.messageGrid[rowIndex].splice(colIndex, 1, this.myMessage)
-      this.myMessage = "";
+      this.setMessageInGrid(rowIndex, colIndex, message)
 
-      // 5秒後にメッセージを消去
+      // 4秒後にメッセージを消去
       setTimeout((rowIndex, colIndex) => {
-        let messageRow = this.messageGrid[rowIndex]
-        messageRow[colIndex] = ""
-        this.messageGrid.splice(rowIndex, 1, messageRow)
-      }, 
-      5000, 
+        this.setMessageInGrid(rowIndex, colIndex, "")
+      },
+      4000, 
       rowIndex, 
       colIndex)
+    },
+
+    setMessageInGrid: function(rowIndex, colIndex, message) {
+
+      // Gridに値を設定
+      let messageRow = this.messageGrid[rowIndex]
+      messageRow[colIndex] = message
+      this.messageGrid.splice(rowIndex, 1, messageRow)
     },
   }
 }
 </script>
-
 <style>
 
+  /* メッセージの川 */
   .message-river {
     position: absolute;
     top: 20px;
@@ -132,10 +164,48 @@ export default {
     height: 10%;
   }
 
-  .message-float {
+  .message-col {
     height: 100%;
   } 
 
+  /* メッセージフロート */
+  /* .message-float-header {
+    background-color: #2b3e50;
+    color: #fff;
+  }
+
+  .message-float {
+    background-color: #fff;
+    color: #2b3e50;
+    border: solid 0.5px;
+    font-size: 15px;
+    font-weight: bold;
+    opacity: 0.93;
+  } */
+
+  .message-float-header {
+    background-color: #4e4b42;
+    color: #d4ccac;
+  }
+
+  .message-float {
+    background-color: #d4ccac;
+    color: #4e4b42;
+    border: solid 0.5px;
+    font-size: 15px;
+    font-weight: bold;
+    opacity: 0.93;
+  }
+
+  .fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+  }
+
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
+
+  /* スライドフレーム */
   .slide-frame-container {
     position: absolute;
     top: 0px;
@@ -144,24 +214,69 @@ export default {
     right: 0px;
   }
 
-  .message-container {
+  /* メッセージ入力欄 */
+  /* .message-box-container {
     position: absolute;
     bottom: 0px;
     left: 0px;
     right: 0px;
-    height:48px;
-    background-color: #313335;
+    height: 65px;
+    background-color: #fff;
   }
 
-  .message-box {
+  .message-box-header {
+    background-color: #2b3e50;
+    font-weight: bold;
+    color: #fff;
+    text-align: left;
+    padding-left: 10px;
+  }
+
+  input.message-box {
     margin: 5px;
     width: 90%;
+    height: 30px;
+    border: none;
+    border-bottom: 1px solid #2b3e50;
+    border-radius: 0px;
+    background: transparent;
+    color: #2b3e50;
+    font-weight: bold;
+  } */
+
+  .message-box-container {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    height: 65px;
+    background-color: #d4ccac;
   }
 
-  .fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
+  .message-box-header {
+    background-color: #4e4b42;
+    font-weight: bold;
+    color: #d4ccac;
+    text-align: left;
+    padding-left: 10px;
   }
-  .fade-enter, .fade-leave-to {
-    opacity: 0;
+
+  input.message-box {
+    margin: 5px;
+    width: 90%;
+    height: 30px;
+    border: none;
+    border-bottom: 1px solid #4e4b42;
+    border-radius: 0px;
+    background: transparent;
+    color: #4e4b42;
+    font-weight: bold;
   }
+
+  input.message-box:focus {
+    border: none;
+    border-bottom: 1px solid #4e4b42;
+    background: transparent;  
+  }
+
 </style>
