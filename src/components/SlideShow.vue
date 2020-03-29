@@ -1,7 +1,11 @@
 <template>
   <div>
     <div class="slide-frame-container">
-      <SlideFrame :slide-id="slideId" />
+      <object :data="slideUrl" type="application/pdf" width="100%" height="100%">
+        <param name="initZoom" value="fitToPage" />
+      </object>
+      <!-- <embed :src="slideUrl" type="application/pdf" width="100%" height="100%"> -->
+      <!-- <iframe width="100%" height="100%" src="/pdfjs/web/viewer.html?file=test.pdf" /> -->
     </div>
     <div class="message-river">
       <div class="row message-row" v-for="(messageRow, index) in messageGrid" :key="index">
@@ -11,42 +15,48 @@
               <div class="message-float-header">Message</div> 
               {{message}}
             </div>
-          </transition>          
+          </transition>
         </div>
       </div>
     </div>
-    <div class="message-box-container row">
+    <!-- <div v-if="isOthers" class="message-box-container row">
       <div class="message-box-header">Message</div> 
-      <input type="text" class="message-box" id="message" v-model="myMessage" v-on:keydown.enter="addMessage($event.keyCode)">
-    </div>
+      <input type="text" class="message-box" id="message" v-model="myMessage" @keydown.enter="addMessage($event.keyCode)">
+    </div> -->
   </div>
 </template>
 
 <script>
-import SlideFrame from './SlideFrame.vue'
 import db from '@/firebase/firestore.js'
 
 export default {
-
-  components: {
-    SlideFrame
-  },
 
   data: function() {
     return {
       dateOfVisit: new Date(),
       userId:'',
-      slideId: '',
-      isOthers: false,
+      slideId: this.$route.params.slideId,
+      isOthers: true,
       myMessage:'',
       messageGrid: new Array(10),
+      page:1,
     }
   },
 
   created: function () {
+
+    // messageGird初期化
+    for(let row = 0; row < 10; row++){
+      this.messageGrid[row] = new Array(4).fill("");
+    }
     
+    // メッセージの監視
+    this.observeMessage(this.floatMessage)
+
+    // ローカルストレージにユーザーIDが存在しない場合は閲覧者
+    if(!localStorage.userId) return
+
     this.userId = localStorage.userId
-    this.slideId = this.$route.params.slideId
 
     // 閲覧者か発表者か
     db.collection('slides')
@@ -54,15 +64,15 @@ export default {
       .where('slideId', '==', this.slideId)
       .get().then((doc) => {
       this.isOthers = doc.size == 0
-    })
- 
-    // messageGird初期化
-    for(let row = 0; row < 10; row++){
-      this.messageGrid[row] = new Array(4).fill("");
-    }
+    }) 
+  },
 
-    // メッセージの監視
-    this.observeMessage(this.floatMessage)
+  computed: {
+    
+    slideUrl() {
+      // スライドのURL
+      return "pdf/test.pdf#page=" + this.page
+    },
   },
 
   methods: {
@@ -76,7 +86,6 @@ export default {
         .startAt(this.dateOfVisit)
         .onSnapshot(function(snapshot) {
         snapshot.docChanges().forEach(function(change) {
-          
           // 新規追加の時のみ、画面に表示する
           if (change.type === "added") {
             floatMessage(change.doc.data().message)
@@ -189,6 +198,7 @@ export default {
   }
 
   .message-float {
+    z-index: 99999;
     background-color: #d4ccac;
     color: #4e4b42;
     border: solid 0.5px;
@@ -208,7 +218,7 @@ export default {
   /* スライドフレーム */
   .slide-frame-container {
     position: absolute;
-    top: 0px;
+    top: -50px;
     bottom: 0px;
     left: 0px;
     right: 0px;

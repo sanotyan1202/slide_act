@@ -1,6 +1,5 @@
 <template>
-  <iframe :src="slideUrl" frameborder="0" class="slide-frame">
-  </iframe>
+  <iframe :src="slideUrl" frameborder="0" class="slide-frame" id="slide-frame"></iframe>
 </template>
 
 <script>

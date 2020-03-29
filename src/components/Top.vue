@@ -7,20 +7,31 @@
         </div>
       </div>
       <div class="row">
+        <div class="six columns offset-by-three columns">
+          <PDFUploader />
+        </div>
+      </div>
+      <!-- <div class="row">
         <div class="post-slide-container">
           <input type="text" placeholder="slide id" id="slide-id" v-model="slideId">
         </div>
-      </div>
-      <div class="row">
+      </div> -->
+      <!-- <div class="row">
         <a class="button button-primary" @click.prevent="registSlide">Act</a>
-      </div>
+      </div> -->
     </div>
 </template>
 
 <script>
 import db from '@/firebase/firestore.js'
+import PDFUploader from './PDFUploader.vue'
+
 
 export default {
+
+  components: {
+    PDFUploader
+  },
 
   data: function() {
     return {
