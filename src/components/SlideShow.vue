@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="slide-frame-container">
-      <object :data="slideUrl" type="application/pdf" width="100%" height="100%">
+      <!-- <object :data="slideUrl" type="application/pdf" width="100%" height="100%">
         <param name="initZoom" value="fitToPage" />
-      </object>
-      <!-- <embed :src="slideUrl" type="application/pdf" width="100%" height="100%"> -->
-      <!-- <iframe width="100%" height="100%" src="/pdfjs/web/viewer.html?file=test.pdf" /> -->
+      </object> -->
+      <embed :src="slideUrl" type="application/pdf" width="100%" height="100%">
+      <!-- <iframe style="width:100%; height:500px;" :src="slideUrl" /> -->
     </div>
     <div class="message-river">
       <div class="row message-row" v-for="(messageRow, index) in messageGrid" :key="index">
@@ -39,7 +39,7 @@ export default {
       isOthers: true,
       myMessage:'',
       messageGrid: new Array(10),
-      page:1,
+      page:2,
     }
   },
 
@@ -71,7 +71,7 @@ export default {
     
     slideUrl() {
       // スライドのURL
-      return "pdf/test.pdf#page=" + this.page
+      return "https://firebasestorage.googleapis.com/v0/b/slide-act.appspot.com/o/test.pdf?alt=media&token=4454ea26-c2c8-4c62-9153-f8fbeb1c1d47#page=" + this.page
     },
   },
 
@@ -218,7 +218,7 @@ export default {
   /* スライドフレーム */
   .slide-frame-container {
     position: absolute;
-    top: -50px;
+    top: 0px;
     bottom: 0px;
     left: 0px;
     right: 0px;

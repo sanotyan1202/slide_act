@@ -52,7 +52,7 @@ export default {
 <style>
 
 .drop {
-  border: 2px dotted #2c3e50;
+  border: 2px dashed #2c3e50b0;
   padding: 20px;
 }
 

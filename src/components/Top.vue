@@ -11,6 +11,7 @@
           <PDFUploader />
         </div>
       </div>
+      <iframe style="width:100%; height:500px;" src="http://localhost:8888/pdfjs/web/viewer.html?file=https%3A%2F%2Ffirebasestorage.googleapis.com%2Fv0%2Fb%2Fslide-act.appspot.com%2Fo%2Ftest.pdf%3Falt%3Dmedia%26token%3D4454ea26-c2c8-4c62-9153-f8fbeb1c1d47" />
       <!-- <div class="row">
         <div class="post-slide-container">
           <input type="text" placeholder="slide id" id="slide-id" v-model="slideId">
