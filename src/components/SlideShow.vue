@@ -1,11 +1,7 @@
 <template>
   <div>
     <div class="slide-frame-container">
-      <!-- <object :data="slideUrl" type="application/pdf" width="100%" height="100%">
-        <param name="initZoom" value="fitToPage" />
-      </object> -->
       <embed :src="slideUrl" type="application/pdf" width="100%" height="100%">
-      <!-- <iframe style="width:100%; height:500px;" :src="slideUrl" /> -->
     </div>
     <div class="message-river">
       <div class="row message-row" v-for="(messageRow, index) in messageGrid" :key="index">
