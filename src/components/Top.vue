@@ -1,82 +1,93 @@
 <template>
-    <div class="container">
-      <div class="row title-container">
-        <h1 class="title">Slide Act</h1>
-        <div class="description">
-          スライドを活性化するWebサービス
-        </div>
-      </div>
-      <div class="row">
-        <div class="six columns offset-by-three columns">
-          <PDFUploader v-show="uploaded" v-on:give-slide-id="setSlideId" />
-          <pdf id="pdf" v-bind:src="encodedUrl" :page="6"></pdf>
-        </div>
-      </div>
-      <div class="row">
-        <a class="button button-primary" @click="act" >Act</a>
+  <div class="container">
+    <div class="row title-container">
+      <h1 class="title">Slide Act</h1>
+      <div class="description">
+        スライドを活性化するWebサービス
       </div>
     </div>
+    <div class="row">
+      <div v-show="!uploaded" class="six columns offset-by-three columns">
+        <PDFUploader v-on:give-slide="setSlide" />
+      </div>
+      <div v-if="uploaded" class="four columns offset-by-four columns" >
+        <div id="slide-show-container">
+          <SlideShow :slide="slide" />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <a class="button button-primary" v-show="uploaded" @click="act">Act</a>&emsp;
+      <a class="button button-danger" v-show="uploaded" @click="del">Del</a>
+    </div>
+  </div>
 </template>
 
 <script>
 import utils from '@/common/utils.js';
-// import db from '@/firebase/firestore.js';
+import db from '@/firebase/firestore.js';
 import pdf from 'vue-pdf';
-import PDFUploader from './PDFUploader.vue';
+import storage from '@/firebase/storage.js'
+import PDFUploader from '@/components/PDFUploader';
+import SlideShow from '@/components/SlideShow';
 
+// 4:3
 export default {
 
   components: {
     PDFUploader,
+    SlideShow,
     pdf
   },
 
   data: function() {
     return {
-      slideId: '',
+      slide: null,
       userId: ''
     }
   },
 
   created: function() {
-    // ローカルストレージからユーザーIDとスライドIDを取得
-    this.getUserId();
-    this.getSlideId();
+    // ローカルストレージからスライドIDを取得
+    this.getSlide();
+    console.log(window.parent.screen);
   },
 
   methods: {
 
-    getUserId: function() {
-
-      // ローカルストレージにユーザーIDが存在しない場合はランダムな文字列で生成
-      if(!localStorage.userId) {
-        localStorage.userId = utils.generateUuid();
-      }
-
-      // ローカルストレージからユーザーIDを取得
-      this.userId = localStorage.userId;
-    },
-
-    getSlideId: function() {
+    getSlide: function() {
       
       // ローカルストレージにスライドIDが存在する場合のみ設定
-      if(localStorage.slideId) {
-        this.slideId = localStorage.slideId;
+      if(localStorage.slide) {
+        this.slide = JSON.parse(localStorage.slide);
       }
     },
 
     act: function() {
-      const docEl = document.querySelector("#pdf");
+      const docEl = document.querySelector("#slide-show-container");
       let requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
       requestFullScreen.call(docEl);
-      
     },
 
+    del: function() {
+      
+      // Firesotre削除
+      db.collection('slides').doc(this.slide.id).delete();
 
-    setSlideId: function(slideId) {
-      // ローカルストレージにスライドIDを設定
-      localStorage.slideId = slideId;
-      this.slideId = slideId;
+      // Storage削除
+      storage.ref(this.slide.file).delete();
+
+      // ローカルストレージ削除
+      localStorage.clear();
+
+      // スライド消去
+      this.slide = null;
+    },
+
+    setSlide: function(slide) {
+      // ローカルストレージにスライドを保存
+      localStorage.slide = JSON.stringify(slide);
+      this.slide = slide;
     }
   },
 
@@ -84,16 +95,8 @@ export default {
 
     uploaded: function () {
       // ファイルアップロード済:true 未:false
-      return this.slideId.length !== 0;
+      return this.slide !== null;
     },
-
-    encodedUrl: function() {
-      // const aa = "http://localhost:8888/pdfjs/web/viewer.html?file="
-      // + encodeURIComponent("https://firebasestorage.googleapis.com/v0/b/slide-act.appspot.com/o/pdf%2Fe47791db-eb13-4213-970c-4b08387bbbf6?alt=media&token=7788c882-b244-4101-9606-c28168bcff83");
-      // console.log(aa);
-      // return aa;
-      return "https://firebasestorage.googleapis.com/v0/b/slide-act.appspot.com/o/pdf%2Fe47791db-eb13-4213-970c-4b08387bbbf6?alt=media&token=7788c882-b244-4101-9606-c28168bcff83";
-    }
   }
 }
 </script>
@@ -109,8 +112,35 @@ export default {
   margin-bottom: 20px;
 }
 
+#slide-show-container {
+  position: relative;
+  content: "";
+  display: block;
+  clear: both;
+  padding: 0px 30px 0px 30px;
+  margin: -15px 0px 20px 0px;
+}
+
+#slide-show-container:fullscreen {
+  padding: 0px 171px 0px 171px;
+}
+
+
+.button-danger {
+  background-color: #dd6060;
+  border-color: #dd6060;
+  color: white;
+}
+
+.button-danger:hover {
+  background-color: #ba5050;
+  border-color: #ba5050;
+  color: white;
+}
+
 input#slide-id {
   width: 80%;
   max-width: 450px;
 }
+
 </style>

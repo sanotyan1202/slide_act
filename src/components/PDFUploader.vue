@@ -62,20 +62,22 @@ export default {
       const url = await snapshot.ref.getDownloadURL();
 
       // firestoreにPDF情報を登録
-      const slideRef = db.collection('slides');
-      const docRef = await slideRef.add({
+      let slide = {
         url: url,
-        createdAt: new Date()
-      });
+        file: filename,
+        createdAt: new Date
+      };
+      const slideRef = db.collection('slides');
+      const docRef = await slideRef.add(slide);
 
-      // firestoreで自動生成されるIDを取得
-      const slideId = docRef.id;
+      // 新規登録されたIDを設定
+      slide.id = docRef.id;
 
       // ローディングコンポーネントを非表示
       this.uploading = false;
 
       // 親にスライドIDを渡す
-      this.$emit('give-silde-id', slideId);
+      this.$emit('give-slide', slide);
     },
   }
 };

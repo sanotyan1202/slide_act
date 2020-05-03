@@ -1,8 +1,10 @@
 <template>
-  <div>
-    <div class="slide-frame-container">
-      <embed :src="slideUrl" type="application/pdf" width="100%" height="100%">
-    </div>
+  <div @click="page++">
+    <Keypress key-event="keyup" :key-code="13" @success="page++" /><!-- Enterキー -->
+    <Keypress key-event="keyup" :key-code="37" @success="page--" /><!-- 左矢印キー -->
+    <Keypress key-event="keyup" :key-code="39" @success="page++" /><!-- 右矢印キー -->
+    <Keypress key-event="keyup" :key-code="27" @success="page=1" /><!-- Escキー -->
+    <pdf id="pdf" v-bind:src="slide.url" :page="page" class="pdf"></pdf>
     <div class="message-river">
       <div class="row message-row" v-for="(messageRow, index) in messageGrid" :key="index">
         <div class="three columns message-col" v-for="(message, index) in messageRow" :key="index">
@@ -24,8 +26,16 @@
 
 <script>
 import db from '@/firebase/firestore.js'
+import pdf from 'vue-pdf';
 
 export default {
+
+  components: {
+    pdf,
+    Keypress: () => import('vue-keypress')
+  },
+
+  props: ['slide'],
 
   data: function() {
     return {
@@ -35,7 +45,7 @@ export default {
       isOthers: true,
       myMessage:'',
       messageGrid: new Array(10),
-      page:2,
+      page:1,
     }
   },
 
@@ -47,28 +57,8 @@ export default {
     }
     
     // メッセージの監視
-    this.observeMessage(this.floatMessage)
+    this.observeMessage(this.floatMessage);
 
-    // ローカルストレージにユーザーIDが存在しない場合は閲覧者
-    if(!localStorage.userId) return
-
-    this.userId = localStorage.userId
-
-    // 閲覧者か発表者か
-    db.collection('slides')
-      .where('userId', '==', this.userId)
-      .where('slideId', '==', this.slideId)
-      .get().then((doc) => {
-      this.isOthers = doc.size == 0
-    }) 
-  },
-
-  computed: {
-    
-    slideUrl() {
-      // スライドのURL
-      return "https://firebasestorage.googleapis.com/v0/b/slide-act.appspot.com/o/test.pdf?alt=media&token=4454ea26-c2c8-4c62-9153-f8fbeb1c1d47#page=" + this.page
-    },
   },
 
   methods: {
@@ -77,14 +67,14 @@ export default {
 
       // メッセージの監視
       db.collection('messages')
-        .where('slideId', '==', this.slideId)
+        .where('slideId', '==', this.slide.id)
         .orderBy('createdAt')
         .startAt(this.dateOfVisit)
         .onSnapshot(function(snapshot) {
         snapshot.docChanges().forEach(function(change) {
           // 新規追加の時のみ、画面に表示する
           if (change.type === "added") {
-            floatMessage(change.doc.data().message)
+            floatMessage(change.doc.data().message);
           }
         });
       })
@@ -93,46 +83,46 @@ export default {
     addMessage: function(keyCode) {
 
       // 日本語確定Enterを無視
-      if(keyCode !== 13) return
+      if(keyCode !== 13) {
+        return;
+      }
 
       // 未入力チェック
-      if(this.myMessage.length === 0) return
-      
+      if(this.myMessage.length === 0) {
+        return;
+      }
+
       // メッセージの登録
       db.collection('messages').add({
-        slideId: this.slideId,
+        slideId: this.slide.id,
         message: this.myMessage,
         createdAt: new Date()
-      }).then(() => {
-        console.log("success")
-      }).catch((err) => {
-        console.error(err)
-      })
+      });
 
-      this.myMessage = ""
+      this.myMessage = "";
     },
 
     floatMessage: function(message) {
       
       // メッセージグリッドの最小、最大行列数
-      const rowMin = 0
-      const rowMax = 9
-      const colMin = 0
-      const colMax = 3
+      const rowMin = 0;
+      const rowMax = 9;
+      const colMin = 0;
+      const colMax = 3;
 
       // 変数を用意
-      let rowIndex = 0
-      let colIndex = 0
+      let rowIndex = 0;
+      let colIndex = 0;
 
       // グリッドのどの位置にメッセージを表示するかランダムで選択
       // すでにメッセージが表示されている場合は、別の位置にする
       do  {
-        rowIndex = Math.floor( Math.random() * (rowMax + 1 - rowMin)) + rowMin
-        colIndex = Math.floor( Math.random() * (colMax + 1 - colMin)) + colMin
-      } while(this.messageGrid[rowIndex][colIndex].length != 0)
+        rowIndex = Math.floor( Math.random() * (rowMax + 1 - rowMin)) + rowMin;
+        colIndex = Math.floor( Math.random() * (colMax + 1 - colMin)) + colMin;
+      } while(this.messageGrid[rowIndex][colIndex].length != 0);
       
       // メッセージの表示
-      this.setMessageInGrid(rowIndex, colIndex, message)
+      this.setMessageInGrid(rowIndex, colIndex, message);
 
       // 4秒後にメッセージを消去
       setTimeout((rowIndex, colIndex) => {
@@ -140,17 +130,17 @@ export default {
       },
       4000, 
       rowIndex, 
-      colIndex)
+      colIndex);
     },
 
     setMessageInGrid: function(rowIndex, colIndex, message) {
 
       // Gridに値を設定
-      let messageRow = this.messageGrid[rowIndex]
-      messageRow[colIndex] = message
-      this.messageGrid.splice(rowIndex, 1, messageRow)
+      let messageRow = this.messageGrid[rowIndex];
+      messageRow[colIndex] = message;
+      this.messageGrid.splice(rowIndex, 1, messageRow);
     },
-  }
+  },
 }
 </script>
 <style>
@@ -209,15 +199,6 @@ export default {
 
   .fade-enter, .fade-leave-to {
     opacity: 0;
-  }
-
-  /* スライドフレーム */
-  .slide-frame-container {
-    position: absolute;
-    top: 0px;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
   }
 
   /* メッセージ入力欄 */
