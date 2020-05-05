@@ -6,6 +6,10 @@
         スライドを活性化するWebサービス
       </div>
     </div>
+    <div v-if="uploaded" class="row browser">
+      閲覧用URL<br/>
+      {{browserUrl}}
+    </div>
     <div class="row">
       <div v-show="!uploaded" class="six columns offset-by-three columns">
         <PDFUploader v-on:give-slide="setSlide" />
@@ -24,7 +28,6 @@
 </template>
 
 <script>
-import utils from '@/common/utils.js';
 import db from '@/firebase/firestore.js';
 import storage from '@/firebase/storage.js'
 import PDFUploader from '@/components/PDFUploader';
@@ -42,7 +45,7 @@ export default {
       slide: null,
       userId: '',
       padding: 0,
-      state: ''
+      state: '',
     }
   },
 
@@ -71,7 +74,7 @@ export default {
 
       // スクリーンの画面サイズ取得
       const width = window.parent.screen.width;
-      const height = window.parent.screen.height;
+      // const height = window.parent.screen.height;
       
       // PDFが4:3で、画面が16:9の場合のみ有効
       this.padding = width / 8;
@@ -124,6 +127,10 @@ export default {
     styles: function() {
       // CSS変数を設定
       return {'--padding': this.padding + 'px' };
+    },
+
+    browserUrl: function() {
+      return location.href + '/' + this.slide.id;
     }
   }
 }
@@ -145,8 +152,7 @@ export default {
   content: "";
   display: block;
   clear: both;
-  /* padding: 0px 30px 0px 30px; */
-  margin: -15px 30px 20px 30px;
+  margin: 20px 30px 20px 30px;
   box-shadow: 0 0 5px #2b3e50;
 }
 
