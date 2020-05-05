@@ -115,11 +115,11 @@ export default {
       this.swipe.current.x = e.touches[0].pageX;
       this.swipe.distance.x = this.swipe.current.x - this.swipe.start.x;
       if( this.swipe.flag && this.swipe.distance.x > 0 && this.swipe.distance.x >= this.swipe.threshold){
-        this.next();
+        this.previous();
         this.swipe.flag = false;
       }
       if( this.swipe.flag && this.swipe.distance.x < 0 && this.swipe.distance.x >= this.swipe.threshold * -1){
-        this.previous();
+        this.next();
         this.swipe.flag = false;
       }
     },
