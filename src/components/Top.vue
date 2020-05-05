@@ -114,7 +114,7 @@ export default {
       // ローカルストレージにスライドを保存
       localStorage.slide = JSON.stringify(slide);
       this.slide = slide;
-    }
+    },
   },
 
   computed : {
@@ -130,7 +130,7 @@ export default {
     },
 
     browserUrl: function() {
-      return location.href + '/' + this.slide.id;
+      return location.href + this.slide.id;
     }
   }
 }

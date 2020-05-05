@@ -5,7 +5,7 @@
     <Keypress key-event="keyup" :key-code="39" @success="next" /><!-- 右矢印キー -->
     <pdf id="pdf" class="pdf" v-bind:src="slide.url" :page="page" 
       @num-pages="lastpage = $event"></pdf>
-    <MessageGrid v-show="fullscreen" :slide="slide" />
+    <MessageGrid v-if="fullscreen" :slide="slide" />
   </div>
 </template>
 

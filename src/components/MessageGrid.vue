@@ -1,5 +1,9 @@
 <template>
   <div>
+    <audio id="se" preload="auto">
+      <source src="sound/se.mp3" type="audio/mp3">
+    </audio>
+
     <div class="message-river">
       <div class="row message-row" v-for="(messageRow, index) in messageGrid" :key="index">
         <div class="three columns message-col" v-for="(messageBox, index) in messageRow" :key="index">
@@ -61,7 +65,6 @@ export default {
       })
     },
 
-    // メッセージを画面に表示する4秒で非表示に
     floatMessage: function(messageBox) {
       
       // メッセージグリッドの最小、最大行列数
@@ -70,7 +73,6 @@ export default {
       const colMin = 0;
       const colMax = 3;
 
-      // 変数を用意
       let rowIndex = 0;
       let colIndex = 0;
 
@@ -83,6 +85,9 @@ export default {
       
       // メッセージの表示
       this.setMessageInGrid(rowIndex, colIndex, messageBox);
+
+      // 音声の出力
+      this.play();
 
       // 4秒後にメッセージを消去
       setTimeout((rowIndex, colIndex) => {
@@ -101,6 +106,11 @@ export default {
       messageRow[colIndex] = messageBox;
       this.messageGrid.splice(rowIndex, 1, messageRow);
     },
+
+    play : function() {
+      document.querySelector("#se").currentTime = 0;
+      document.querySelector("#se").play();
+    }
   },
 }
 </script>
