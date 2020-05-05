@@ -69,7 +69,6 @@ export default {
       }
     },
 
-    // フルスクリーン時の左右のPaddingを設定
     setScreenPadding: function() {
 
       // スクリーンの画面サイズ取得
@@ -91,7 +90,6 @@ export default {
       this.state = 'fullscreen';
     },
 
-    // ローカルストレージ、Storage、FirestoreからPDFの情報を削除
     // TODO:エラー処理
     del: function() {
       
@@ -108,7 +106,6 @@ export default {
       this.slide = null;
     },
 
-    // ローカルストレージにスライドを保存
     setSlide: function(slide) {
 
       // ローカルストレージにスライドを保存
@@ -130,7 +127,7 @@ export default {
     },
 
     browserUrl: function() {
-      return location.href + '/' + this.slide.id;
+      return location.href + this.slide.id;
     }
   }
 }

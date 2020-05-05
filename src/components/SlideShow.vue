@@ -1,5 +1,8 @@
 <template>
-  <div @click="next">
+  <div @click="next"
+       @touchstart="OnTouchStart($event)"
+       @touchmove="OnTouchMove($event)"
+       @touchend="OnTouchEnd()">
     <Keypress v-if="fullscreen" key-event="keyup" :key-code="13" @success="next" /><!-- Enterキー -->
     <Keypress key-event="keyup" :key-code="37" @success="previous" /><!-- 左矢印キー -->
     <Keypress key-event="keyup" :key-code="39" @success="next" /><!-- 右矢印キー -->
@@ -28,7 +31,20 @@ export default {
     return {
       messageGrid: new Array(10),
       page: 1,
-      lastpage: 0
+      lastpage: 0,
+      swipe: {
+        flag: false,
+        threshold: 60,
+        start: {
+          x: 0
+        },
+        current: {
+          x: 0
+        },
+        distance: {
+          x: 0
+        },
+    },
     }
   },
 
@@ -45,7 +61,6 @@ export default {
 
   methods: {
 
-    // ページを進める
     next: function() {
       
       // 最終ページでない時だけ、ページ数をインクリメントする
@@ -56,7 +71,6 @@ export default {
       this.updatePage(this.page);
     },
 
-    // ページを戻す
     previous: function() {
 
       // 最初のページでない時だけ、ページ数をデクリメントする
@@ -67,7 +81,6 @@ export default {
       this.updatePage(this.page);
     },
 
-    // 現在のページ番号を登録する
     updatePage: function(page) {
 
       // TOPページの子コンポーネントの時だけページを更新する
@@ -80,7 +93,6 @@ export default {
         .set({ page: page });
     },
 
-    // ページ番号を監視し、更新されたらページを移動する
     observePage: function(setPage) {
 
       // ページの監視
@@ -93,7 +105,29 @@ export default {
     setPage: function(page) {
       this.page = page;
     },
+
+    // スワイプでスライド遷移
+    OnTouchStart: function (e) {
+      this.swipe.flag = true;
+      this.swipe.start.x = e.touches[0].pageX;
+    },
+    OnTouchMove: function (e) {
+      this.swipe.current.x = e.touches[0].pageX;
+      this.swipe.distance.x = this.swipe.current.x - this.swipe.start.x;
+      if( this.swipe.flag && this.swipe.distance.x > 0 && this.swipe.distance.x >= this.swipe.threshold){
+        this.next();
+        this.swipe.flag = false;
+      }
+      if( this.swipe.flag && this.swipe.distance.x < 0 && this.swipe.distance.x >= this.swipe.threshold * -1){
+        this.previous();
+        this.swipe.flag = false;
+      }
+    },
+    OnTouchEnd: function () {
+      this.swipe.flag = false;
+    },
   },
+
   computed: {
     fullscreen: function() {
       return this.state === 'fullscreen';

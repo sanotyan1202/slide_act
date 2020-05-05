@@ -4,9 +4,9 @@
     <div class="row">
       <div class="eight columns offset-by-two columns">
         <div id="slide-show-container" @click.prevent="1">
-          <SlideShow v-if="get" :slide="slide" />
+          <SlideShow v-if="get" :slide="slide" :state="'browser'" />
         </div>
-        <div class="input">
+        <div class="form">
           <div class="three columns">
             <div class="message-box-container">
               <div class="message-box-header">Name</div> 
@@ -53,15 +53,14 @@ export default {
 
   methods: {
 
-    // スライドの取得
     getSlide: async function () {
+      // スライドの取得
       const slideId =this.$route.params.slideId;
       const doc = await db.collection('slides').doc(slideId).get();
       this.slide = doc.data();
       this.slide.id = doc.id;
     },
 
-    // メッセージをFirestoreに登録
     addMessage: function(keyCode) {
 
       // 日本語確定Enterを無視
@@ -76,7 +75,8 @@ export default {
       if(this.message.length === 0) {
         return;
       }
-
+      
+      // 名前が未入力ならNO NAME
       if (this.name.length === 0) {
         this.name = 'NO NAME';
       }

@@ -42,7 +42,6 @@ export default {
 
   methods: {
 
-    // メッセージを監視し、新規登録されたら画面に表示する
     observeMessage: function(floatMessage) {
 
       // メッセージの監視
@@ -61,7 +60,6 @@ export default {
       })
     },
 
-    // メッセージを画面に表示する4秒で非表示に
     floatMessage: function(messageBox) {
       
       // メッセージグリッドの最小、最大行列数
@@ -93,7 +91,6 @@ export default {
       colIndex);
     },
 
-    // 画面のGridにメッセージをセット
     setMessageInGrid: function(rowIndex, colIndex, messageBox) {
 
       // Gridに値を設定
