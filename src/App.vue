@@ -7,27 +7,6 @@
 <script>
 export default {
   name: 'App',
-  // mounted: function() {
-  //   var vm = this;
-  //   window.addEventListener('keyup', function(event) {
-  //     const key = event.keyCode;
-  //     console.log("test");
-  //     switch (key) {
-  //       case 13:
-  //         console.log("test2");
-  //         vm.$broadcast('keyupEnter');
-  //         break;
-  //       case 37:
-  //         console.log("test3");
-  //         vm.$broadcast('keyupArrowLeft');
-  //         break;
-  //       case 39:
-  //         console.log("test4");
-  //         vm.$broadcast('keyupArrowRight');
-  //         break;
-  //     }
-  //   });
-  // }
 }
 </script>
 

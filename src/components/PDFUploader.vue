@@ -36,6 +36,8 @@ export default {
 
   methods: {
     
+    // ドロップされたファイルをStorageに保存
+    // ファイル情報をFireStoreに登録
     onDrop: async function() {
 
       this.message = '';

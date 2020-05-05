@@ -1,5 +1,5 @@
 [{
-  "origin": ["https://silde-act.firebaseapp.com", "http://localhost:8888"],
+  "origin": ["https://silde-act.firebaseapp.com", "http://localhost:8888", "http://192.168.2.104:8888"],
   "responseHeader": ["*"],
   "method": ["*"],
   "maxAgeSeconds": 86400
