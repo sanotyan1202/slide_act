@@ -24,9 +24,8 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### TODO
-デザイン
-フォントサイズ　画面に合わせる
-スマホキーボードスクロール
+使い方説明モーダルの追加
+デザイン、効果音の追加
+スマホキーボードスクロール(Android対応)
 エラー対応
-文字数制限
 ファイルサイズ制限
