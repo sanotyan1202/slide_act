@@ -16,7 +16,7 @@
       </div>
       <div v-if="uploaded" class="four columns offset-by-four columns" >
         <div id="slide-show-container" :style="styles">
-          <SlideShow :slide="slide" :state="state" />
+          <SlideShow :slide="slide" :parent="'top'" />
         </div>
       </div>
     </div>
@@ -45,7 +45,6 @@ export default {
       slide: null,
       userId: '',
       padding: 0,
-      state: '',
     }
   },
 
@@ -87,7 +86,6 @@ export default {
                            || docEl.webkitRequestFullScreen 
                            || docEl.msRequestFullscreen;
       requestFullScreen.call(docEl);
-      this.state = 'fullscreen';
     },
 
     // TODO:エラー処理

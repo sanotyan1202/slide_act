@@ -4,7 +4,7 @@
     <div class="row">
       <div class="eight columns offset-by-two columns">
         <div id="slide-show-container" @click.prevent="1">
-          <SlideShow v-if="get" :slide="slide" :state="'browser'" />
+          <SlideShow v-if="get" :slide="slide" :parent="'browser'" />
         </div>
         <div class="form">
           <div class="three columns">

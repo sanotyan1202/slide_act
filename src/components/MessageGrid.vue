@@ -1,5 +1,6 @@
 <template>
   <div>
+    <audio id="se" src="audio/se.mp3"></audio>
     <div class="message-river">
       <div class="row message-row" v-for="(messageRow, index) in messageGrid" :key="index">
         <div class="three columns message-col" v-for="(messageBox, index) in messageRow" :key="index">
@@ -82,6 +83,9 @@ export default {
       // メッセージの表示
       this.setMessageInGrid(rowIndex, colIndex, messageBox);
 
+      // 効果音再生
+      this.play();
+
       // 4秒後にメッセージを消去
       setTimeout((rowIndex, colIndex) => {
         this.setMessageInGrid(rowIndex, colIndex, null);
@@ -98,6 +102,10 @@ export default {
       messageRow[colIndex] = messageBox;
       this.messageGrid.splice(rowIndex, 1, messageRow);
     },
+
+    play: function() {
+      document.querySelector("#se").play();
+    }
   },
 }
 </script>

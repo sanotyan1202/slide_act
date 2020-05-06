@@ -3,12 +3,12 @@
        @touchstart="OnTouchStart($event)"
        @touchmove="OnTouchMove($event)"
        @touchend="OnTouchEnd()">
-    <Keypress v-if="fullscreen" key-event="keyup" :key-code="13" @success="next" /><!-- Enterキー -->
+    <Keypress v-if="parent === 'top'" key-event="keyup" :key-code="13" @success="next" /><!-- Enterキー -->
     <Keypress key-event="keyup" :key-code="37" @success="previous" /><!-- 左矢印キー -->
     <Keypress key-event="keyup" :key-code="39" @success="next" /><!-- 右矢印キー -->
     <pdf id="pdf" class="pdf" v-bind:src="slide.url" :page="page" 
       @num-pages="lastpage = $event"></pdf>
-    <MessageGrid v-show="fullscreen" :slide="slide" />
+    <MessageGrid v-if="parent === 'top'" :slide="slide" />
   </div>
 </template>
 
@@ -25,7 +25,7 @@ export default {
     Keypress: () => import('vue-keypress')
   },
 
-  props: ['slide', 'state'],
+  props: ['slide', 'parent'],
 
   data: function() {
     return {
