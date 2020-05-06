@@ -127,11 +127,5 @@ export default {
       this.swipe.flag = false;
     },
   },
-
-  computed: {
-    fullscreen: function() {
-      return this.state === 'fullscreen';
-    }
-  }
 }
 </script>
