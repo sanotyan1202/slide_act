@@ -84,7 +84,7 @@ export default {
     updatePage: function(page) {
 
       // TOPページの子コンポーネントの時だけページを更新する
-      if (this.state !== 'fullscreen') {
+      if (this.parent !== 'top') {
         return;
       }
 
