@@ -25,7 +25,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### TODO
 使い方説明モーダルの追加
-デザイン、効果音の追加
+効果音の追加
 スマホキーボードスクロール(Android対応)
 エラー対応
 ファイルサイズ制限

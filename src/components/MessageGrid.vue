@@ -102,8 +102,6 @@ export default {
 }
 </script>
 <style>
-
-  /* メッセージの川 */
   .message-river {
     position: absolute;
     top: 20px;
@@ -121,21 +119,20 @@ export default {
     height: 100%;
   } 
 
-  /* メッセージフロート */
   .message-float-header {
-    background-color: #2b3e50;
-    color: #fff;
+      background-color: #caffe9;
+      color: #2b3e4f;
+      border-radius: 10px 10px 0px 0px;
+      border-bottom: solid 2px #8eb2a3;
   }
-
   .message-float {
-    background-color: #fff;
+    background-color: #caffe9;
     color: #2b3e50;
-    border: solid 0.5px;
-    font-size: 200%;
+    border: solid 2px #8eb2a3;
+    font-size: 150%;
     font-weight: bold;
-    opacity: 0.93;
+    border-radius: 10px;
   }
-
   .fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
   }
