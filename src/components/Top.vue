@@ -50,6 +50,9 @@ export default {
 
   created: function() {
 
+    // ユーザーIDの作成
+    this.createUserId();
+
     // ローカルストレージからスライドIDを取得
     this.getSlide();
 
