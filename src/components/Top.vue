@@ -110,7 +110,7 @@ export default {
       storage.ref(filepath).delete();
 
       // ローカルストレージ削除
-      localStorage.clear();
+      localStorage.removeItem('slide');
 
       // スライド消去
       this.slide = null;
