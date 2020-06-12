@@ -54,11 +54,13 @@ export default {
       // ローディングコンポーネントを表示
       this.uploading = true;
 
+      const userId = localStorage.userId;
       // 一意なファイル名を生成
-      const filename = 'pdf/' + utils.generateUuid();
+      const filename = utils.generateUuid();
+      const filepath = `pdf/${userId}/${filename}`;
 
       // ファイルをアップロード
-      const snapshot = await storage.ref(filename).put(files[0]);
+      const snapshot = await storage.ref(filepath).put(files[0]);
 
       // ファイルのアップロードURLを取得
       const url = await snapshot.ref.getDownloadURL();

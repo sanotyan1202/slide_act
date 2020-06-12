@@ -69,7 +69,6 @@ export default {
       const colMin = 0;
       const colMax = 3;
 
-      // 変数を用意
       let rowIndex = 0;
       let colIndex = 0;
 

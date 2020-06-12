@@ -6,9 +6,10 @@
     <Keypress v-if="parent === 'top'" key-event="keyup" :key-code="13" @success="next" /><!-- Enterキー -->
     <Keypress key-event="keyup" :key-code="37" @success="previous" /><!-- 左矢印キー -->
     <Keypress key-event="keyup" :key-code="39" @success="next" /><!-- 右矢印キー -->
+    <Keypress key-event="keyup" :key-code="27" @success="start" /><!-- Escキー -->
     <pdf id="pdf" class="pdf" v-bind:src="slide.url" :page="page" 
       @num-pages="lastpage = $event"></pdf>
-    <MessageGrid v-if="parent === 'top'" :slide="slide" />
+    <MessageGrid v-if="fullscreen" :slide="slide" />
   </div>
 </template>
 
@@ -60,6 +61,12 @@ export default {
   },
 
   methods: {
+    
+    // 最初のページに戻る
+    start: function() {
+      this.page = 1;
+      this.pudatePage(this.page);
+    },
 
     next: function() {
       
