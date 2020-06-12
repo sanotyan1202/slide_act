@@ -9,7 +9,7 @@
     <Keypress key-event="keyup" :key-code="27" @success="start" /><!-- Escキー -->
     <pdf id="pdf" class="pdf" v-bind:src="slide.url" :page="page" 
       @num-pages="lastpage = $event"></pdf>
-    <MessageGrid v-if="fullscreen" :slide="slide" />
+    <MessageGrid v-if="parent === 'top'" :slide="slide" />
   </div>
 </template>
 
