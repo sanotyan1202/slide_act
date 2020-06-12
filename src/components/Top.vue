@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import db from '@/firebase/firestore.js';
+import utils from '@/common/utils.js'
 import storage from '@/firebase/storage.js'
 import PDFUploader from '@/components/PDFUploader';
 import SlideShow from '@/components/SlideShow';
@@ -59,6 +59,14 @@ export default {
   },
 
   methods: {
+
+    // ユーザーIDの作成
+    createUserId: function() {
+      // ローカルストレージに、ユーザーIDが存在しない場合のみ追加
+      if(!localStorage.userId) {
+        localStorage.userId = utils.generateUuid();
+      }
+    },
 
     // ローカルストレージからスライド情報を取得
     getSlide: function() {
@@ -95,11 +103,12 @@ export default {
     // TODO:エラー処理
     del: function() {
       
-      // Firesotre削除
-      db.collection('slides').doc(this.slide.id).delete();
+      // ファイルパスを取得
+      const userId = localStorage.userId;
+      const filepath = `pdf/${userId}/${this.slide.file}`;
 
       // Storage削除
-      storage.ref(this.slide.file).delete();
+      storage.ref(filepath).delete();
 
       // ローカルストレージ削除
       localStorage.clear();
