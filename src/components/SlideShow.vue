@@ -65,7 +65,7 @@ export default {
     // 最初のページに戻る
     start: function() {
       this.page = 1;
-      this.pudatePage(this.page);
+      this.updatePage(this.page);
     },
 
     next: function() {
