@@ -16,7 +16,7 @@
       </div>
       <div v-if="uploaded" class="four columns offset-by-four columns" >
         <div id="slide-show-container" :style="styles">
-          <SlideShow :slide="slide" :state="state" />
+          <SlideShow :slide="slide" :parent="'top'" />
         </div>
       </div>
     </div>
@@ -45,11 +45,13 @@ export default {
       slide: null,
       userId: '',
       padding: 0,
-      state: '',
     }
   },
 
   created: function() {
+
+    // ユーザーIDの作成
+    this.createUserId();
 
     // ローカルストレージからスライドIDを取得
     this.getSlide();
@@ -77,7 +79,6 @@ export default {
       }
     },
 
-    // フルスクリーン時の左右のPaddingを設定
     setScreenPadding: function() {
 
       // スクリーンの画面サイズ取得
@@ -96,10 +97,8 @@ export default {
                            || docEl.webkitRequestFullScreen 
                            || docEl.msRequestFullscreen;
       requestFullScreen.call(docEl);
-      this.state = 'fullscreen';
     },
 
-    // ローカルストレージ、Storage、FirestoreからPDFの情報を削除
     // TODO:エラー処理
     del: function() {
       
@@ -117,7 +116,6 @@ export default {
       this.slide = null;
     },
 
-    // ローカルストレージにスライドを保存
     setSlide: function(slide) {
 
       // ローカルストレージにスライドを保存

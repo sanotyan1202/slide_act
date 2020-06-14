@@ -24,9 +24,7 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### TODO
+How to use
 デザイン
-音を出す
-スライドスワイプ
-Android対応
+スマホキーボードスクロール(Android対応)
 エラー対応
-ファイルサイズ制限

@@ -1,12 +1,15 @@
 <template>
-  <div @click="next">
-    <Keypress v-if="fullscreen" key-event="keyup" :key-code="13" @success="next" /><!-- Enterキー -->
+  <div @click="next"
+       @touchstart="OnTouchStart($event)"
+       @touchmove="OnTouchMove($event)"
+       @touchend="OnTouchEnd()">
+    <Keypress v-if="parent === 'top'" key-event="keyup" :key-code="13" @success="next" /><!-- Enterキー -->
     <Keypress key-event="keyup" :key-code="37" @success="previous" /><!-- 左矢印キー -->
     <Keypress key-event="keyup" :key-code="39" @success="next" /><!-- 右矢印キー -->
     <Keypress key-event="keyup" :key-code="27" @success="start" /><!-- Escキー -->
     <pdf id="pdf" class="pdf" v-bind:src="slide.url" :page="page" 
       @num-pages="lastpage = $event"></pdf>
-    <MessageGrid v-if="fullscreen" :slide="slide" />
+    <MessageGrid v-if="parent === 'top'" :slide="slide" />
   </div>
 </template>
 
@@ -23,13 +26,26 @@ export default {
     Keypress: () => import('vue-keypress')
   },
 
-  props: ['slide', 'state'],
+  props: ['slide', 'parent'],
 
   data: function() {
     return {
       messageGrid: new Array(10),
       page: 1,
-      lastpage: 0
+      lastpage: 0,
+      swipe: {
+        flag: false,
+        threshold: 60,
+        start: {
+          x: 0
+        },
+        current: {
+          x: 0
+        },
+        distance: {
+          x: 0
+        },
+    },
     }
   },
 
@@ -49,10 +65,9 @@ export default {
     // 最初のページに戻る
     start: function() {
       this.page = 1;
-      this.pudatePage(this.page);
+      this.updatePage(this.page);
     },
 
-    // ページを進める
     next: function() {
       
       // 最終ページでない時だけ、ページ数をインクリメントする
@@ -63,7 +78,6 @@ export default {
       this.updatePage(this.page);
     },
 
-    // ページを戻す
     previous: function() {
 
       // 最初のページでない時だけ、ページ数をデクリメントする
@@ -74,11 +88,10 @@ export default {
       this.updatePage(this.page);
     },
 
-    // 現在のページ番号を登録する
     updatePage: function(page) {
 
       // TOPページの子コンポーネントの時だけページを更新する
-      if (this.state !== 'fullscreen') {
+      if (this.parent !== 'top') {
         return;
       }
 
@@ -87,7 +100,6 @@ export default {
         .set({ page: page });
     },
 
-    // ページ番号を監視し、更新されたらページを移動する
     observePage: function(setPage) {
 
       // ページの監視
@@ -100,11 +112,27 @@ export default {
     setPage: function(page) {
       this.page = page;
     },
+
+    // スワイプでスライド遷移
+    OnTouchStart: function (e) {
+      this.swipe.flag = true;
+      this.swipe.start.x = e.touches[0].pageX;
+    },
+    OnTouchMove: function (e) {
+      this.swipe.current.x = e.touches[0].pageX;
+      this.swipe.distance.x = this.swipe.current.x - this.swipe.start.x;
+      if( this.swipe.flag && this.swipe.distance.x > 0 && this.swipe.distance.x >= this.swipe.threshold){
+        this.previous();
+        this.swipe.flag = false;
+      }
+      if( this.swipe.flag && this.swipe.distance.x < 0 && this.swipe.distance.x >= this.swipe.threshold * -1){
+        this.next();
+        this.swipe.flag = false;
+      }
+    },
+    OnTouchEnd: function () {
+      this.swipe.flag = false;
+    },
   },
-  computed: {
-    fullscreen: function() {
-      return this.state === 'fullscreen';
-    }
-  }
 }
 </script>

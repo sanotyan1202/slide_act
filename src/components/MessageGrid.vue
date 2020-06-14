@@ -1,9 +1,6 @@
 <template>
   <div>
-    <audio id="se" preload="auto">
-      <source src="sound/se.mp3" type="audio/mp3">
-    </audio>
-
+    <audio id="se" src="audio/se.mp3"></audio>
     <div class="message-river">
       <div class="row message-row" v-for="(messageRow, index) in messageGrid" :key="index">
         <div class="three columns message-col" v-for="(messageBox, index) in messageRow" :key="index">
@@ -46,7 +43,6 @@ export default {
 
   methods: {
 
-    // メッセージを監視し、新規登録されたら画面に表示する
     observeMessage: function(floatMessage) {
 
       // メッセージの監視
@@ -86,19 +82,18 @@ export default {
       // メッセージの表示
       this.setMessageInGrid(rowIndex, colIndex, messageBox);
 
-      // 音声の出力
+      // 効果音再生
       this.play();
 
       // 4秒後にメッセージを消去
-      setTimeout((rowIndex, colIndex) => {
-        this.setMessageInGrid(rowIndex, colIndex, null);
-      },
-      4000, 
-      rowIndex, 
-      colIndex);
+      // setTimeout((rowIndex, colIndex) => {
+      //   this.setMessageInGrid(rowIndex, colIndex, null);
+      // },
+      // 4000, 
+      // rowIndex, 
+      // colIndex);
     },
 
-    // 画面のGridにメッセージをセット
     setMessageInGrid: function(rowIndex, colIndex, messageBox) {
 
       // Gridに値を設定
@@ -107,16 +102,13 @@ export default {
       this.messageGrid.splice(rowIndex, 1, messageRow);
     },
 
-    play : function() {
-      document.querySelector("#se").currentTime = 0;
+    play: function() {
       document.querySelector("#se").play();
     }
   },
 }
 </script>
 <style>
-
-  /* メッセージの川 */
   .message-river {
     position: absolute;
     top: 20px;
@@ -134,23 +126,59 @@ export default {
     height: 100%;
   } 
 
-  /* メッセージフロート */
-  .message-float-header {
-    background-color: #2b3e50;
-    color: #fff;
+  /* 初期 */
+  /* .message-float-header {
+      background-color: #caffe9;
+      color: #2b3e4f;
+      border-radius: 10px 10px 0px 0px;
+      border-bottom: solid 2px #8eb2a3;
   }
 
   .message-float {
-    background-color: #fff;
+    background-color: #caffe9;
     color: #2b3e50;
-    border: solid 0.5px;
-    font-size: 200%;
+    border: solid 2px #8eb2a3;
+    font-size: 150%;
     font-weight: bold;
-    opacity: 0.93;
+    border-radius: 10px;
+  } */
+
+  .message-float-header {
+    background-color: #4c4732;
+    color: #fff89c;
+    width: 100px;
+    font-size: 90%;
+    position: relative;
+    left: -25px;
+    top: -10px;
+    padding-left: 10px;
+    height: 30px;
+  }
+  .message-float-header:after {
+  content: "";
+  position: absolute;
+  right: -15px;
+  bottom: 0px;
+  width: 0px;
+  height: 0px;
+  margin: auto;
+  border-style: solid;
+  border-color: transparent transparent transparent #4c4732;
+  border-width: 15px 0 15px 15px;
+}
+
+  .message-float {
+    background-color: #fffbe9;
+    color: #3e3a12;
+    border: solid 2px #908b81;
+    font-size: 150%;
+    opacity: 97%;
+    text-align: left;
+    padding: 15px 5px 5px 10px;
   }
 
   .fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
+    transition: opacity .5s;
   }
 
   .fade-enter, .fade-leave-to {
