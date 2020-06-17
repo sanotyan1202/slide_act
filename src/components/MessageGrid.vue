@@ -86,12 +86,12 @@ export default {
       this.play();
 
       // 4秒後にメッセージを消去
-      // setTimeout((rowIndex, colIndex) => {
-      //   this.setMessageInGrid(rowIndex, colIndex, null);
-      // },
-      // 4000, 
-      // rowIndex, 
-      // colIndex);
+      setTimeout((rowIndex, colIndex) => {
+        this.setMessageInGrid(rowIndex, colIndex, null);
+      },
+      4000, 
+      rowIndex, 
+      colIndex);
     },
 
     setMessageInGrid: function(rowIndex, colIndex, messageBox) {
@@ -154,25 +154,25 @@ export default {
     padding-left: 10px;
     height: 30px;
   }
+
   .message-float-header:after {
-  content: "";
-  position: absolute;
-  right: -15px;
-  bottom: 0px;
-  width: 0px;
-  height: 0px;
-  margin: auto;
-  border-style: solid;
-  border-color: transparent transparent transparent #4c4732;
-  border-width: 15px 0 15px 15px;
-}
+    content: "";
+    position: absolute;
+    right: -15px;
+    bottom: 0px;
+    width: 0px;
+    height: 0px;
+    margin: auto;
+    border-style: solid;
+    border-color: transparent transparent transparent #4c4732;
+    border-width: 15px 0 15px 15px;
+  }
 
   .message-float {
     background-color: #fffbe9;
     color: #3e3a12;
     border: solid 2px #908b81;
     font-size: 150%;
-    opacity: 97%;
     text-align: left;
     padding: 15px 5px 5px 10px;
   }

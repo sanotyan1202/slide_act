@@ -11,7 +11,7 @@
             <div class="message-box-container">
               <div class="message-box-header">Name</div> 
               <input type="text" class="message-box"
-              v-model="name" placeholder="Your Name" maxlength="7">
+              v-model="name" placeholder="Your Name" maxlength="5">
             </div>
           </div>
           <div class="nine columns">
