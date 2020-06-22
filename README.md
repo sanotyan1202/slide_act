@@ -25,10 +25,9 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### TODO
 How to use
-デザイン
-スマホキーボードスクロール(Android対応)
 エラー対応
 メッセージの拡大縮小
+アイコン
 動作確認
 　スマホ
 　Keynoteの日本語表示されない問題

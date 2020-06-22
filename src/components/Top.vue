@@ -1,28 +1,56 @@
 <template>
-  <div class="container">
-    <div class="row title-container">
-      <h1 class="title">Slide Act</h1>
-      <div class="description">
-        スライドを活性化するWebサービス
-      </div>
-    </div>
-    <div v-if="uploaded" class="row browser">
-      閲覧用URL<br/>
-      {{browserUrl}}
-    </div>
-    <div class="row">
-      <div v-show="!uploaded" class="six columns offset-by-three columns">
-        <PDFUploader v-on:give-slide="setSlide" />
-      </div>
-      <div v-if="uploaded" class="four columns offset-by-four columns" >
-        <div id="slide-show-container" :style="styles">
-          <SlideShow :slide="slide" :parent="'top'" />
+  <div>
+    <div class="top">
+      <nav class="navbar">
+        <div class="container">
+          <ul class="navbar-list">
+            <li class="navbar-item"><a class="navbar-link" href="#intro">SlideActとは</a></li>
+            <li class="navbar-item"><a class="navbar-link" href="#how-to-use">使い方</a></li>
+          </ul>
+        </div>
+      </nav>
+      <div class="container">
+        <div class="row title-container">
+          <h1 class="title">Slide Act</h1>
+          <div class="description">
+            スライドを活性化するWebサービス
+          </div>
+        </div>
+        <div v-if="uploaded" class="row browser">
+          閲覧用URL<br/>
+          {{browserUrl}}
+        </div>
+        <div class="row">
+          <div v-show="!uploaded" class="six columns offset-by-three columns">
+            <PDFUploader v-on:give-slide="setSlide" />
+          </div>
+          <div v-if="uploaded" class="four columns offset-by-four columns" >
+            <div id="slide-show-container" :style="styles">
+              <SlideShow :slide="slide" :parent="'top'" />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <a class="button button-primary" v-show="uploaded" @click="act">Act</a>&emsp;
+          <a class="button button-danger" v-show="uploaded" @click="del">Del</a>
         </div>
       </div>
     </div>
-    <div class="row">
-      <a class="button button-primary" v-show="uploaded" @click="act">Act</a>&emsp;
-      <a class="button button-danger" v-show="uploaded" @click="del">Del</a>
+    <div id="intro" class="intro">
+      <div class="row title-container">
+        <h2 class="sub-title">Slide Actとは</h2>
+        <div class="description">
+          紹介
+        </div>
+      </div>
+    </div>
+    <div id="how-to-use" class="how-to-use">
+      <div class="row title-container">
+        <h2 class="sub-title">使い方</h2>
+        <div class="description">
+          使い方
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -157,7 +185,7 @@ export default {
 <style scoped>
 
 .title-container {
-  margin-top: 100px;
+  margin-top: 150px;
   margin-bottom: 50px;
 }
 
@@ -197,4 +225,37 @@ input#slide-id {
   max-width: 450px;
 }
 
+.navbar {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6rem;
+    background: #fff;
+    z-index: 99;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+
+.navbar-list {
+    list-style: none;
+    margin-bottom: 0;
+    margin-left:50px;
+}
+
+.navbar-item {
+    position: relative;
+    float: left;
+    margin-bottom: 0;
+}
+
+.navbar-link {
+    font-size: 14px;
+    letter-spacing: .2rem;
+    margin-right: 35px;
+    text-decoration: none;
+    line-height: 6.5rem;
+    color: #222;
+}
 </style>
