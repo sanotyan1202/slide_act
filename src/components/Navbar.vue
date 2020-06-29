@@ -2,7 +2,7 @@
   <nav class="navbar">
     <div class="container">
       <ul class="navbar-list">
-        <li class="navbar-item"><a class="navbar-link" href="#" v-scroll-to="'#top'">HOME</a></li>
+        <li class="navbar-item"><a class="navbar-link" href="#" v-scroll-to="'#top'">Act</a></li>
         <li class="navbar-item"><a class="navbar-link" href="#" v-scroll-to="'#introduction'">SlideActとは</a></li>
         <li class="navbar-item"><a class="navbar-link" href="#" v-scroll-to="'#how-to-use'">使い方</a></li>
       </ul>

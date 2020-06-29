@@ -4,7 +4,7 @@
       <div class="row title-container">
         <h1 class="title">Slide Act</h1>
         <div class="description">
-          スライドを活性化するWebサービス
+          プレゼンを活性化するWebサービス
         </div>
       </div>
       <div v-if="uploaded" class="row browser">
