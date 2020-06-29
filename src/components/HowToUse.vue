@@ -28,7 +28,7 @@
                 <p>メッセージはプレゼンの邪魔をしないように4秒ほどで消えます。</p>
               </div>
               <div id="step4" class="how-to-step">
-                <p>いつもより活性化したプレゼンをお楽しみください。</p>
+                <p>それでは、いつもより活性化したプレゼンをお楽しみください。</p>
               </div>
             </div>
           </div>
@@ -49,6 +49,6 @@
 }
 
 .how-to-step {
-  margin-top:100px;
+  margin-top:80px;
 }
 </style>
