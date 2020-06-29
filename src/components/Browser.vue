@@ -103,7 +103,7 @@ export default {
 <style>
 
   #slide-show-container {
-    margin-top: -30px;
+    margin-top: 30px;
     box-shadow: 0 0 5px #2b3e50;
   }
   /* メッセージ入力欄 */
