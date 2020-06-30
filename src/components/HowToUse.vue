@@ -22,6 +22,8 @@
                 <h5>Step3. 閲覧用URLを聴講者に共有</h5>
                 <p>PDFをアップロードすると、閲覧用URLが表示されます。</p>
                 <p><img src="img/browserurl.png" class="how-to-use-image"></p>
+                <p>（プレゼンターはActボタンを押して、フルスクリーンにすることができます。）
+                </p>
                 <p>URLにアクセスすると聴講用のサイトが表示されます。</p>
                 <p><img src="img/browserscreen.png" class="how-to-use-image"></p>
                 <p>名前とメッセージを入力し、Enterキーで送信することができます。</p>

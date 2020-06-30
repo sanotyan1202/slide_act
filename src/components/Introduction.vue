@@ -6,9 +6,9 @@
         <div class="description">
           <div class="row">
             <div class="twelve columns">
-              <p>Slide Act はリアルタイムメッセージング機能を提供します。</p>
+              <p>Slide Act はあなたのスライドにリアルタイムメッセージング機能を提供します。</p>
               <p><img src="img/comment.png" class="intro-image"></p>
-              <p>問いかけに対して回答してもらったり、質問を受け付たり、使い方は無限大です。</p>
+              <p>問いかけに回答してもらったり、質問を受け付たり、使い方は無限大です。</p>
             </div>
           </div>
         </div>

@@ -24,9 +24,7 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### TODO
-How to use
 エラー対応
-メッセージの拡大縮小
 アイコン
 動作確認
 　スマホ
