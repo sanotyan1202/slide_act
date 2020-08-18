@@ -8,7 +8,7 @@
     <Keypress key-event="keyup" :key-code="39" @success="next" /><!-- 右矢印キー -->
     <Keypress key-event="keyup" :key-code="27" @success="start" /><!-- Escキー -->
     <pdf id="pdf" class="pdf" v-bind:src="slide.url" :page="page" @num-pages="lastpage = $event" />
-    <MessageGrid v-if="parent === 'top'" :slide="slide" />
+    <MessageGrid :parent="parent" :slide="slide" />
   </div>
 </template>
 

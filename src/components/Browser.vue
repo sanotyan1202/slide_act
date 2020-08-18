@@ -19,7 +19,7 @@
               <div class="message-box-header">Message</div> 
               <input type="text" class="message-box"
               v-model="message" @keydown.enter="addMessage($event.keyCode)"
-              placeholder="Input and Enter" maxlength="50">
+              placeholder="Input and Enter (Max:40)" maxlength="40">
             </div>
           </div>
         </div>
