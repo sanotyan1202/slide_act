@@ -134,7 +134,7 @@ export default {
   .message-float-header {
     background-color: #4c4732;
     color: #fff89c;
-    width: 40%;
+    width: 45%;
     font-size: 90%;
     position: relative;
     left: -1.2em;
