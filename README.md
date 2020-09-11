@@ -1,4 +1,4 @@
-# slide_act
+# slide-act
 
 https://slide-act.web.app/
 
