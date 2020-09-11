@@ -11,7 +11,7 @@
             <div class="message-box-container">
               <div class="message-box-header">Name</div> 
               <input type="text" class="message-box"
-              v-model="name" placeholder="Your Name" maxlength="7">
+              v-model="name" placeholder="Your Name" maxlength="5">
             </div>
           </div>
           <div class="nine columns">
@@ -19,7 +19,7 @@
               <div class="message-box-header">Message</div> 
               <input type="text" class="message-box"
               v-model="message" @keydown.enter="addMessage($event.keyCode)"
-              placeholder="Input and Enter" maxlength="50">
+              placeholder="Input and Enter (Max:40)" maxlength="40">
             </div>
           </div>
         </div>
@@ -103,7 +103,7 @@ export default {
 <style>
 
   #slide-show-container {
-    margin-top: -30px;
+    margin-top: 30px;
     box-shadow: 0 0 5px #2b3e50;
   }
   /* メッセージ入力欄 */

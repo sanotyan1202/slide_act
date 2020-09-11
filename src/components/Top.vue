@@ -1,28 +1,30 @@
 <template>
-  <div class="container">
-    <div class="row title-container">
-      <h1 class="title">Slide Act</h1>
-      <div class="description">
-        スライドを活性化するWebサービス
-      </div>
-    </div>
-    <div v-if="uploaded" class="row browser">
-      閲覧用URL<br/>
-      {{browserUrl}}
-    </div>
-    <div class="row">
-      <div v-show="!uploaded" class="six columns offset-by-three columns">
-        <PDFUploader v-on:give-slide="setSlide" />
-      </div>
-      <div v-if="uploaded" class="four columns offset-by-four columns" >
-        <div id="slide-show-container" :style="styles">
-          <SlideShow :slide="slide" :parent="'top'" />
+  <div id="top" class="top">
+    <div class="container">
+      <div class="row title-container">
+        <h1 class="title">Slide Act</h1>
+        <div class="description">
+          プレゼンを活性化するWebサービス
         </div>
       </div>
-    </div>
-    <div class="row">
-      <a class="button button-primary" v-show="uploaded" @click="act">Act</a>&emsp;
-      <a class="button button-danger" v-show="uploaded" @click="del">Del</a>
+      <div v-if="uploaded" class="row browser">
+        閲覧用URL<br/>
+        {{browserUrl}}
+      </div>
+      <div class="row">
+        <div v-show="!uploaded" class="six columns offset-by-three columns">
+          <PDFUploader v-on:give-slide="setSlide" />
+        </div>
+        <div v-if="uploaded" class="four columns offset-by-four columns" >
+          <div id="slide-show-container" :style="styles">
+            <SlideShow :slide="slide" :parent="'top'" />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <a class="button button-primary" v-show="uploaded" @click="act">Act</a>&emsp;
+        <a class="button button-danger" v-show="uploaded" @click="del">Del</a>
+      </div>
     </div>
   </div>
 </template>
@@ -37,7 +39,7 @@ export default {
 
   components: {
     PDFUploader,
-    SlideShow
+    SlideShow,
   },
 
   data: function() {
@@ -55,9 +57,6 @@ export default {
 
     // ローカルストレージからスライドIDを取得
     this.getSlide();
-
-    // フルスクリーン時のPDFのPaddingを計算
-    this.setScreenPadding();
   },
 
   methods: {
@@ -79,19 +78,33 @@ export default {
       }
     },
 
-    setScreenPadding: function() {
-
-      // スクリーンの画面サイズ取得
-      const width = window.parent.screen.width;
-      // const height = window.parent.screen.height;
-      
-      // PDFが4:3で、画面が16:9の場合のみ有効
-      this.padding = width / 8;
-    },
-
     // フルスクリーンに
     act: function() {
       const docEl = document.querySelector("#slide-show-container");
+
+      // 画面サイズ取得
+      const screenWidth = window.parent.screen.width;
+      const scrrenHeight = window.parent.screen.height;
+
+      // PDFのサイズ取得
+      const pdfHeight = docEl.clientHeight;
+      const pdfWidth = docEl.clientWidth;
+
+      // フルスクリーンにした時の倍率を計算
+      const fullscreenRatio = screenWidth / pdfWidth;
+
+      // フルスクリーン時のPDFの高さを計算
+      const fullscreenPdfHeight = pdfHeight * fullscreenRatio;
+
+      // 何倍すれば縦幅が収まるか計算
+      const shrinkRatio = scrrenHeight / fullscreenPdfHeight;
+
+      // 減らす横幅を計算
+      const padding = screenWidth - (screenWidth * shrinkRatio);
+
+      // 両側のpaddingを設定するので/2
+      this.padding = padding / 2;
+
       let requestFullScreen = docEl.requestFullscreen 
                            || docEl.mozRequestFullScreen 
                            || docEl.webkitRequestFullScreen 
@@ -144,9 +157,8 @@ export default {
 </script>
 
 <style scoped>
-
 .title-container {
-  margin-top: 100px;
+  padding-top:150px;
   margin-bottom: 50px;
 }
 
@@ -185,5 +197,4 @@ input#slide-id {
   width: 80%;
   max-width: 450px;
 }
-
 </style>

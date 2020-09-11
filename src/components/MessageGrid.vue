@@ -5,7 +5,7 @@
       <div class="row message-row" v-for="(messageRow, index) in messageGrid" :key="index">
         <div class="three columns message-col" v-for="(messageBox, index) in messageRow" :key="index">
           <transition name="fade">
-            <div v-if="messageBox !== null" class="message-float">
+            <div v-if="messageBox !== null" class="message-float" :style="styles">
               <div class="message-float-header">{{messageBox.name}}</div> 
               {{messageBox.message}}
             </div>
@@ -19,22 +19,27 @@
 <script>
 import db from '@/firebase/firestore.js'
 
+const rowMax = 5;
+const colMax = 4;
+
 export default {
 
   data: function() {
     return {
       dateOfVisit: new Date(),
-      messageGrid: new Array(10),
+      messageGrid: new Array(rowMax),
+      styles: {},
     }
   },
-
-  props: ['slide'],
-
+  props: ['slide', 'parent'],
+  
   created: function () {
 
+    this.setFontSize();
+
     // messageGird初期化
-    for(let row = 0; row < 10; row++){
-      this.messageGrid[row] = new Array(4).fill(null);
+    for(let row = 0; row < rowMax; row++){
+      this.messageGrid[row] = new Array(colMax).fill(null);
     }
 
     // メッセージの監視
@@ -42,6 +47,11 @@ export default {
   },
 
   methods: {
+
+    setFontSize: function() {
+      const fontsize = this.parent === "browser" ? 1.0 : 1.4;
+      this.styles = {'--message-font-size': fontsize + "vw" };
+    },
 
     observeMessage: function(floatMessage) {
 
@@ -63,20 +73,15 @@ export default {
 
     floatMessage: function(messageBox) {
       
-      // メッセージグリッドの最小、最大行列数
-      const rowMin = 0;
-      const rowMax = 9;
-      const colMin = 0;
-      const colMax = 3;
-
-      let rowIndex = 0;
-      let colIndex = 0;
 
       // グリッドのどの位置にメッセージを表示するかランダムで選択
       // すでにメッセージが表示されている場合は、別の位置にする
-      do  {
-        rowIndex = Math.floor( Math.random() * (rowMax + 1 - rowMin)) + rowMin;
-        colIndex = Math.floor( Math.random() * (colMax + 1 - colMin)) + colMin;
+      let rowIndex = 0;
+      let colIndex = 0;
+
+    do  {
+        rowIndex = Math.floor( Math.random() * (rowMax));
+        colIndex = Math.floor( Math.random() * (colMax));
       } while(this.messageGrid[rowIndex][colIndex] !== null);
       
       // メッセージの表示
@@ -86,12 +91,12 @@ export default {
       this.play();
 
       // 4秒後にメッセージを消去
-      // setTimeout((rowIndex, colIndex) => {
-      //   this.setMessageInGrid(rowIndex, colIndex, null);
-      // },
-      // 4000, 
-      // rowIndex, 
-      // colIndex);
+      setTimeout((rowIndex, colIndex) => {
+        this.setMessageInGrid(rowIndex, colIndex, null);
+      },
+      4000, 
+      rowIndex, 
+      colIndex);
     },
 
     setMessageInGrid: function(rowIndex, colIndex, messageBox) {
@@ -119,62 +124,45 @@ export default {
   }
 
   .message-row {
-    height: 10%;
+    height: 20%;
   }
 
   .message-col {
     height: 100%;
   } 
 
-  /* 初期 */
-  /* .message-float-header {
-      background-color: #caffe9;
-      color: #2b3e4f;
-      border-radius: 10px 10px 0px 0px;
-      border-bottom: solid 2px #8eb2a3;
-  }
-
-  .message-float {
-    background-color: #caffe9;
-    color: #2b3e50;
-    border: solid 2px #8eb2a3;
-    font-size: 150%;
-    font-weight: bold;
-    border-radius: 10px;
-  } */
-
   .message-float-header {
     background-color: #4c4732;
     color: #fff89c;
-    width: 100px;
+    width: 45%;
     font-size: 90%;
     position: relative;
-    left: -25px;
-    top: -10px;
-    padding-left: 10px;
-    height: 30px;
+    left: -1.2em;
+    top: -0.5em;
+    padding-left: 0.5em;
   }
-  .message-float-header:after {
-  content: "";
-  position: absolute;
-  right: -15px;
-  bottom: 0px;
-  width: 0px;
-  height: 0px;
-  margin: auto;
-  border-style: solid;
-  border-color: transparent transparent transparent #4c4732;
-  border-width: 15px 0 15px 15px;
-}
 
+  /* .message-float-header:after {
+    content: "";
+    position: absolute;
+    right: -15px;
+    bottom: 0px;
+    width: 0px;
+    height: 0px;
+    margin: auto;
+    border-style: solid;
+    border-color: transparent transparent transparent #4c4732;
+    border-width: 15px 0 15px 15px;
+  }
+ */
   .message-float {
+    --message-font-size:1.5vw;
     background-color: #fffbe9;
     color: #3e3a12;
     border: solid 2px #908b81;
-    font-size: 150%;
-    opacity: 97%;
+    font-size: var(--message-font-size);
     text-align: left;
-    padding: 15px 5px 5px 10px;
+    padding: 0.7em 0.5em 0.2em 0.5em;
   }
 
   .fade-enter-active, .fade-leave-active {
