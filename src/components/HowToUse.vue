@@ -26,13 +26,13 @@
               <div id="step3" class="how-to-step">
                 <h5>Step3. 閲覧用URLを参加者に共有</h5>
                 <p>PDFをアップロードすると、閲覧用URLが表示されます。</p>
-                <p>プレゼンを開始する前に聴講者に閲覧用URLを配布してください。</p>
+                <p>プレゼンを開始する前に参加者に閲覧用URLを配布してください。</p>
                 <p><img src="img/browserurl.png" class="how-to-use-image"></p>
                 <p>（発表者はActボタンを押して、プレゼンテーションを開始できます。）
                 </p>
-                <p>閲覧用URLにアクセスすると聴講用のサイトが表示されます。</p>
+                <p>閲覧用URLにアクセスすると参加者用のサイトが表示されます。</p>
                 <p><img src="img/browserscreen.png" class="how-to-use-image"></p>
-                <p>聴講者は名前とメッセージを入力し、Enterキーで送信することができます。</p>
+                <p>参加者は名前とメッセージを入力し、Enterキーで送信することができます。</p>
               </div>
               <div id="step4" class="how-to-step">
                 <p>それでは、いつもより活性化したプレゼンをお楽しみください。</p>
