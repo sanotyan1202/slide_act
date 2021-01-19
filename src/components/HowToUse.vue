@@ -11,6 +11,7 @@
                 <h5>Step1. プレゼン資料をPDFに変換</h5>
                 <p>スライドをPDFに変換してください。</p>
                 <p>PowerPoint、Googleスライド、Beautiful.aiなどに対応しています。</p>
+                <p>PDF化はPowerPointやGoogleスライドのエクスポート機能をご利用ください。</p>
               </div>
               <div id="step2" class="how-to-step">
                 <h5>Step2. Slide Actにアップロード</h5>
@@ -21,12 +22,13 @@
               <div id="step3" class="how-to-step">
                 <h5>Step3. 閲覧用URLを聴講者に共有</h5>
                 <p>PDFをアップロードすると、閲覧用URLが表示されます。</p>
+                <p>プレゼンを開始する前に聴講者に閲覧用URLを配布してください。</p>
                 <p><img src="img/browserurl.png" class="how-to-use-image"></p>
-                <p>（プレゼンターはActボタンを押して、フルスクリーンにすることができます。）
+                <p>（プレゼンターはActボタンを押して、プレゼンテーションを開始できます。）
                 </p>
-                <p>URLにアクセスすると聴講用のサイトが表示されます。</p>
+                <p>閲覧用URLにアクセスすると聴講用のサイトが表示されます。</p>
                 <p><img src="img/browserscreen.png" class="how-to-use-image"></p>
-                <p>名前とメッセージを入力し、Enterキーで送信することができます。</p>
+                <p>聴講者は名前とメッセージを入力し、Enterキーで送信することができます。</p>
                 <p>メッセージはプレゼンの邪魔をしないように4秒ほどで消えます。</p>
               </div>
               <div id="step4" class="how-to-step">
