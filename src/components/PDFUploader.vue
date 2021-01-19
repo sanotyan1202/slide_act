@@ -50,6 +50,11 @@ export default {
       if(files.length !== 1) {
         return;
       }
+
+      if(files[0].size > 5 * 1024 * 1024) {
+        alert("5MB以下のPDFのみアップロード可能です。");
+        return;
+      }
       
       // ローディングコンポーネントを表示
       this.uploading = true;

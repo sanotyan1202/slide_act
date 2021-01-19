@@ -9,9 +9,8 @@
               <p>Slide Actは3ステップで簡単に使用することができます。</p>
               <div id="step1" class="how-to-step">
                 <h5>Step1. プレゼン資料をPDFに変換</h5>
-                <p>スライドをPDFに変換してください。</p>
+                <p>PowerPointなどでスライドを作成し、エクスポート機能でPDFに変換してください。</p>
                 <p>PowerPoint、Googleスライド、Beautiful.aiなどに対応しています。</p>
-                <p>PDF化はPowerPointやGoogleスライドのエクスポート機能をご利用ください。</p>
               </div>
               <div id="step2" class="how-to-step">
                 <h5>Step2. Slide Actにアップロード</h5>
@@ -24,7 +23,7 @@
                 <p>PDFをアップロードすると、閲覧用URLが表示されます。</p>
                 <p>プレゼンを開始する前に聴講者に閲覧用URLを配布してください。</p>
                 <p><img src="img/browserurl.png" class="how-to-use-image"></p>
-                <p>（プレゼンターはActボタンを押して、プレゼンテーションを開始できます。）
+                <p>（発表者はActボタンを押して、プレゼンテーションを開始できます。）
                 </p>
                 <p>閲覧用URLにアクセスすると聴講用のサイトが表示されます。</p>
                 <p><img src="img/browserscreen.png" class="how-to-use-image"></p>
