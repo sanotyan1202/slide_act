@@ -88,7 +88,7 @@ export default {
       this.setMessageInGrid(rowIndex, colIndex, messageBox);
 
       // 効果音再生
-      this.play();
+      // this.play();
 
       // 4秒後にメッセージを消去
       setTimeout((rowIndex, colIndex) => {
