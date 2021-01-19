@@ -26,9 +26,8 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ### TODO
 必須
     エラーキャッチ
-    アイコン
-    動作確認
-    　スマホ
-    　Keynoteの日本語表示されない問題
+    favicon
+    料金確認
+    Keynoteの日本語表示されない問題
 やりたい
     絵文字
