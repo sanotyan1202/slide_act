@@ -8,7 +8,7 @@
         </div>
       </div>
       <div v-if="uploaded" class="row browser">
-        閲覧用URL<br/>
+        参加者用URL<br/>
         {{browserUrl}}
       </div>
       <div class="row">
