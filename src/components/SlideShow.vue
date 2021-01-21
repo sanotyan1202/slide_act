@@ -1,14 +1,23 @@
 <template>
-  <div @click="next"
-       @touchstart="OnTouchStart($event)"
-       @touchmove="OnTouchMove($event)"
-       @touchend="OnTouchEnd()">
-    <Keypress v-if="parent === 'top'" key-event="keyup" :key-code="13" @success="next" /><!-- Enterキー -->
-    <Keypress key-event="keyup" :key-code="37" @success="previous" /><!-- 左矢印キー -->
-    <Keypress key-event="keyup" :key-code="39" @success="next" /><!-- 右矢印キー -->
-    <Keypress key-event="keyup" :key-code="27" @success="start" /><!-- Escキー -->
-    <pdf id="pdf" class="pdf" v-bind:src="slide.url" :page="page" @num-pages="lastpage = $event" />
-    <MessageGrid :parent="parent" :slide="slide" />
+  <div>
+    <div @click="next"
+        @click.right.prevent="prev"
+        @touchstart="OnTouchStart($event)"
+        @touchmove="OnTouchMove($event)"
+        @touchend="OnTouchEnd()">
+      <div id="keypress-group" v-if="parent === 'top'">
+        <Keypress key-event="keyup" :key-code="13" @success="next" /><!-- Enterキー -->
+        <Keypress key-event="keyup" :key-code="37" @success="prev" /><!-- 左矢印キー -->
+        <Keypress key-event="keyup" :key-code="39" @success="next" /><!-- 右矢印キー -->
+        <Keypress key-event="keyup" :key-code="27" @success="start" /><!-- Escキー -->
+      </div>
+      <pdf id="pdf" class="pdf" v-bind:src="slide.url" :page="page" @num-pages="lastpage = $event" />
+      <MessageGrid :parent="parent" :slide="slide" />
+    </div>
+    <div id="next-prev" v-if="parent !== 'top'">
+      <img src="img/left.jpeg" @click="prev" width="20em" />
+      <img src="img/right.jpeg" @click="next" width="20em" />
+    </div>  
   </div>
 </template>
 
@@ -77,7 +86,7 @@ export default {
       this.updatePage(this.page);
     },
 
-    previous: function() {
+    prev: function() {
 
       // 最初のページでない時だけ、ページ数をデクリメントする
       if (this.page > 1) {
@@ -121,7 +130,7 @@ export default {
       this.swipe.current.x = e.touches[0].pageX;
       this.swipe.distance.x = this.swipe.current.x - this.swipe.start.x;
       if( this.swipe.flag && this.swipe.distance.x > 0 && this.swipe.distance.x >= this.swipe.threshold){
-        this.previous();
+        this.prev();
         this.swipe.flag = false;
       }
       if( this.swipe.flag && this.swipe.distance.x < 0 && this.swipe.distance.x >= this.swipe.threshold * -1){
@@ -135,3 +144,12 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+#next-prev {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 0.5em 1.5em 0.5em 1.5em;
+}
+</style>
