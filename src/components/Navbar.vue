@@ -1,6 +1,7 @@
 <template>
   <nav class="navbar">
     <div class="container">
+      <img src="img/logo.png" />
       <ul class="navbar-list">
         <li class="navbar-item"><a class="navbar-link" href="#" v-scroll-to="'#top'">Act</a></li>
         <li class="navbar-item"><a class="navbar-link" href="#" v-scroll-to="'#introduction'">SlideActとは</a></li>

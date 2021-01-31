@@ -1,8 +1,11 @@
 <template>
   <div class="container">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
-    <div class="row">
+    <div class="row content">
       <div class="eight columns offset-by-two columns">
+        <a href="/">
+          <img id="logo" src="img/logo.png" />
+        </a>
         <div id="slide-show-container" @click.prevent="1">
           <SlideShow v-if="get" :slide="slide" :parent="'browser'" />
         </div>
@@ -103,12 +106,11 @@ export default {
 <style>
 
   #slide-show-container {
-    margin-top: 30px;
     box-shadow: 0 0 5px #2b3e50;
   }
   /* メッセージ入力欄 */
   .message-box-container {
-    margin-top:30px;
+    margin-top:25px;
     height: 65px;
     background-color: #fff;
   }
@@ -137,6 +139,11 @@ export default {
     border: none;
     border-bottom: 1px solid rgb(0, 140, 140);
     background: transparent;  
+  }
+
+  #logo {
+    margin-top: 5px;
+    width: 70px;
   }
 
 </style>

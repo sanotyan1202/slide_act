@@ -15,8 +15,8 @@
       <MessageGrid :parent="parent" :slide="slide" />
     </div>
     <div id="next-prev" v-if="parent !== 'top'">
-      <img src="img/left.jpeg" @click="prev" width="20em" />
-      <img src="img/right.jpeg" @click="next" width="20em" />
+      <img src="img/left.jpeg" @click="prev" width="20px" />
+      <img src="img/right.jpeg" @click="next" width="20px" />
     </div>  
   </div>
 </template>
@@ -150,6 +150,6 @@ export default {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  padding: 0.5em 1.5em 0.5em 1.5em;
+  padding: 5px 10px 5px 10px;
 }
 </style>
