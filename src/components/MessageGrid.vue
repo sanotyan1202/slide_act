@@ -135,7 +135,7 @@ export default {
     background-color: #4c4732;
     color: #fff89c;
     width: 45%;
-    font-size: 90%;
+    font-size: 75%;
     position: relative;
     left: -1.2em;
     top: -0.5em;

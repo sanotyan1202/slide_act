@@ -17,12 +17,28 @@
               v-model="name" placeholder="Your Name" maxlength="5">
             </div>
           </div>
-          <div class="nine columns">
+          <div class="eight columns">
             <div class="message-box-container">
               <div class="message-box-header">Message</div> 
               <input type="text" class="message-box"
-              v-model="message" @keydown.enter="addMessage($event.keyCode)"
-              placeholder="Input and Enter (Max:40)" maxlength="40">
+                v-model="message" @keydown.enter="addMessage($event.keyCode)"
+                placeholder="Input and Enter (Max:40)" maxlength="40" >
+          </div>
+          </div>
+          <div class="one column">
+            <div class="emoji-picker-container">
+                <TwemojiPicker
+                  :emojiData="emojiDataAll"
+                  :emojiGroups="emojiGroups"
+                  :skinsSelection="false"
+                  :searchEmojisFeat="true"
+                  :randomEmojiArray="emojiArray"
+                  @emojiUnicodeAdded="selectEmoji"
+                  searchEmojiPlaceholder="Search here."
+                  searchEmojiNotFound="Emojis not found."
+                  isLoadingLabel="Loading..."
+                  
+                />
             </div>
           </div>
         </div>
@@ -34,18 +50,23 @@
 <script>
 import db from '@/firebase/firestore.js'
 import SlideShow from '@/components/SlideShow';
+import {TwemojiPicker} from '@kevinfaguiar/vue-twemoji-picker';
+import EmojiAllData from '@kevinfaguiar/vue-twemoji-picker/emoji-data/ja/emoji-all-groups.json';
+import EmojiGroups from '@kevinfaguiar/vue-twemoji-picker/emoji-data/emoji-groups.json';
 
 export default {
 
   components: {
-    SlideShow
+    SlideShow,
+    TwemojiPicker,
   },
 
   data: function() {
     return {
       slide: null,
       message: '',
-      name: ''
+      name: '',
+      emojiArray: ['🙂'],
     }
   },
 
@@ -94,11 +115,20 @@ export default {
 
       this.message = "";
     },
+    selectEmoji: function(emoji) {
+      this.message += emoji;
+    },
   },
 
   computed: {
     get: function() {
       return this.slide !== null;
+    },
+    emojiDataAll() {
+        return EmojiAllData;
+    },
+    emojiGroups() {
+      return EmojiGroups;
     }
   }
 }
@@ -146,4 +176,17 @@ export default {
     width: 70px;
   }
 
+  .emoji-picker-container {
+    position: relative;
+    left:-40px;
+    top:45px;
+  }
+
+  img.emoji {
+    width:20px !important;
+    height:20px !important;
+  }
+  #btn-emoji-default {
+    height: 0 !important;
+  }
 </style>
