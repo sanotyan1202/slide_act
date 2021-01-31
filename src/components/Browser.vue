@@ -178,8 +178,8 @@ export default {
 
   .emoji-picker-container {
     position: relative;
-    left:-40px;
-    top:45px;
+    left:-45px;
+    top:50px;
   }
 
   img.emoji {
