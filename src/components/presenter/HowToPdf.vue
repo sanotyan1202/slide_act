@@ -13,11 +13,11 @@
         <img v-if="googleSlide || hoverGoogleSlide" class="selected" src="img/favicon.png" alt="selected">
         GoogleSlide
     </li>
-    <li @click="current = 'Beautiful.ai'"
-        @mouseover="hover = 'Beautiful.ai'" 
+    <li @click="current = 'beautiful.ai'"
+        @mouseover="hover = 'beautiful.ai'" 
         @mouseleave="hover = ''">
         <img v-if="beautifulAi || hoverBeautifulAi" class="selected" src="img/favicon.png" alt="selected">
-        Beautiful.ai
+        beautiful.ai
     </li>
   </ul>
   <div v-if="!none" class="to-pdf-body">
@@ -42,7 +42,7 @@ export default {
     beautifulAi: function() { return this.current === 'Beautiful.ai'; },
     hoverPowerPoint: function() { return this.hover === 'PowerPoint'; },
     hoverGoogleSlide: function() { return this.hover === 'GoogleSlide'; },
-    hoverBeautifulAi: function() { return this.hover === 'Beautiful.ai'; },
+    hoverBeautifulAi: function() { return this.hover === 'beautiful.ai'; },
   }
 }
 </script>

@@ -64,4 +64,13 @@ components: {
   right:0;
   margin: auto;
 }
+
+/* transition */
+.fade-leave-active {
+  transition: opacity 1s;
+}
+
+.fade-leave-to {
+  opacity: 0;
+}
 </style>

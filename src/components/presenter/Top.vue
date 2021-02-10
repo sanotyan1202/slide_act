@@ -1,42 +1,36 @@
 <template>
   <div class="container">
     <div class="content-container">
-      <Splash />
+      <Splash v-show="!uploaded" />
       <div class="logo-container">
         <img class="logo" src="img/logo2.png" alt="logo">
       </div>
-      <p class="description">スライドをPDF化して下の枠にドラッグ&amp;ドロップしてください</p>
-      <div class="pdf-uploader-container" >
-        <PDFUploader v-on:give-slide="setSlide" />
+      <div v-if="!uploaded" class="uploading">
+        <p class="description">スライドをPDF化して下の枠にドラッグ&amp;ドロップしてください</p>
+        <div class="pdf-uploader-container" >
+          <PDFUploader v-on:give-slide="setSlide" />
+        </div>
+        <p class="description">PDF化のやり方は以下を参照してください</p>
+        <div class="to-pdf-container">
+          <HowToPdf />
+        </div>
       </div>
-      <p class="description">PDF化のやり方は以下を参照してください</p>
-      <div class="to-pdf-container">
-        <HowToPdf />
-      </div>
-    </div>
-
-    <transition name="fade">
-      <div v-if="step2" class="step-container">
-        <p class="step-desc"> 参加者に以下のURLを配布してください</p>
+      
+      <div v-if="uploaded" class="uploaded">  
+        <p class="description"> 参加者に以下のURLを配布してください</p>
         <div class="row browser">
           {{browserUrl}}
           <a href="javascript:void(0)" class="copy" v-clipboard:copy="browserUrl" @click="copyName = 'copied!'">{{copyName}}</a>
         </div>
-        <div class="row">
-          <div class="four columns offset-by-four columns" >
-            <div id="slide-show-container" :style="styles">
-              <SlideShow :slide="slide" :parent="'top'" />
-            </div>
-          </div>
+        <div id="slide-show-container" :style="styles">
+          <SlideShow :slide="slide" :parent="'top'" />
         </div>
-        <p class="step-desc"> Step 3 / 3 Actボタンをクリックしてスライドショーを開始してください。</p>
         <div class="row">
-          <a class="button button-primary" @click="act">Act</a>&emsp;
-          <a class="button button-danger" @click="del">Del</a>
+          <a class="button-primary" @click="act">開始</a>&emsp;
+          <a class="button-danger" @click="del">削除</a>
         </div>
       </div>
-    </transition>
-
+    </div>
   </div>
 </template>
 
@@ -177,16 +171,14 @@ export default {
 </script>
 
 <style scoped>
-/* Step2 */
 img.logo {
-  width: 20rem;
+  width: 18rem;
 }
 .pdf-uploader-container {
   margin-top: 2rem;
   margin-bottom: 3rem;
 }
 
-/* all */
 .content-container {
   margin-top: 6rem;
 }
@@ -195,25 +187,17 @@ p.description {
   margin-top: 4rem;
 }
 
-.fade-leave-active {
-  transition: opacity 1s;
-}
-
-.fade-leave-to {
-  opacity: 0;
-}
-
-.post-slide-container {
-  margin-bottom: 20px;
-}
-
+/** スライドショー */
 #slide-show-container {
   position: relative;
   content: "";
   display: block;
   clear: both;
-  margin: 20px 30px 20px 30px;
   box-shadow: 0 0 5px #2b3e50;
+  width: 20rem;
+  left: 0;
+  right: 0;
+  margin: 2rem auto;
 }
 
 #slide-show-container:fullscreen {
@@ -222,6 +206,7 @@ p.description {
   padding-right: var(--padding);
 }
 
+/** ボタン系 */
 .copy {
   margin-left: 5px;
   padding: 2px;
@@ -235,20 +220,30 @@ p.description {
   background-color:#eff2f3;
 }
 
+.button-primary {
+  background-color: #58c4f0;
+  padding: 7px;
+  color: white;
+  border-radius: 4px;
+  display: initial;
+}
+
+.button-primary:hover {
+  background-color: #4eb4dc;
+  cursor: pointer;
+}
+
 .button-danger {
   background-color: #dd6060;
   border-color: #dd6060;
+  padding: 7px;
   color: white;
+  border-radius: 4px;
 }
 
 .button-danger:hover {
   background-color: #ba5050;
   border-color: #ba5050;
-  color: white;
-}
-
-input#slide-id {
-  width: 80%;
-  max-width: 450px;
+  cursor: pointer;
 }
 </style>
