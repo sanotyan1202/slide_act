@@ -49,7 +49,7 @@
 
 <script>
 import db from '@/firebase/firestore.js'
-import SlideShow from '@/components/SlideShow';
+import SlideShow from '@/components/common/SlideShow';
 import {TwemojiPicker} from '@kevinfaguiar/vue-twemoji-picker';
 import EmojiAllData from '@kevinfaguiar/vue-twemoji-picker/emoji-data/ja/emoji-all-groups.json';
 import EmojiGroups from '@kevinfaguiar/vue-twemoji-picker/emoji-data/emoji-groups.json';

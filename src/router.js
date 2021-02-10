@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Main from './components/Main.vue'
-import Browser from './components/Browser.vue'
+import Main from './components/presenter/Main'
+import Browser from './components/participant/Browser'
 
 Vue.use(VueRouter);
 

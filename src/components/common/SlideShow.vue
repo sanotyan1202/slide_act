@@ -24,7 +24,7 @@
 <script>
 import db from '@/firebase/firestore.js'
 import pdf from 'vue-pdf';
-import MessageGrid from '@/components/MessageGrid';
+import MessageGrid from '@/components/common/MessageGrid';
 
 export default {
 

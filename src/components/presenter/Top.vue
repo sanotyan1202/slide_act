@@ -1,43 +1,62 @@
 <template>
-  <div id="top" class="top">
-    <div class="container">
-      <div class="row title-container">
-        <h1 class="title">Slide Act</h1>
-        <div class="description">
-          メッセージング機能でリモートでもワイワイ楽しめるプレゼンを！
-        </div>
+  <div class="container">
+    <div class="content-container">
+      <Splash />
+      <div class="logo-container">
+        <img class="logo" src="img/logo2.png" alt="logo">
       </div>
-      <div v-if="uploaded" class="row browser">
-        参加者用URL<br/>
-        {{browserUrl}}
+      <p class="description">スライドをPDF化して下の枠にドラッグ&amp;ドロップしてください</p>
+      <div class="pdf-uploader-container" >
+        <PDFUploader v-on:give-slide="setSlide" />
       </div>
-      <div class="row">
-        <div v-show="!uploaded" class="six columns offset-by-three columns">
-          <PDFUploader v-on:give-slide="setSlide" />
-        </div>
-        <div v-if="uploaded" class="four columns offset-by-four columns" >
-          <div id="slide-show-container" :style="styles">
-            <SlideShow :slide="slide" :parent="'top'" />
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <a class="button button-primary" v-show="uploaded" @click="act">Act</a>&emsp;
-        <a class="button button-danger" v-show="uploaded" @click="del">Del</a>
+      <p class="description">PDF化のやり方は以下を参照してください</p>
+      <div class="to-pdf-container">
+        <HowToPdf />
       </div>
     </div>
+
+    <transition name="fade">
+      <div v-if="step2" class="step-container">
+        <p class="step-desc"> 参加者に以下のURLを配布してください</p>
+        <div class="row browser">
+          {{browserUrl}}
+          <a href="javascript:void(0)" class="copy" v-clipboard:copy="browserUrl" @click="copyName = 'copied!'">{{copyName}}</a>
+        </div>
+        <div class="row">
+          <div class="four columns offset-by-four columns" >
+            <div id="slide-show-container" :style="styles">
+              <SlideShow :slide="slide" :parent="'top'" />
+            </div>
+          </div>
+        </div>
+        <p class="step-desc"> Step 3 / 3 Actボタンをクリックしてスライドショーを開始してください。</p>
+        <div class="row">
+          <a class="button button-primary" @click="act">Act</a>&emsp;
+          <a class="button button-danger" @click="del">Del</a>
+        </div>
+      </div>
+    </transition>
+
   </div>
 </template>
 
 <script>
 import utils from '@/common/utils.js'
 import storage from '@/firebase/storage.js'
-import PDFUploader from '@/components/PDFUploader';
-import SlideShow from '@/components/SlideShow';
+import Splash from '@/components/presenter/Splash';
+import HowToPdf from '@/components/presenter/HowToPdf';
+import PDFUploader from '@/components/presenter/PDFUploader';
+import SlideShow from '@/components/common/SlideShow';
+import VueClipboard from 'vue-clipboard2';
+import Vue from 'vue';
+
+Vue.use(VueClipboard)
 
 export default {
 
   components: {
+    Splash,
+    HowToPdf,
     PDFUploader,
     SlideShow,
   },
@@ -47,6 +66,7 @@ export default {
       slide: null,
       userId: '',
       padding: 0,
+      copyName: "copy",
     }
   },
 
@@ -75,6 +95,7 @@ export default {
       // ローカルストレージにスライドIDが存在する場合のみ設定
       if(localStorage.slide) {
         this.slide = JSON.parse(localStorage.slide);
+        this.step = 2;
       }
     },
 
@@ -139,9 +160,8 @@ export default {
 
   computed : {
 
-    uploaded: function () {
-      // ファイルアップロード済:true 未:false
-      return this.slide !== null;
+    uploaded: function () { 
+      return this.slide !== null
     },
 
     styles: function() {
@@ -157,9 +177,30 @@ export default {
 </script>
 
 <style scoped>
-.title-container {
-  padding-top:150px;
-  margin-bottom: 50px;
+/* Step2 */
+img.logo {
+  width: 20rem;
+}
+.pdf-uploader-container {
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+}
+
+/* all */
+.content-container {
+  margin-top: 6rem;
+}
+
+p.description {
+  margin-top: 4rem;
+}
+
+.fade-leave-active {
+  transition: opacity 1s;
+}
+
+.fade-leave-to {
+  opacity: 0;
 }
 
 .post-slide-container {
@@ -179,6 +220,19 @@ export default {
   --padding:0;
   padding-left: var(--padding);
   padding-right: var(--padding);
+}
+
+.copy {
+  margin-left: 5px;
+  padding: 2px;
+  border: solid 0.5px #777b80;
+  border-radius: 5px;
+  color: #2c3e50;
+  text-decoration: none;
+}
+
+.copy:hover {
+  background-color:#eff2f3;
 }
 
 .button-danger {

@@ -1,24 +1,25 @@
 <template>
-  <div @dragover.prevent="dragging = true"
+  <div id="pdf-uploader"
+       @dragover.prevent="dragging = true"
        @dragleave.prevent="dragging = false"
        @drop.prevent="onDrop">
     <div v-show="!uploading" class="drop" :class="{dragging: dragging}">
-      <p class="drag-drop-info">ここにPDFファイルをドロップ</p>
+      <p class="drag-drop-info">ここにPDFファイルをドラック&amp;ドロップ</p>
       <p>または</p>
       <label for="local_file_selector" class="select-file">
         ファイルを選択
         <input type="file" style="display:none;" id="local_file_selector" accept=".pdf" @change="onDrop" />
       </label>
     </div>
-    <Loading v-show="uploading"></Loading>
+    <Loading class="loading" v-show="uploading"></Loading>
   </div>
 </template>
 
 <script>
-import utils from '@/common/utils.js'
-import db from '@/firebase/firestore.js'
-import storage from '@/firebase/storage.js'
-import Loading from '@/components/Loading'
+import utils from '@/common/utils'
+import db from '@/firebase/firestore'
+import storage from '@/firebase/storage'
+import Loading from '@/components/utils/Loading'
 
 export default {
 
@@ -91,11 +92,19 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
+#pdf-uploader {
+  height: 8rem;
+  width: 24rem;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
 
 .drop {
-  border: 2px dashed #2c3e50b0;
-  padding: 20px;
+  border: 3px dashed #2c3e5082;
+  padding: 1rem;
+  text-align: center;
 }
 
 .dragging {
@@ -104,7 +113,7 @@ export default {
 
 .select-file {
   background-color: #58c4f0;
-  width: 120px;
+  width: 80rem;
   padding: 7px;
   color: white;
   border-radius: 4px;
@@ -114,5 +123,9 @@ export default {
 .select-file:hover {
   background-color: #4eb4dc;
   cursor: pointer;
+}
+
+.loading {
+  margin-top: 2rem;
 }
 </style>
