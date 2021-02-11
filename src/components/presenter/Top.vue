@@ -117,9 +117,6 @@ export default {
       // 横幅Max時のPDFの高さを計算
       const fullscreenPdfHeight = pdfHeight * fullscreenRatio;
 
-      alert(fullscreenPdfHeight)
-      alert(screenHeight)
-
       // PDF縦幅が画面縦幅より小さい場合は、上下のpaddingのみ設定する
       if (fullscreenPdfHeight < screenHeight) {
         this.paddingUpDown = (screenHeight - fullscreenPdfHeight) / 2;
@@ -142,7 +139,6 @@ export default {
       requestFullScreen.call(docEl);
     },
 
-    // TODO:エラー処理
     del: function() {
       
       // ファイルパスを取得
@@ -157,6 +153,8 @@ export default {
 
       // スライド消去
       this.slide = null;
+
+      this.copyName = "copy";
     },
 
     setSlide: function(slide) {

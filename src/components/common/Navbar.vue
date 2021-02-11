@@ -6,11 +6,6 @@
           <img class="logo" src="img/logo.png" alt="logo">
         </a>
       </div>
-      <!-- <ul class="navbar-list">
-        <li class="navbar-item"><a class="navbar-link" href="javascript:void(0)" v-scroll-to="'#top'">Act</a></li>
-        <li class="navbar-item"><a class="navbar-link" href="javascript:void(0)" v-scroll-to="'#introduction'">SlideActとは</a></li>
-        <li class="navbar-item"><a class="navbar-link" href="javascript:void(0)" v-scroll-to="'#how-to-use'">使い方</a></li>
-      </ul> -->
     </div>
   </nav>
 </template>

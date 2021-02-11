@@ -151,6 +151,7 @@ export default {
 .slide-show {
   position: relative;
 }
+
 .menu {
   display: flex;
   justify-content: space-between;

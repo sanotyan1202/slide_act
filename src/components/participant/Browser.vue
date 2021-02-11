@@ -127,7 +127,7 @@ export default {
 <style>
 #slide-show-container {
   box-shadow: 0 0 5px #2b3e50;
-  width: 45rem;
+  width: 40rem;
   left: 0;
   right: 0;
   margin: 1rem auto;
@@ -136,7 +136,7 @@ export default {
 /* メッセージ入力欄 */
 .form-flex {
   display: flex;
-  width: 45rem;
+  width: 40rem;
   left: 0;
   right: 0;
   margin: auto;
@@ -188,6 +188,7 @@ img.emoji {
   width:20px !important;
   height:20px !important;
 }
+
 #btn-emoji-default {
   height: 0 !important;
 }
