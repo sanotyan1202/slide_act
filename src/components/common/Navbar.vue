@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar">
     <div class="container">
-      <div class="navbar-left">
+      <div :class="{left: parent==='top'}">
         <a class="logo-container" href="https://slide-act.web.app">
           <img class="logo" src="img/logo.png" alt="logo">
         </a>
@@ -14,6 +14,12 @@
     </div>
   </nav>
 </template>
+
+<script>
+export default {
+    props: ['parent'],
+}
+</script>
 
 <style scoped>
 
@@ -35,7 +41,7 @@
   border-bottom: 1px solid #eee;
 }
 
-.navbar-left {
+.left {
   text-align:left;
 }
 

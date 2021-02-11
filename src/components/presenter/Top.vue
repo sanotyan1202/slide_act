@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <header>
-      <Navbar />
+      <Navbar :parent="'top'" />
     </header>
     <main class="content">
       <Splash />

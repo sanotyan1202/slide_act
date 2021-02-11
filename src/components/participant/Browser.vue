@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <header>
-      <Navbar />
+      <Navbar :parent="'browser'" />
     </header>
     <main class="content">
       <div id="slide-show-container" @click.prevent="1">
