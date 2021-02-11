@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="slide-show">
     <div @click="next"
         @click.right.prevent="prev"
         @touchstart="OnTouchStart($event)"
@@ -150,6 +150,9 @@ export default {
 </script>
 
 <style scoped>
+.slide-show {
+  position: relative;
+}
 .menu {
   display: flex;
   justify-content: space-between;

@@ -1,16 +1,13 @@
 <template>
-  <div>
-    <audio id="se" src="audio/se.mp3"></audio>
-    <div class="message-river">
-      <div class="row message-row" v-for="(messageRow, index) in messageGrid" :key="index">
-        <div class="three columns message-col" v-for="(messageBox, index) in messageRow" :key="index">
-          <transition name="fade">
-            <div v-if="messageBox !== null" class="message-float" :style="styles">
-              <div class="message-float-header">{{messageBox.name}}</div> 
-              {{messageBox.message}}
-            </div>
-          </transition>
-        </div>
+  <div class="message-river">
+    <div class="message-row" v-for="(messageRow, index) in messageGrid" :key="index">
+      <div class="message-col" v-for="(messageBox, index) in messageRow" :key="index">
+        <transition name="fade">
+          <div v-if="messageBox !== null" class="message-float" :style="styles">
+            <div class="message-float-header">{{messageBox.name}}</div> 
+            {{messageBox.message}}
+          </div>
+        </transition>
       </div>
     </div>
   </div>
@@ -113,63 +110,68 @@ export default {
   },
 }
 </script>
-<style>
-  .message-river {
-    position: absolute;
-    top: 20px;
-    bottom: 70px;
-    left: 20px;
-    right: 20px;
-    pointer-events: none;
-  }
+<style scoped>
+.message-river {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  bottom: 2rem;
+  left: 1rem;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+}
 
-  .message-row {
-    height: 20%;
-  }
+.message-row {
+  height: 20%;
+  width: 100%;
+  display: flex;
+}
 
-  .message-col {
-    height: 100%;
-  } 
+.message-col {
+  height: 100%;
+  width: 25%;
+} 
 
-  .message-float-header {
-    background-color: #4c4732;
-    color: #fff89c;
-    width: 45%;
-    font-size: 80%;
-    position: relative;
-    left: -1.2em;
-    top: -0.5em;
-    padding-left: 0.5em;
-  }
+.message-float-header {
+  background-color: #4c4732;
+  color: #fff89c;
+  width: 45%;
+  font-size: 80%;
+  position: relative;
+  left: -1.2rem;
+  top: -0.5rem;
+  padding-left: 0.5rem;
+}
 
-  /* .message-float-header:after {
-    content: "";
-    position: absolute;
-    right: -15px;
-    bottom: 0px;
-    width: 0px;
-    height: 0px;
-    margin: auto;
-    border-style: solid;
-    border-color: transparent transparent transparent #4c4732;
-    border-width: 15px 0 15px 15px;
-  }
- */
-  .message-float {
-    --message-font-size:1.5vw;
-    background-color: #fffbe9;
-    color: #3e3a12;
-    border: solid 2px #908b81;
-    font-size: var(--message-font-size);
-    text-align: left;
-    padding: 0.7em 0.5em 0.2em 0.5em;
-  }
+/* .message-float-header:after {
+  content: "";
+  position: absolute;
+  right: -15px;
+  bottom: 0px;
+  width: 0px;
+  height: 0px;
+  margin: auto;
+  border-style: solid;
+  border-color: transparent transparent transparent #4c4732;
+  border-width: 15px 0 15px 15px;
+}
+*/
+.message-float {
+  --message-font-size:1.5vw;
+  background-color: #fffbe9;
+  color: #3e3a12;
+  border: solid 2px #908b81;
+  font-size: var(--message-font-size);
+  text-align: left;
+  padding: 0.7rem 0.5rem 0.2rem 0.5rem;
+}
 
-  .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s;
-  }
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
 
-  .fade-enter, .fade-leave-to {
-    opacity: 0;
-  }
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
 </style>
