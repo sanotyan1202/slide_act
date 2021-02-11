@@ -20,7 +20,7 @@
       </div>
       
       <div v-if="uploaded" class="uploaded">  
-        <p class="description"> 参加者に以下の参加者用URLを配布してください</p>
+        <p class="description"> 参加者に以下の参加者用URLを配布してスライドショーを開始してください</p>
         <div class="row browser">
           {{browserUrl}}
           <a href="javascript:void(0)" class="copy" v-clipboard:copy="browserUrl" @click="copyName = 'copied!'">{{copyName}}</a>
@@ -30,9 +30,7 @@
         </div>
         <div class="button-container">
           <a class="button-primary" @click="act">スライドショーの開始</a>&emsp;
-          <a class="button-danger" @click="del">
-            <img src="img/del.png" alt="削除" />
-          </a>
+          <a class="button-danger" @click="del">削除</a>
         </div>
       </div>
     </main>
@@ -113,13 +111,16 @@ export default {
       const pdfHeight = docEl.clientHeight;
       const pdfWidth = docEl.clientWidth;
 
-      // フルスクリーンにした時の倍率を計算
+      // 横幅Max時の倍率を計算
       const fullscreenRatio = screenWidth / pdfWidth;
 
       // 横幅Max時のPDFの高さを計算
       const fullscreenPdfHeight = pdfHeight * fullscreenRatio;
 
-      // 縦が超えない場合は、上下のpaddingのみ設定する
+      alert(fullscreenPdfHeight)
+      alert(screenHeight)
+
+      // PDF縦幅が画面縦幅より小さい場合は、上下のpaddingのみ設定する
       if (fullscreenPdfHeight < screenHeight) {
         this.paddingUpDown = (screenHeight - fullscreenPdfHeight) / 2;
         return;
@@ -174,7 +175,10 @@ export default {
 
     styles: function() {
       // CSS変数を設定
-      return {'--padding': this.padding + 'px' };
+      return {
+        '--paddingSide': this.paddingSide + 'px',
+        '--paddingUpDown': this.paddingUpDown + 'px',
+       };
     },
 
     browserUrl: function() {
@@ -237,7 +241,7 @@ p.description {
 
 .button-primary {
   background-color: #58c4f0;
-  padding: 7px;
+  padding: 0.7rem;
   color: white;
   border-radius: 4px;
   display: initial;
@@ -249,17 +253,15 @@ p.description {
 }
 
 .button-danger {
-  position: absolute;
-  top: 25.5rem;
-  left: 49.5rem;
-  width: 1.2rem;
-}
-
-.button-danger img {
-  width: 100%;
+  background-color: #f05858;
+  padding: 0.7rem;
+  color: white;
+  border-radius: 4px;
+  display: initial;
 }
 
 .button-danger:hover {
+  background-color: #dc4e4e;
   cursor: pointer;
 }
 </style>
