@@ -24,6 +24,6 @@ font-family: YakuHanJP, "Noto Sans JP", "Helvetica Neue", Arial, "Hiragino Kaku 
 }
 
 main.content {
-  margin-top: 6rem;
+  margin-top: 5rem;
 }
 </style>
