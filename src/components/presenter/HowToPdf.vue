@@ -22,6 +22,8 @@
   </ul>
   <div v-if="!none" class="to-pdf-body">
     <img v-if="powerPoint" class="to-pdf-image" src="img/pptx2pdf.png" />
+    <img v-if="googleSlide" class="to-pdf-image" src="img/gs2pdf.png" />
+    <img v-if="beautifulAi" class="to-pdf-image" src="img/bai2pdf.png" />
   </div>
 </div>
 </template>
@@ -39,7 +41,7 @@ export default {
     none: function() { return this.current === ''; },
     powerPoint: function() { return this.current === 'PowerPoint'; },
     googleSlide: function() { return this.current === 'GoogleSlide'; },
-    beautifulAi: function() { return this.current === 'Beautiful.ai'; },
+    beautifulAi: function() { return this.current === 'beautiful.ai'; },
     hoverPowerPoint: function() { return this.hover === 'PowerPoint'; },
     hoverGoogleSlide: function() { return this.hover === 'GoogleSlide'; },
     hoverBeautifulAi: function() { return this.hover === 'beautiful.ai'; },

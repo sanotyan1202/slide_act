@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Main from './components/presenter/Main'
+import Top from './components/presenter/Top'
 import Browser from './components/participant/Browser'
 
 Vue.use(VueRouter);
@@ -8,7 +8,7 @@ Vue.use(VueRouter);
 export default new VueRouter({
     mode: 'history',
     routes: [
-        {path: '/', component: Main},
+        {path: '/', component: Top},
         {path: '/:slideId', component: Browser}      
     ]
   })

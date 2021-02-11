@@ -1,62 +1,53 @@
 <template>
   <div class="container">
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
-    <div class="row content">
-      <div class="eight columns offset-by-two columns">
-        <a href="/">
-          <img id="logo" src="img/logo.png" />
-        </a>
-        <div id="slide-show-container" @click.prevent="1">
-          <SlideShow v-if="get" :slide="slide" :parent="'browser'" />
+    <header>
+      <Navbar />
+    </header>
+    <main class="content">
+      <div id="slide-show-container" @click.prevent="1">
+        <SlideShow v-if="get" :slide="slide" :parent="'browser'" />
+      </div>
+      <div class="form-flex">
+        <div class="flex-item name">
+          <div class="message-box-header">Name</div> 
+          <input type="text" class="message-box"
+          v-model="name" placeholder="Your Name" maxlength="5">
         </div>
-        <div class="form">
-          <div class="three columns">
-            <div class="message-box-container">
-              <div class="message-box-header">Name</div> 
-              <input type="text" class="message-box"
-              v-model="name" placeholder="Your Name" maxlength="5">
-            </div>
-          </div>
-          <div class="eight columns">
-            <div class="message-box-container">
-              <div class="message-box-header">Message</div> 
-              <input type="text" class="message-box"
-                v-model="message" @keydown.enter="addMessage($event.keyCode)"
-                placeholder="Input and Enter (Max:40)" maxlength="40" >
-          </div>
-          </div>
-          <div class="one column">
-            <div class="emoji-picker-container">
-                <TwemojiPicker
-                  :emojiData="emojiDataAll"
-                  :emojiGroups="emojiGroups"
-                  :skinsSelection="false"
-                  :searchEmojisFeat="true"
-                  :randomEmojiArray="emojiArray"
-                  @emojiUnicodeAdded="selectEmoji"
-                  searchEmojiPlaceholder="Search here."
-                  searchEmojiNotFound="Emojis not found."
-                  isLoadingLabel="Loading..."
-                  
-                />
-            </div>
-          </div>
+        <div class="flex-item message">
+          <div class="message-box-header">Message</div> 
+          <input type="text" class="message-box"
+            v-model="message" @keydown.enter="addMessage($event.keyCode)"
+            placeholder="Input and Enter (Max:40)" maxlength="40" >
+        </div>
+        <div class="flex-item emoji">
+            <TwemojiPicker
+              :emojiData="emojiDataAll"
+              :emojiGroups="emojiGroups"
+              :skinsSelection="false"
+              :searchEmojisFeat="true"
+              :randomEmojiArray="emojiArray"
+              @emojiUnicodeAdded="selectEmoji"
+              searchEmojiPlaceholder="Search here."
+              searchEmojiNotFound="Emojis not found."
+              isLoadingLabel="Loading..."
+            />
         </div>
       </div>
-    </div>
+    </main>
   </div>
 </template>
 
 <script>
 import db from '@/firebase/firestore.js'
+import Navbar from '@/components/common/Navbar';
 import SlideShow from '@/components/common/SlideShow';
 import {TwemojiPicker} from '@kevinfaguiar/vue-twemoji-picker';
 import EmojiAllData from '@kevinfaguiar/vue-twemoji-picker/emoji-data/ja/emoji-all-groups.json';
 import EmojiGroups from '@kevinfaguiar/vue-twemoji-picker/emoji-data/emoji-groups.json';
 
 export default {
-
   components: {
+    Navbar,
     SlideShow,
     TwemojiPicker,
   },
@@ -134,59 +125,70 @@ export default {
 }
 </script>
 <style>
+#slide-show-container {
+  box-shadow: 0 0 5px #2b3e50;
+  width: 45rem;
+  left: 0;
+  right: 0;
+  margin: 1rem auto;
+}
 
-  #slide-show-container {
-    box-shadow: 0 0 5px #2b3e50;
-  }
-  /* メッセージ入力欄 */
-  .message-box-container {
-    margin-top:25px;
-    height: 65px;
-    background-color: #fff;
-  }
+/* メッセージ入力欄 */
+.form-flex {
+  display: flex;
+  width: 45rem;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
 
-  .message-box-header {
-    /* background-color: #2b3e50; */
-    font-weight: bold;
-    color :#2b3e50;
-    text-align: left;
-    padding-left: 10px;
-  }
+.flex-item {
+  margin-right: 0.5rem;
+  height: 2rem;
+  background-color: #fff;
+}
 
-  input.message-box {
-    margin: 5px;
-    width: 100%;
-    height: 30px;
-    border: none;
-    border-bottom: 1px solid #2b3e50;
-    background: transparent;
-    border-radius: 0px;
-    color: #2b3e50;
-    font-weight: bold;
-  }
+.flex-item.name {
+  width: 20%;
+}
 
-  input.message-box:focus {
-    border: none;
-    border-bottom: 1px solid rgb(0, 140, 140);
-    background: transparent;  
-  }
+.flex-item.message {
+  width: 75%;
+}
 
-  #logo {
-    margin-top: 5px;
-    width: 70px;
-  }
+.flex-item.emoji {
+  width: 5%;
+  padding-top: 2rem;
+}
 
-  .emoji-picker-container {
-    position: relative;
-    left:-45px;
-    top:50px;
-  }
+.message-box-header {
+  font-weight: bold;
+  color :#2b3e50;
+  text-align: left;
+  margin: 0.5rem 0;
+}
 
-  img.emoji {
-    width:20px !important;
-    height:20px !important;
-  }
-  #btn-emoji-default {
-    height: 0 !important;
-  }
+input.message-box {
+  width: 100%;
+  height: 2rem;
+  border: none;
+  border-bottom: 1px solid #2b3e50;
+  background: transparent;
+  color: #2b3e50;
+  font-weight: bold;
+}
+
+input.message-box:focus {
+  border: none;
+  border-bottom: 1px solid rgb(0, 140, 140);
+  background: transparent;  
+}
+
+img.emoji {
+  width:20px !important;
+  height:20px !important;
+}
+#btn-emoji-default {
+  height: 0 !important;
+}
 </style>

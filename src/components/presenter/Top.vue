@@ -1,7 +1,10 @@
 <template>
   <div class="container">
-    <div class="content-container">
-      <Splash v-show="!uploaded" />
+    <header>
+      <Navbar />
+    </header>
+    <main class="content">
+      <Splash />
       <div class="logo-container">
         <img class="logo" src="img/logo2.png" alt="logo">
       </div>
@@ -17,7 +20,7 @@
       </div>
       
       <div v-if="uploaded" class="uploaded">  
-        <p class="description"> 参加者に以下のURLを配布してください</p>
+        <p class="description"> 参加者に以下の参加者用URLを配布してください</p>
         <div class="row browser">
           {{browserUrl}}
           <a href="javascript:void(0)" class="copy" v-clipboard:copy="browserUrl" @click="copyName = 'copied!'">{{copyName}}</a>
@@ -25,18 +28,21 @@
         <div id="slide-show-container" :style="styles">
           <SlideShow :slide="slide" :parent="'top'" />
         </div>
-        <div class="row">
-          <a class="button-primary" @click="act">開始</a>&emsp;
-          <a class="button-danger" @click="del">削除</a>
+        <div class="button-container">
+          <a class="button-primary" @click="act">スライドショーの開始</a>&emsp;
+          <a class="button-danger" @click="del">
+            <img src="img/del.png" alt="削除" />
+          </a>
         </div>
       </div>
-    </div>
+    </main>
   </div>
 </template>
 
 <script>
 import utils from '@/common/utils.js'
 import storage from '@/firebase/storage.js'
+import Navbar from '@/components/common/Navbar';
 import Splash from '@/components/presenter/Splash';
 import HowToPdf from '@/components/presenter/HowToPdf';
 import PDFUploader from '@/components/presenter/PDFUploader';
@@ -49,6 +55,7 @@ Vue.use(VueClipboard)
 export default {
 
   components: {
+    Navbar,
     Splash,
     HowToPdf,
     PDFUploader,
@@ -174,17 +181,14 @@ export default {
 img.logo {
   width: 18rem;
 }
-.pdf-uploader-container {
-  margin-top: 2rem;
-  margin-bottom: 3rem;
-}
-
-.content-container {
-  margin-top: 6rem;
-}
 
 p.description {
-  margin-top: 4rem;
+  margin-top: 3rem;
+}
+
+.pdf-uploader-container {
+  margin-top: 2rem;
+  margin-bottom: 5rem;
 }
 
 /** スライドショー */
@@ -234,16 +238,17 @@ p.description {
 }
 
 .button-danger {
-  background-color: #dd6060;
-  border-color: #dd6060;
-  padding: 7px;
-  color: white;
-  border-radius: 4px;
+  position: absolute;
+  top: 25.5rem;
+  left: 49.5rem;
+  width: 1.2rem;
+}
+
+.button-danger img {
+  width: 100%;
 }
 
 .button-danger:hover {
-  background-color: #ba5050;
-  border-color: #ba5050;
   cursor: pointer;
 }
 </style>

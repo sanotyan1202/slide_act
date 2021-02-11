@@ -1,21 +1,14 @@
 <template>
   <div id="main">
-    <div class="navbar-container">
-      <Navbar />
-    </div>
-    <div class="top-container content">
-      <Top class="top" />
-    </div>
+    <Top class="top" />
   </div>
 </template>
 
 <script>
-import Navbar from '@/components/presenter/Navbar';
 import Top from '@/components/presenter/Top';
 
 export default {
   components: {
-    Navbar,
     Top,
   },
 }

@@ -14,8 +14,11 @@
       <pdf id="pdf" class="pdf" v-bind:src="slide.url" :page="page" @num-pages="lastpage = $event" />
       <MessageGrid :parent="parent" :slide="slide" />
     </div>
-    <div id="next-prev" v-if="parent !== 'top'">
+    <div class="menu" v-if="parent !== 'top'">
       <img src="img/left.jpeg" @click="prev" width="20px" />
+      <!-- <div>
+        <input type="checkbox" v-model="messageShow" />メッセージを表示する
+      </div> -->
       <img src="img/right.jpeg" @click="next" width="20px" />
     </div>  
   </div>
@@ -39,6 +42,7 @@ export default {
   data: function() {
     return {
       messageGrid: new Array(10),
+      messageShow: true,
       page: 1,
       lastpage: 0,
       swipe: {
@@ -146,7 +150,7 @@ export default {
 </script>
 
 <style scoped>
-#next-prev {
+.menu {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;

@@ -5,7 +5,7 @@
         <div class="top-note">登録不要！</div>
         あなたのプレゼンが劇的に楽しくなる
       </h1>
-      <a href="javascript:void(0)" @click="start = false">
+      <a href="javascript:void(0)" @click="start=false">
         <PlayIcon class="play-icon" />
       </a>
       <img class="title-image" src="img/title.png" alt="title" />
@@ -33,11 +33,11 @@ components: {
 <style scoped>
 .splash {
   position: absolute;
-  top: 4rem;
+  top: 3.5rem;
   right: 0;
-  bottom: 0;
   left: 0;
-  z-index: 99;
+  height: 100vh;
+  z-index: 98;
   background-color: white;
 }
 
@@ -73,4 +73,5 @@ components: {
 .fade-leave-to {
   opacity: 0;
 }
+
 </style>
