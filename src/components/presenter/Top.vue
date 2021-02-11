@@ -188,7 +188,7 @@ export default {
 
 <style scoped>
 img.logo {
-  width: 18rem;
+  width: 15rem;
 }
 
 p.description {

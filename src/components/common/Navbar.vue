@@ -19,8 +19,8 @@ export default {
 <style scoped>
 
 .logo {
-  width:10rem;
-  margin-top:0.8rem;
+  width:9rem;
+  margin-top:0.6rem;
 }
 
 .navbar {
@@ -29,7 +29,7 @@ export default {
   top: 0;
   left: 0;
   right: 0;
-  height: 3.5rem;
+  height: 3rem;
   background: #fff;
   z-index: 99;
   border-top: 1px solid #eee;
