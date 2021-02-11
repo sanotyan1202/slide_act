@@ -66,7 +66,8 @@ export default {
     return {
       slide: null,
       userId: '',
-      padding: 0,
+      paddingSide: 0,
+      paddingUpDown: 0,
       copyName: "copy",
     }
   },
@@ -106,7 +107,7 @@ export default {
 
       // 画面サイズ取得
       const screenWidth = window.parent.screen.width;
-      const scrrenHeight = window.parent.screen.height;
+      const screenHeight = window.parent.screen.height;
 
       // PDFのサイズ取得
       const pdfHeight = docEl.clientHeight;
@@ -115,17 +116,23 @@ export default {
       // フルスクリーンにした時の倍率を計算
       const fullscreenRatio = screenWidth / pdfWidth;
 
-      // フルスクリーン時のPDFの高さを計算
+      // 横幅Max時のPDFの高さを計算
       const fullscreenPdfHeight = pdfHeight * fullscreenRatio;
 
+      // 縦が超えない場合は、上下のpaddingのみ設定する
+      if (fullscreenPdfHeight < screenHeight) {
+        this.paddingUpDown = (screenHeight - fullscreenPdfHeight) / 2;
+        return;
+      }
+
       // 何倍すれば縦幅が収まるか計算
-      const shrinkRatio = scrrenHeight / fullscreenPdfHeight;
+      const shrinkRatio = screenHeight / fullscreenPdfHeight;
 
       // 減らす横幅を計算
       const padding = screenWidth - (screenWidth * shrinkRatio);
 
       // 両側のpaddingを設定するので/2
-      this.padding = padding / 2;
+      this.paddingSide = padding / 2;
 
       let requestFullScreen = docEl.requestFullscreen 
                            || docEl.mozRequestFullScreen 
@@ -205,9 +212,13 @@ p.description {
 }
 
 #slide-show-container:fullscreen {
-  --padding:0;
-  padding-left: var(--padding);
-  padding-right: var(--padding);
+  --paddingSide:0;
+  padding-left: var(--paddingSide);
+  padding-right: var(--paddingSide);
+  --paddingUpDown:0;
+  padding-top: var(--paddingUpDown);
+  padding-bottom: var(--paddingUpDown);
+
 }
 
 /** ボタン系 */

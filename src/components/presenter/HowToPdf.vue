@@ -83,7 +83,7 @@ ul.to-pdf-menu {
 }
 
 .to-pdf-body {
-  border: solid 0.5px #eaedf1;
+  border: solid 1px #eaedf1;
   height: 28rem;
   width: 60rem;
   padding: 1rem;

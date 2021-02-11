@@ -2,7 +2,7 @@
   <nav class="navbar">
     <div class="container">
       <div :class="{left: parent==='top'}">
-        <a class="logo-container" href="https://slide-act.web.app">
+        <a class="logo-container" href="/">
           <img class="logo" src="img/logo.png" alt="logo">
         </a>
       </div>

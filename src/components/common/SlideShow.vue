@@ -15,12 +15,10 @@
       <MessageGrid :parent="parent" :slide="slide" />
     </div>
     <div class="menu" v-if="parent !== 'top'">
-      <img src="img/left.jpeg" @click="prev" width="20px" />
-      <!-- <div>
-        <input type="checkbox" v-model="messageShow" />メッセージを表示する
-      </div> -->
-      <img src="img/right.jpeg" @click="next" width="20px" />
-    </div>  
+      <img src="img/left.jpeg" class="prev" @click="prev" />
+      {{ this.page + "/" + this.lastpage }}
+      <img src="img/right.jpeg"  class="next" @click="next" />
+    </div>
   </div>
 </template>
 
@@ -157,6 +155,24 @@ export default {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  padding: 5px 10px 5px 10px;
+  padding: 0.5rem;
+  border: solid 2px #eaedf1;
 }
+
+.prev {
+  width: 1rem;
+}
+
+.prev:hover {
+  cursor: pointer;
+}
+
+.next {
+  width: 1rem;
+}
+
+.next:hover {
+  cursor: pointer;
+}
+
 </style>
