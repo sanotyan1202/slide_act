@@ -162,6 +162,7 @@ export default {
 
 .prev {
   width: 1rem;
+  height: 1rem;
 }
 
 .prev:hover {
@@ -170,6 +171,7 @@ export default {
 
 .next {
   width: 1rem;
+  height: 1rem;
 }
 
 .next:hover {

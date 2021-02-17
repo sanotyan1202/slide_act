@@ -4,16 +4,16 @@
       <Navbar :parent="'browser'" />
     </header>
     <main class="content">
-      <div id="slide-show-container" @click.prevent="1">
+      <div id="slide-show-container" :class="{narrow: isNarrow}" @click.prevent="1">
         <SlideShow v-if="get" :slide="slide" :parent="'browser'" />
       </div>
-      <div class="form-flex">
-        <div class="flex-item name">
+      <div class="form-flex" :class="{narrow: isNarrow}">
+        <div class="flex-item name" :class="{narrow: isNarrow}">
           <div class="message-box-header">Name</div> 
           <input type="text" class="message-box"
           v-model="name" placeholder="Your Name" maxlength="5">
         </div>
-        <div class="flex-item message">
+        <div class="flex-item message" :class="{narrow: isNarrow}">
           <div class="message-box-header">Message</div> 
           <input type="text" class="message-box"
             v-model="message" @keydown.enter="addMessage($event.keyCode)"
@@ -58,15 +58,24 @@ export default {
       message: '',
       name: '',
       emojiArray: ['🙂'],
+      windowWidth: window.innerWidth,
     }
   },
 
   created: function () {
+
+    // ブラウザ幅の変更を感知
+    window.addEventListener('resize', this.handleResize)
+
     // スライドを取得
     this.getSlide();
   },
 
   methods: {
+
+    handleResize: function() {
+      this.windowWidth = window.innerWidth;
+    },
 
     getSlide: async function () {
       // スライドの取得
@@ -115,11 +124,15 @@ export default {
     get: function() {
       return this.slide !== null;
     },
-    emojiDataAll() {
+    emojiDataAll: function() {
         return EmojiAllData;
     },
-    emojiGroups() {
+    emojiGroups: function() {
       return EmojiGroups;
+    },
+    isNarrow: function() {
+      // ブラウザの幅がスライドの幅より小さい場合true
+      return this.windowWidth < 640;
     }
   }
 }
@@ -133,6 +146,10 @@ export default {
   margin: 1rem auto;
 }
 
+#slide-show-container.narrow {
+  width:100% !important;
+}
+
 /* メッセージ入力欄 */
 .form-flex {
   display: flex;
@@ -142,11 +159,22 @@ export default {
   margin: auto;
 }
 
+.form-flex.narrow {
+  flex-direction: column;
+  width: 100% !important;
+}
+
 .flex-item {
   margin-right: 0.5rem;
   height: 2rem;
   background-color: #fff;
 }
+
+.flex-item.narrow {
+  height: initial;
+  width: 100% !important;
+}
+
 
 .flex-item.name {
   width: 20%;
