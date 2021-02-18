@@ -52,7 +52,7 @@ export default {
         return;
       }
 
-      if(files[0].size > 5 * 1024 * 1024) {
+      if(files[0].size > 20 * 1024 * 1024) {
         alert("5MB以下のPDFのみアップロード可能です。");
         return;
       }
