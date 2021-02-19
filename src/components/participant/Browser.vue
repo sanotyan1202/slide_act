@@ -18,7 +18,7 @@
           <div class="message-box-header">Message</div> 
           <input type="text" class="message-box"
             v-model="message" @keydown.enter="addMessage($event.keyCode)"
-            placeholder="Input and Enter (Max:40)" maxlength="40" >
+            placeholder="Input and Enter (Max:30)" maxlength="30" >
         </div>
         <div class="flex-item emoji">
             <TwemojiPicker
