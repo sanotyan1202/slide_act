@@ -21,10 +21,10 @@
       
       <div v-if="uploaded" class="uploaded">  
         <p class="description"> 参加者に以下の参加者用URLを配布してスライドショーを開始してください</p>
-        <div class="row browser">
+        <p class="description">
           {{browserUrl}}
           <a href="javascript:void(0)" class="copy" v-clipboard:copy="browserUrl" @click="copyName = 'copied!'">{{copyName}}</a>
-        </div>
+        </p>
         <div id="slide-show-container" :style="styles">
           <SlideShow :slide="slide" :parent="'top'" />
         </div>
@@ -193,6 +193,7 @@ img.logo {
 
 p.description {
   margin-top: 3rem;
+  font-size: 1.2rem;
 }
 
 .pdf-uploader-container {

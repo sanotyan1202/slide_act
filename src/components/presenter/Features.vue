@@ -2,8 +2,8 @@
 <div class="flex-col">
   <div class="flex-row">
     <div class="flex-item desc">
-      <h2>リアルタイムにスライドを<br/>参加者と共有</h2>
-      <p>発表者がスライドを進めると、参加者の画面でも自動的に同じスライドが表示されます。</p>
+      <h1>リアルタイムにスライドを<br/>参加者と共有</h1>
+      <p class="description">発表者がスライドを進めると、参加者の画面でも自動的に同じスライドが表示されます。</p>
     </div>
     <div class="flex-item image">
       2
@@ -14,13 +14,14 @@
       3
     </div>
     <div class="flex-item desc">
-      <h2>メッセージング機能で<br/>双方向コミュニケーション</h2>
-      <p>質問に回答してもらったり、感想をつぶやいてもらったり、あなたの発想次第で無限の使い方が考えられます。</p>
+      <h1>メッセージング機能で<br/>双方向コミュニケーション</h1>
+      <p class="description">質問に回答してもらったり、感想をつぶやいてもらったり、あなたの発想次第で無限の使い方が考えられます。</p>
     </div>
   </div>
   <div class="flex-row">
     <div class="flex-item desc">
-      <h2>スマホからも参加できるので対面でPCがなくても問題なし</h2>
+      <h1>スマホからも参加できるのでPCがなくても問題なし</h1>
+      <p class="description">質問に回答してもらったり、感想をつぶやいてもらったり、あなたの発想次第で無限の使い方が考えられます。</p>
     </div>
     <div class="flex-item image">
       6
@@ -51,5 +52,8 @@
   text-align: left;
 }
 
+p.description {
+  font-size:1.2rem;
+}
 
 </style>
