@@ -95,7 +95,7 @@ export default {
 <style scoped>
 #pdf-uploader {
   height: 8rem;
-  width: 24rem;
+  width: 25rem;
   left: 0;
   right: 0;
   margin: auto;

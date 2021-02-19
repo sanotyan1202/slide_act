@@ -100,11 +100,6 @@ export default {
         return;
       }
       
-      // 名前が未入力ならNO NAME
-      if (this.name.length === 0) {
-        this.name = 'NO NAME';
-      }
-
       // メッセージの登録
       db.collection('messages').add({
         slideId: this.slide.id,

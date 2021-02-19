@@ -1,25 +1,32 @@
 <template>
   <transition name="fade">
     <div v-if="start" class="splash">
-      <h1 class="top-message">
-        <div class="top-note">登録不要！</div>
-        あなたのプレゼンが劇的に楽しくなる
-      </h1>
-      <a href="javascript:void(0)" @click="start=false">
-        <PlayIcon class="play-icon" />
-      </a>
-      <img class="title-image" src="img/title.png" alt="title" />
+      <div class="container">
+        <h1 class="top-message">
+          <div class="top-note">登録不要！</div>
+          あなたのプレゼンが劇的に楽しくなる
+        </h1>
+        <a href="javascript:void(0)" @click="start=false">
+          <PlayIcon class="play-icon" />
+        </a>
+        <img class="title-image" src="img/title.png" alt="title" />
+        <div class="features-container">
+          <Features />
+        </div>
+      </div>
     </div>
   </transition>
 </template>
 
 <script>
 import PlayIcon from '@/components/utils/ScalingPlayIcon';
+import Features from '@/components/presenter/Features';
 
 export default {
 
 components: {
     PlayIcon,
+    Features,
   },
 
   data: function() {
@@ -36,7 +43,7 @@ components: {
   top: 3.5rem;
   right: 0;
   left: 0;
-  height: 100vh;
+  /* height: 45rem; */
   z-index: 98;
   background-color: white;
 }
@@ -63,6 +70,10 @@ components: {
   left:0;
   right:0;
   margin: auto;
+}
+
+.features-container {
+  margin-top: 5rem;
 }
 
 /* transition */
