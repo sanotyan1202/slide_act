@@ -4,10 +4,18 @@
       <Navbar :parent="'browser'" />
     </header>
     <main class="content">
+      <div v-if="isSmartPhone" class="form-flex" :class="{narrow: isNarrow}">
+        <div class="flex-item message" :class="{narrow: isNarrow}">
+          <div class="message-box-header">Message</div> 
+          <input type="text" class="message-box"
+            v-model="message" @keydown.enter="addMessage($event.keyCode)"
+            placeholder="Input and Enter (Max:30)" maxlength="30" >
+        </div>
+      </div>
       <div id="slide-show-container" :class="{narrow: isNarrow}" @click.prevent="1">
         <SlideShow v-if="get" :slide="slide" :parent="'browser'" />
       </div>
-      <div class="form-flex" :class="{narrow: isNarrow}">
+      <div v-if="!isSmartPhone" class="form-flex" :class="{narrow: isNarrow}">
         <div class="flex-item name" :class="{narrow: isNarrow}">
           <div class="message-box-header">Name</div> 
           <input type="text" class="message-box"
@@ -64,6 +72,11 @@ export default {
   },
 
   created: function () {
+
+    // スマホの場合、最初に名前を取得
+    if (this.isSmartPhone) {
+      this.name = window.prompt("ユーザー名を入力してください", "");
+    }
 
     // ブラウザ幅の変更を感知
     window.addEventListener('resize', this.handleResize)
@@ -141,7 +154,10 @@ export default {
     isNarrow: function() {
       // ブラウザの幅がスライドの幅より小さい場合true
       return this.windowWidth < 640;
-    }
+    },
+    isSmartPhone: function() {
+      return navigator.userAgent.match(/iPhone|Android.+Mobile/);
+    },
   }
 }
 </script>
@@ -180,7 +196,7 @@ export default {
 
 .flex-item.narrow {
   height: initial;
-  width: 100% !important;
+  width: 95% !important;
 }
 
 
