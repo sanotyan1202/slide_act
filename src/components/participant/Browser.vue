@@ -11,7 +11,8 @@
         <div class="flex-item name" :class="{narrow: isNarrow}">
           <div class="message-box-header">Name</div> 
           <input type="text" class="message-box"
-          v-model="name" placeholder="Your Name" maxlength="5">
+          v-model="name" @keydown.enter="addName($event.keyCode)"
+          placeholder="Your Name" maxlength="5">
         </div>
         <div class="flex-item message" :class="{narrow: isNarrow}">
           <div class="message-box-header">Message</div> 
@@ -85,6 +86,17 @@ export default {
       this.slide.id = doc.id;
     },
 
+    addName: function(keyCode) {
+
+      // 日本語確定Enterを無視
+      if(keyCode !== 13) {
+        return;
+      }
+
+      // フォーカス外し
+      document.activeElement.blur();
+    },
+
     addMessage: function(keyCode) {
 
       // 日本語確定Enterを無視
@@ -110,6 +122,7 @@ export default {
 
       this.message = "";
     },
+    
     selectEmoji: function(emoji) {
       this.message += emoji;
     },
