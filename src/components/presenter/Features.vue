@@ -6,7 +6,8 @@
       <p class="description">発表者がスライドを進めると、参加者の画面でも自動的に同じスライドが表示されます。</p>
     </div>
     <div class="flex-item image">
-      2
+      <img class="feature" src="img/feature01presenter.png" alt="スライドの連動">
+      <img class="feature" src="img/feature01participant.png" alt="スライドの連動">
     </div>
   </div>
   <div class="flex-row">
@@ -20,8 +21,8 @@
   </div>
   <div class="flex-row">
     <div class="flex-item desc">
-      <h1>スマホからも参加できるのでPCがなくても問題なし</h1>
-      <p class="description">質問に回答してもらったり、感想をつぶやいてもらったり、あなたの発想次第で無限の使い方が考えられます。</p>
+      <h1>スマホからメッセージが送れる<br/>のでPCがなくても参加できる</h1>
+      <p class="description">対面でプレゼンする場合は参加者にPCが無いこともあると思います。そんな時はスマホからメッセージを送ってもらうことで、Slide Actを活用できます。</p>
     </div>
     <div class="flex-item image">
       6
@@ -48,12 +49,15 @@
 }
 
 .flex-item.desc {
-  padding: 2rem;
   text-align: left;
 }
 
 p.description {
   font-size:1.2rem;
+}
+
+img.feature {
+  width: 100%;
 }
 
 </style>

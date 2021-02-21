@@ -3,8 +3,8 @@
     <div v-if="start" class="splash">
       <div class="container">
         <h1 class="top-message">
-          <div class="top-note">登録不要！</div>
-          あなたのプレゼンが劇的に楽しくなる
+          <div class="top-note"><span class="underline">登録不要！</span></div>
+          <span class="underline">あなたのプレゼンが劇的に楽しくなる</span>
         </h1>
         <a href="javascript:void(0)" @click="start=false">
           <PlayIcon class="play-icon" />
@@ -43,7 +43,6 @@ components: {
   top: 3.5rem;
   right: 0;
   left: 0;
-  /* height: 45rem; */
   z-index: 98;
   background-color: white;
 }
@@ -56,6 +55,10 @@ components: {
 
 .top-message {
   font-size:3rem;
+}
+
+.underline {
+  background: linear-gradient(transparent 80%, #fcee21 0%)
 }
 
 .title-image {
