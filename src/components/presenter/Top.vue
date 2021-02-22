@@ -6,7 +6,9 @@
     <main class="content">
       <Splash />
       <div class="logo-container">
+        <a class="logo-container" href="/">
         <img class="logo" src="img/logo2.png" alt="logo">
+        </a>
       </div>
       <div v-if="!uploaded" class="uploading">
         <p class="description">スライドをPDF化して下の枠にドラッグ&amp;ドロップしてください</p>
@@ -193,7 +195,7 @@ img.logo {
 
 p.description {
   margin-top: 3rem;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
 }
 
 .pdf-uploader-container {

@@ -14,4 +14,8 @@
     0%   { transform: scale(0.8); }
     100% { transform: scale(1); }
   }
+
+  #scaling-play-icon:hover {
+    cursor: pointer;
+  }
 </style>

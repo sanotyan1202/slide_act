@@ -32,7 +32,7 @@
 export default {
   data: function() {
     return {
-      current: '',
+      current: 'PowerPoint',
       hover: '',
     }
   },

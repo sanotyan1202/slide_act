@@ -9,7 +9,10 @@
         <a href="javascript:void(0)" @click="start=false">
           <PlayIcon class="play-icon" />
         </a>
-        <img class="title-image" src="img/title.png" alt="title" />
+        <img id="message1" class="message-image" src="img/message1.png" alt="message1" />
+        <img id="message2" class="message-image" src="img/message2.png" alt="message2" />
+        <img id="message3" class="message-image" src="img/message3.png" alt="message3" />
+        <img class="title-image" src="img/title.jpeg" alt="title" />
         <div class="features-container">
           <Features />
         </div>
@@ -57,27 +60,77 @@ components: {
   font-size:3rem;
 }
 
-.underline {
-  background: linear-gradient(transparent 80%, #fcee21 0%)
-}
-
 .title-image {
-  margin-top: -11rem;
-  width: 50rem;
+  margin-top: -1rem;
+  width: 55rem;
 }
 
 .play-icon {
   position:absolute;
   width:7rem;
   top:28rem;
-  left:0;
+  left:-2rem;
   right:0;
   margin: auto;
 }
 
-.features-container {
-  margin-top: 5rem;
+.message-image {
+  position: absolute;
+  width: 15rem;
 }
+
+#message1 {
+  top: 29rem;
+  left: -23rem;
+  right:0;
+  margin: auto;
+  animation: message1 5.0s ease-out;
+  animation-iteration-count: infinite; 
+}
+
+#message2 {
+  top: 16rem;
+  left: 11rem;
+  right:0;
+  margin: auto;
+  animation: message2 8.0s ease-out;
+  animation-iteration-count: infinite; 
+}
+
+#message3 {
+  top: 14rem;
+  left: -22rem;
+  right:0;
+  margin: auto;
+  animation: message3 10.0s ease-out;
+  animation-iteration-count: infinite; 
+}
+
+@keyframes message1 {
+  0%   {opacity: 0%;}
+  10%  {opacity: 0%;}
+  30%  {opacity: 100%;}
+  70%  {opacity: 100%;}
+  90%  {opacity: 0%;}
+  100% {opacity: 0%;}
+}
+
+@keyframes message2 {
+  0%   {opacity: 0%;}
+  20%  {opacity: 0%;}
+  40%  {opacity: 100%;}
+  80%  {opacity: 100%;}
+  100%  {opacity: 0%;}
+}
+
+@keyframes message3 {
+  0%   {opacity: 0%;}
+  40%  {opacity: 0%;}
+  60%  {opacity: 100%;}
+  90%  {opacity: 100%;}
+  100% {opacity: 0%;}
+}
+
 
 /* transition */
 .fade-leave-active {

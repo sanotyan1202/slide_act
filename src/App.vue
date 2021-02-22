@@ -30,4 +30,18 @@ main.content {
 input {
   font-size: 16px;
 }
+
+span.underline {
+  background: linear-gradient(transparent 75%, #fcee21 0%)
+}
+
+span.underline.green {
+  background: linear-gradient(transparent 75%, #21fc75 0%)
+}
+
+
+span.bold {
+  font-weight: bold;
+}
+
 </style>

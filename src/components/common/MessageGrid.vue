@@ -4,7 +4,7 @@
       <div class="message-col" :class="{narrow: isNarrow}" v-for="(messageBox, index) in messageRow" :key="index">
         <transition name="fade">
           <div v-if="messageBox !== null" class="message-float" :style="styles">
-            <div v-if="noname" class="message-float-header">{{messageBox.name}}</div> 
+            <div v-if="!noname" class="message-float-header">{{messageBox.name}}</div> 
             {{messageBox.message}}
           </div>
         </transition>
