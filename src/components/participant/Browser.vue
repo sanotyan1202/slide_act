@@ -75,7 +75,7 @@ export default {
 
     // スマホの場合、最初に名前を取得
     if (this.isSmartPhone) {
-      this.name = window.prompt("ユーザー名を入力してください", "");
+      this.name = window.prompt("あなたの名前を入力してください", "");
     }
 
     // ブラウザ幅の変更を感知

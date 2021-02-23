@@ -2,7 +2,7 @@
 <div id="features">
   <div class="title-container">
     <h1 class="top-message">
-    <span class="underline green">What is Slide Act?</span>
+    What is Slide Act?
     </h1>
     <p class="sub-message">プレゼンがリモートだと参加者の反応も無いし、イマイチ盛り上がらない...</p>
     <p class="sub-message">Slide Actはそんな悩みを解決します！</p>
@@ -18,7 +18,7 @@
     <div class="feature-image-container">
       <div>
         <p class="image-title">発表者の画面</p>
-        <img class="feature" src="img/feature01presenter.png" alt="発表者のスライド">
+        <img class="feature" src="img/feature01presenter.jpeg" alt="発表者の画面">
       </div>
       <div>
         <img class="relation" src="img/interlock-right.png" alt="連動">
@@ -38,14 +38,14 @@
     <div class="feature-image-container">
       <div>
         <p class="image-title">参加者の画面</p>
-        <img class="feature" src="img/feature02participant.png" alt="発表者のスライド">
+        <img class="feature" src="img/feature02participant.png" alt="参加者の画面">
       </div>
       <div>
         <img class="relation" src="img/send-right.png" alt="連動">
       </div>
       <div>
         <p class="image-title">発表者の画面</p>
-        <img class="feature" src="img/feature02presenter.png" alt="参加者の画面">
+        <img class="feature" src="img/feature02presenter.jpeg" alt="発表者の画面">
       </div>
     </div>
     <div class="feature-description-container">
@@ -65,7 +65,7 @@
       </div>
       <div>
         <p class="image-title">発表者の画面</p>
-        <img class="feature" src="img/feature03presenter.png" alt="参加者の画面">
+        <img class="feature" src="img/feature03presenter.jpeg" alt="参加者の画面">
       </div>
     </div>
     <div class="feature-description-container">
@@ -103,6 +103,13 @@ export default {
   margin-top: 8rem;
 }
 
+.title-container {
+  background-color: #80808014;
+  margin: 0 calc(50% - 50vw);
+  width: 100vw;
+  padding: 2rem 0 2rem 0;
+}
+
 .top-message {
   font-size: 2.8rem;
   margin-bottom: 4rem;
@@ -115,7 +122,7 @@ export default {
 .feature-container {
   display: flex;
   flex-direction: column;
-  margin-top: -4rem;
+  margin-top: -1rem;
 }
 
 .feature-description-container {

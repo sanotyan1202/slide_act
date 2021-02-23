@@ -84,7 +84,7 @@ components: {
   left: -23rem;
   right:0;
   margin: auto;
-  animation: message1 5.0s ease-out;
+  animation: message1 5s ease-out;
   animation-iteration-count: infinite; 
 }
 
@@ -93,7 +93,7 @@ components: {
   left: 11rem;
   right:0;
   margin: auto;
-  animation: message2 8.0s ease-out;
+  animation: message2 8s ease-out;
   animation-iteration-count: infinite; 
 }
 
@@ -102,35 +102,34 @@ components: {
   left: -22rem;
   right:0;
   margin: auto;
-  animation: message3 10.0s ease-out;
+  animation: message3 10s ease-out;
   animation-iteration-count: infinite; 
 }
 
 @keyframes message1 {
-  0%   {opacity: 0%;}
-  10%  {opacity: 0%;}
-  30%  {opacity: 100%;}
-  70%  {opacity: 100%;}
-  90%  {opacity: 0%;}
-  100% {opacity: 0%;}
+  0%   {opacity: 0;}
+  10%  {opacity: 0;}
+  30%  {opacity: 1;}
+  70%  {opacity: 1;}
+  90%  {opacity: 0;}
+  100% {opacity: 0;}
 }
 
 @keyframes message2 {
-  0%   {opacity: 0%;}
-  20%  {opacity: 0%;}
-  40%  {opacity: 100%;}
-  80%  {opacity: 100%;}
-  100%  {opacity: 0%;}
+  0%   {opacity: 0;}
+  20%  {opacity: 0;}
+  40%  {opacity: 1;}
+  80%  {opacity: 1;}
+  100%  {opacity: 0;}
 }
 
 @keyframes message3 {
-  0%   {opacity: 0%;}
-  40%  {opacity: 0%;}
-  60%  {opacity: 100%;}
-  90%  {opacity: 100%;}
-  100% {opacity: 0%;}
+  0%   {opacity: 0;}
+  40%  {opacity: 0;}
+  60%  {opacity: 1;}
+  90%  {opacity: 1;}
+  100% {opacity: 0;}
 }
-
 
 /* transition */
 .fade-leave-active {
@@ -140,5 +139,4 @@ components: {
 .fade-leave-to {
   opacity: 0;
 }
-
 </style>
