@@ -72,13 +72,10 @@
       <p class="description">
         それではいつもより楽しくなったプレゼンをお楽しみください。
       </p>
+      <p class="to-top" @click="scrollTop">
+        トップへ
+      </p>
     </div>
-    <div>
-      <div>
-        <img class="to-top" src="img/top-up.png" @click="scrollTop" alt="トップへ">
-      </div>
-    </div>
-
   </div>
 </div>
 </template>
@@ -166,12 +163,7 @@ img.relation {
   font-size:1.2rem;
 }
 
-.to-top {
-  width: 5rem;
-}
-
 .to-top:hover {
-  width: 5rem;
   cursor: pointer;
 }
 </style>
