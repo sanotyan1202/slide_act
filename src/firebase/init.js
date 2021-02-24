@@ -1,5 +1,6 @@
-import Firebase from 'firebase/app'
+import firebase from 'firebase/app'
 import 'firebase/firestore'
+import 'firebase/analytics'
 
 const config = {
   apiKey: "AIzaSyBta9DDBUcBpAryyLyydx023DgR-IyPT5U",
@@ -12,6 +13,6 @@ const config = {
   measurementId: "G-TXVWYNZ0G4"
 };
 
-const firebaseApp = Firebase.initializeApp(config, 'slide-act')
+const firebaseApp = firebase.initializeApp(config, 'slide-act')
 
 export default firebaseApp

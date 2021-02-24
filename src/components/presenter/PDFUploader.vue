@@ -16,10 +16,11 @@
 </template>
 
 <script>
-import utils from '@/common/utils'
-import db from '@/firebase/firestore'
-import storage from '@/firebase/storage'
-import Loading from '@/components/utils/Loading'
+import utils from '@/common/utils';
+import db from '@/firebase/firestore';
+import analytics from '@/firebase/analytics';
+import storage from '@/firebase/storage';
+import Loading from '@/components/utils/Loading';
 
 export default {
 
@@ -88,6 +89,11 @@ export default {
 
       // 親にスライドIDを渡す
       this.$emit('give-slide', slide);
+
+      analytics.logEvent('share', {
+        content_type: 'slide',
+        item_id: slide.id,
+      })
     },
   }
 };

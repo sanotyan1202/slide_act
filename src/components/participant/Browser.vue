@@ -47,7 +47,8 @@
 </template>
 
 <script>
-import db from '@/firebase/firestore.js'
+import analytics from '@/firebase/analytics';
+import db from '@/firebase/firestore.js';
 import Navbar from '@/components/common/Navbar';
 import SlideShow from '@/components/common/SlideShow';
 import {TwemojiPicker} from '@kevinfaguiar/vue-twemoji-picker';
@@ -134,6 +135,7 @@ export default {
       });
 
       this.message = "";
+      analytics.logEvent('message');
     },
     
     selectEmoji: function(emoji) {

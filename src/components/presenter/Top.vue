@@ -40,8 +40,9 @@
 </template>
 
 <script>
-import utils from '@/common/utils.js'
-import storage from '@/firebase/storage.js'
+import utils from '@/common/utils.js';
+import analytics from '@/firebase/analytics';
+import storage from '@/firebase/storage.js';
 import Navbar from '@/components/common/Navbar';
 import Splash from '@/components/presenter/Splash';
 import HowToPdf from '@/components/presenter/HowToPdf';
@@ -139,6 +140,8 @@ export default {
                            || docEl.webkitRequestFullScreen 
                            || docEl.msRequestFullscreen;
       requestFullScreen.call(docEl);
+
+      analytics.logEvent('act');
     },
 
     del: function() {
@@ -157,6 +160,8 @@ export default {
       this.slide = null;
 
       this.copyName = "copy";
+
+      analytics.logEvent('delete')
     },
 
     setSlide: function(slide) {
