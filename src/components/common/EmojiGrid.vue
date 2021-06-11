@@ -28,7 +28,6 @@ export default {
   props: ['slide', 'parent'],
   
   created: function () {
-
     // ブラウザ幅の変更を感知
     window.addEventListener('resize', this.handleResize)
 
@@ -40,7 +39,19 @@ export default {
   },
 
   mounted: function() {
-    // メッセージのフォントサイズを設定
+
+    // 絵文字Gridの幅の変更を監視して、絵文字サイズを可変にする
+    const col = document.querySelector(".emoji-col");    
+    const observer = new MutationObserver(() => {
+      this.handleResize
+    });
+    const options = {
+      attriblutes: true,
+      attributeFilter: ["style"]
+    };
+    observer.observe(col, options);
+
+    // 絵文字のフォントサイズを設定
     this.setFontSize();
   },
 
@@ -71,8 +82,22 @@ export default {
       this.windowWidth = window.innerWidth;
 
       // メッセージグリッドの初期化
-      this.iniEmojiGird();
+      this.initEmojiGird();
+
+      // フォントサイズ変更
+      this.setFontSize();
     },
+
+    setFontSize: function() {
+
+      // 絵文字グリッドの縦幅を取得
+      const cellHeight = document.querySelector(".emoji-col").clientHeight;
+
+      // 縦幅に合わせて文字サイズを変更
+      const fontsize = cellHeight / 30;
+      this.styles = {'--emoji-font-size': fontsize + "em" };
+    },
+
 
     observeEmoji: function(floatEmoji) {
 
@@ -155,7 +180,7 @@ export default {
 }
 
 .emoji-float {
-  --emoji-font-size:3vw;
+  --emoji-font-size:1em;
   background-color: transparent;
   border: none;
   font-size: var(--emoji-font-size);

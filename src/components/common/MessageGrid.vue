@@ -43,6 +43,18 @@ export default {
   mounted: function() {
     // メッセージのフォントサイズを設定
     this.setFontSize();
+
+    // メッセージGridの幅の変更を監視して、文字サイズを可変にする
+    const col = document.querySelector(".message-col");    
+    const observer = new MutationObserver(() => {
+      this.handleResize
+    });
+    const options = {
+      attriblutes: true,
+      attributeFilter: ["style"]
+    };
+    observer.observe(col, options);
+
   },
 
   methods: {
@@ -188,7 +200,7 @@ export default {
 }
 
 .message-float {
-  --message-font-size:1vw;
+  --message-font-size:1em;
   border-radius: 5px;
   background-color: #fffbe9;
   color: #3e3a12;
