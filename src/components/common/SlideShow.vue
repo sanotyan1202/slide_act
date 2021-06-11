@@ -13,6 +13,7 @@
       </div>
       <pdf id="pdf" class="pdf" v-bind:src="slide.url" :page="page" @num-pages="lastpage = $event" />
       <MessageGrid :parent="parent" :slide="slide" />
+      <EmojiGrid :parent="parent" :slide="slide" />
     </div>
     <div class="menu" v-if="parent !== 'top'">
       <img src="img/left.jpeg" class="prev" @click="prev" />
@@ -26,12 +27,14 @@
 import db from '@/firebase/firestore.js'
 import pdf from 'vue-pdf';
 import MessageGrid from '@/components/common/MessageGrid';
+import EmojiGrid from '@/components/common/EmojiGrid';
 
 export default {
 
   components: {
     pdf,
     MessageGrid,
+    EmojiGrid,
     Keypress: () => import('vue-keypress')
   },
 

@@ -18,7 +18,7 @@
       <div v-if="!isSmartPhone" class="form-flex" :class="{narrow: isNarrow}">
         <div class="flex-item name" :class="{narrow: isNarrow}">
           <div class="message-box-header">Name</div> 
-          <input type="text" class="message-box"
+          <input type="text" class="name-box"
           v-model="name" @keydown.enter="addName($event.keyCode)"
           placeholder="Your Name" maxlength="5">
         </div>
@@ -26,7 +26,7 @@
           <div class="message-box-header">Message</div> 
           <input type="text" class="message-box"
             v-model="message" @keydown.enter="addMessage($event.keyCode)"
-            placeholder="Input and Enter (Max:30)" maxlength="30" >
+            placeholder="Input and Enter (Max:25)" maxlength="25" >
         </div>
         <div class="flex-item emoji">
             <TwemojiPicker
@@ -36,6 +36,19 @@
               :searchEmojisFeat="true"
               :randomEmojiArray="emojiArray"
               @emojiUnicodeAdded="selectEmoji"
+              searchEmojiPlaceholder="Search here."
+              searchEmojiNotFound="Emojis not found."
+              isLoadingLabel="Loading..."
+            />
+        </div>
+        <div class="flex-item emoji">
+            <TwemojiPicker
+              :emojiData="emojiDataAll"
+              :emojiGroups="emojiGroups"
+              :skinsSelection="false"
+              :searchEmojisFeat="true"
+              :randomEmojiArray="emojiArray"
+              @emojiUnicodeAdded="addEmoji"
               searchEmojiPlaceholder="Search here."
               searchEmojiNotFound="Emojis not found."
               isLoadingLabel="Loading..."
@@ -137,6 +150,15 @@ export default {
       this.message = "";
       analytics.logEvent('message');
     },
+
+    addEmoji: function(emoji) {
+      // メッセージの登録
+      db.collection('emojis').add({
+        slideId: this.slide.id,
+        emoji: emoji,
+        createdAt: new Date()
+      });
+    },
     
     selectEmoji: function(emoji) {
       this.message += emoji;
@@ -191,9 +213,8 @@ export default {
 }
 
 .flex-item {
-  margin-right: 0.5rem;
   height: 2rem;
-  background-color: #fff;
+  background-color: transparent;
 }
 
 .flex-item.narrow {
@@ -204,6 +225,8 @@ export default {
 
 .flex-item.name {
   width: 20%;
+  box-sizing:border-box;
+  margin-right: 10px;
 }
 
 .flex-item.message {
@@ -211,7 +234,6 @@ export default {
 }
 
 .flex-item.emoji {
-  width: 5%;
   padding-top: 2rem;
 }
 
@@ -222,6 +244,21 @@ export default {
   margin: 0.5rem 0;
 }
 
+input.name-box {
+  width: 100%;
+  height: 2rem;
+  border: none;
+  border-bottom: 1px solid #2b3e50;
+  background: transparent;
+  color: #2b3e50;
+  font-weight: bold;
+  outline: none;
+}
+
+input.name-box:focus {
+  border-bottom: 1px solid rgb(0, 140, 140);
+}
+
 input.message-box {
   width: 100%;
   height: 2rem;
@@ -230,12 +267,12 @@ input.message-box {
   background: transparent;
   color: #2b3e50;
   font-weight: bold;
+  padding-right: 50px;
+  outline: none;
 }
 
 input.message-box:focus {
-  border: none;
   border-bottom: 1px solid rgb(0, 140, 140);
-  background: transparent;  
 }
 
 img.emoji {

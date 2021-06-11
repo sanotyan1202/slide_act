@@ -167,22 +167,12 @@ export default {
 }
 
 .message-row {
-  height: 20%;
-  width: 100%;
   display: flex;
-}
-
-.message-row.narrow {
-  height: 33% !important;
+  flex: 1;
 }
 
 .message-col {
-  height: 100%;
-  width: 25%;
-}
-
-.message-col.narrow {
-  width: 50% !important;
+  flex:1
 }
 
 .message-float-header {
@@ -194,10 +184,12 @@ export default {
   left: -1.2rem;
   top: -0.5rem;
   padding-left: 0.5rem;
+  border-radius: 10px;
 }
 
 .message-float {
   --message-font-size:1vw;
+  border-radius: 5px;
   background-color: #fffbe9;
   color: #3e3a12;
   border: solid 2px #908b81;
