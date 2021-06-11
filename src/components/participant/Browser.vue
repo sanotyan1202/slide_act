@@ -53,6 +53,7 @@
               searchEmojiNotFound="Emojis not found."
               isLoadingLabel="Loading..."
             />
+            <span class="direct">direct</span>
         </div>
       </div>
     </main>
@@ -282,5 +283,10 @@ img.emoji {
 
 #btn-emoji-default {
   height: 0 !important;
+}
+
+.direct {
+  font-size: 0.7rem;
+  vertical-align: top;
 }
 </style>

@@ -12,8 +12,8 @@
         <Keypress key-event="keyup" :key-code="27" @success="start" /><!-- Escキー -->
       </div>
       <pdf id="pdf" class="pdf" v-bind:src="slide.url" :page="page" @num-pages="lastpage = $event" />
-      <MessageGrid :parent="parent" :slide="slide" />
       <EmojiGrid :parent="parent" :slide="slide" />
+      <MessageGrid :parent="parent" :slide="slide" />
     </div>
     <div class="menu" v-if="parent !== 'top'">
       <img src="img/left.jpeg" class="prev" @click="prev" />
