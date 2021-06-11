@@ -1,0 +1,22 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /slides/{slideId} {
+      allow create: if true;
+      allow get: if true;
+    }
+    match /messages/{messageId} {
+      allow write: if true;
+      allow read: if true;
+    }
+    match /emojis/{emojiId} {
+      allow write: if true;
+      allow read: if true;
+    }
+    match /pages/{pageId} {
+      allow create: if true;
+    	allow get: if true;
+      allow update: if true;
+    }
+  }
+}
