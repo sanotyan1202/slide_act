@@ -45,15 +45,11 @@ export default {
     this.setFontSize();
 
     // メッセージGridの幅の変更を監視して、文字サイズを可変にする
-    const col = document.querySelector(".message-col");    
-    const observer = new MutationObserver(() => {
+    const river= document.getElementById("message-river");    
+    const observer = new ResizeObserver(() => {
       this.handleResize
     });
-    const options = {
-      attriblutes: true,
-      attributeFilter: ["style"]
-    };
-    observer.observe(col, options);
+    observer.observe(river);
 
   },
 

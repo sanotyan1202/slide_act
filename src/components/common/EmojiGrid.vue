@@ -1,5 +1,5 @@
 <template>
-  <div class="emoji-river">
+  <div id="emoji-river" class="emoji-river">
     <div class="emoji-row" v-for="(emojiRow, index) in emojiGrid" :key="index">
       <div class="emoji-col" v-for="(emojiBox, index) in emojiRow" :key="index">
         <transition name="fade">
@@ -31,8 +31,6 @@ export default {
     // ブラウザ幅の変更を感知
     window.addEventListener('resize', this.handleResize)
 
-    this.handleResize
-
     // メッセージグリッドの初期化
     this.initEmojiGird();
 
@@ -43,18 +41,16 @@ export default {
   mounted: function() {
 
     // 絵文字Gridの幅の変更を監視して、絵文字サイズを可変にする
-    const col = document.querySelector(".emoji-col");    
-    const observer = new MutationObserver(() => {
-      this.handleResize
+    const river = document.getElementById("emoji-river");    
+    const observer = new ResizeObserver(() => {
+      console.log("window resized");
+      this.handleResize();
     });
-    const options = {
-      attriblutes: true,
-      attributeFilter: ["style"]
-    };
-    observer.observe(col, options);
 
-    // 絵文字のフォントサイズを設定
-    this.setFontSize();
+    observer.observe(river);
+
+    // 絵文字サイズを計算
+    this.handleResize();
   },
 
   methods: {
@@ -98,6 +94,8 @@ export default {
       // 縦幅に合わせて文字サイズを変更
       const fontsize = cellHeight / 30;
       this.styles = {'--emoji-font-size': fontsize + "em" };
+
+      console.log("emoji-font-size:" + this.styles['--emoji-font-size']);
     },
 
 
@@ -121,7 +119,6 @@ export default {
 
     floatEmoji: function(emojiBox) {
       
-
       // グリッドのどの位置にメッセージを表示するかランダムで選択
       // すでにメッセージが表示されている場合は、別の位置にする
       let rowIndex = 0;
