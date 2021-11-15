@@ -31,6 +31,8 @@ export default {
     // ブラウザ幅の変更を感知
     window.addEventListener('resize', this.handleResize)
 
+    this.handleResize
+
     // メッセージグリッドの初期化
     this.initEmojiGird();
 

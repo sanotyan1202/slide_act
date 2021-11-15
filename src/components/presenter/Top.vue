@@ -104,6 +104,7 @@ export default {
 
     // フルスクリーンに
     act: function() {
+
       const docEl = document.querySelector("#slide-show-container");
 
       // 画面サイズ取得
@@ -123,7 +124,6 @@ export default {
       // PDF縦幅が画面縦幅より小さい場合は、上下のpaddingのみ設定する
       if (fullscreenPdfHeight < screenHeight) {
         this.paddingUpDown = (screenHeight - fullscreenPdfHeight) / 2;
-        return;
       }
 
       // 何倍すれば縦幅が収まるか計算
@@ -139,6 +139,7 @@ export default {
                            || docEl.mozRequestFullScreen 
                            || docEl.webkitRequestFullScreen 
                            || docEl.msRequestFullscreen;
+
       requestFullScreen.call(docEl);
 
       analytics.logEvent('act');
@@ -228,7 +229,6 @@ p.description {
   --paddingUpDown:0;
   padding-top: var(--paddingUpDown);
   padding-bottom: var(--paddingUpDown);
-
 }
 
 /** ボタン系 */

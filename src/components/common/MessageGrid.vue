@@ -117,7 +117,6 @@ export default {
 
     floatMessage: function(messageBox) {
       
-
       // グリッドのどの位置にメッセージを表示するかランダムで選択
       // すでにメッセージが表示されている場合は、別の位置にする
       let rowIndex = 0;
