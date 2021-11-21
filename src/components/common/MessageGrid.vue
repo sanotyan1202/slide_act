@@ -1,5 +1,5 @@
 <template>
-  <div class="message-river">
+  <div class="message-river" id="message-river">
     <div class="message-row" :class="{narrow: isNarrow}" v-for="(messageRow, index) in messageGrid" :key="index">
       <div class="message-col" :class="{narrow: isNarrow}" v-for="(messageBox, index) in messageRow" :key="index">
         <transition name="fade">
@@ -37,7 +37,7 @@ export default {
     this.initMessageGird();
 
     // メッセージの監視
-    this.observeMessage(this.floatMessage);
+    this.observeMessages(this.floatMessage);
   },
 
   mounted: function() {
@@ -93,7 +93,7 @@ export default {
       this.styles = {'--message-font-size': fontsize + "rem" };
     },
 
-    observeMessage: function(floatMessage) {
+    observeMessages: function(floatMessage) {
 
       // メッセージの監視
       db.collection('messages')
@@ -101,7 +101,7 @@ export default {
         .orderBy('createdAt')
         .startAt(this.dateOfVisit)
         .onSnapshot(function(snapshot) {
-        snapshot.docChanges().forEach(function(change) {
+          snapshot.docChanges().forEach(function(change) {
 
           // 新規追加の時のみ、画面に表示する
           if (change.type === "added") {

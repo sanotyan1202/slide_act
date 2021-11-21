@@ -12,10 +12,21 @@
             placeholder="Input and Enter (Max:30)" maxlength="30" >
         </div>
       </div>
-      <div id="slide-show-container" :class="{narrow: isNarrow}" @click.prevent="1">
-        <SlideShow v-if="get" :slide="slide" :parent="'browser'" />
+      <div class="slide-message-container">
+        <div class="slide-show-container" :class="{narrow: isNarrow}" @click.prevent="1">
+          <SlideShow 
+          v-if="get" 
+          :slide="slide" 
+          :parent="'browser'"
+          :showMessage="!showMessageList"
+          class="slide-show"
+          />
+        </div>
+        <div v-if="showMessageList" class="message-list-container">
+          <MessageList :slideId="$route.params.slideId" />
+        </div>
       </div>
-      <div v-if="!isSmartPhone" class="form-flex" :class="{narrow: isNarrow}">
+      <div v-if="!isSmartPhone" class="form-container" :class="{narrow: isNarrow}">
         <div class="flex-item name" :class="{narrow: isNarrow}">
           <div class="message-box-header">Name</div> 
           <input type="text" class="name-box"
@@ -64,17 +75,19 @@
 import analytics from '@/firebase/analytics';
 import db from '@/firebase/firestore.js';
 import Navbar from '@/components/common/Navbar';
-import SlideShow from '@/components/common/SlideShow';
-import {TwemojiPicker} from '@kevinfaguiar/vue-twemoji-picker';
 import EmojiAllData from '@kevinfaguiar/vue-twemoji-picker/emoji-data/ja/emoji-all-groups.json';
 import EmojiGroups from '@kevinfaguiar/vue-twemoji-picker/emoji-data/emoji-groups.json';
+import SlideShow from '@/components/common/SlideShow';
+import MessageList from '../common/MessageList.vue';
+import {TwemojiPicker} from '@kevinfaguiar/vue-twemoji-picker';
 
 export default {
   components: {
     Navbar,
-    SlideShow,
     TwemojiPicker,
-  },
+    SlideShow,
+    MessageList
+},
 
   data: function() {
     return {
@@ -82,6 +95,7 @@ export default {
       message: '',
       name: '',
       emojiArray: ['🙂'],
+      showMessageList: true,
       windowWidth: window.innerWidth,
     }
   },
@@ -187,30 +201,44 @@ export default {
 }
 </script>
 <style>
-#slide-show-container {
-  box-shadow: 0 0 5px #2b3e50;
-  width: 40rem;
-  left: 0;
-  right: 0;
-  margin: 1rem auto;
+.content {
+  display: flex;
+  flex-direction: column;
 }
 
-#slide-show-container.narrow {
-  width:100% !important;
+.slide-message-container {
+  height: 70vh;
+  width: 100%;
+  display: flex;
+}
+
+.slide-show-container {
+  height: 100%;
+  min-width: 75%;
+  width: 100%;
+  box-shadow: 0 0 5px #2b3e50;
+}
+
+.slide-show {
+  width:100%;
+}
+
+.message-list-container {
+  margin-left: 1%;
+  height: 100%;
+  min-width: 24%;
 }
 
 /* メッセージ入力欄 */
-.form-flex {
+.form-container {
+  align-self: flex-end;
   display: flex;
-  width: 40rem;
-  left: 0;
-  right: 0;
-  margin: auto;
+  width: 100%;
+  margin: 2rem auto 0 auto;
 }
 
-.form-flex.narrow {
+.form-container.narrow {
   flex-direction: column;
-  width: 100% !important;
 }
 
 .flex-item {
@@ -222,7 +250,6 @@ export default {
   height: initial;
   width: 95% !important;
 }
-
 
 .flex-item.name {
   width: 20%;

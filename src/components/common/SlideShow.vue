@@ -12,8 +12,8 @@
         <Keypress key-event="keyup" :key-code="27" @success="start" /><!-- Escキー -->
       </div>
       <pdf id="pdf" class="pdf" v-bind:src="slide.url" :page="page" @num-pages="lastpage = $event" />
-      <EmojiGrid :parent="parent" :slide="slide" />
-      <MessageGrid :parent="parent" :slide="slide" />
+      <EmojiGrid :parent="parent" :slide="slide" v-if="showMessage" />
+      <MessageGrid :parent="parent" :slide="slide" v-if="showMessage" />
     </div>
     <div class="menu" v-if="parent !== 'top'">
       <img src="img/left.jpeg" class="prev" @click="prev" />
@@ -38,7 +38,11 @@ export default {
     Keypress: () => import('vue-keypress')
   },
 
-  props: ['slide', 'parent'],
+  props: [
+    'slide', 
+    'parent', 
+    'showMessage',
+  ],
 
   data: function() {
     return {

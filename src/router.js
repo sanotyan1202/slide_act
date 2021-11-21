@@ -9,6 +9,6 @@ export default new VueRouter({
     mode: 'history',
     routes: [
         {path: '/', component: Top},
-        {path: '/:slideId', component: Browser}      
+        {path: '/:slideId', component: Browser},
     ]
   })

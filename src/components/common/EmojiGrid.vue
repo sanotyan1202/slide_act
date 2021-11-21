@@ -30,12 +30,12 @@ export default {
   created: function () {
     // ブラウザ幅の変更を感知
     window.addEventListener('resize', this.handleResize)
-
+  
     // メッセージグリッドの初期化
     this.initEmojiGird();
 
     // メッセージの監視
-    this.observeEmoji(this.floatEmoji);
+    this.observeEmojis(this.floatEmoji);
   },
 
   mounted: function() {
@@ -99,7 +99,7 @@ export default {
     },
 
 
-    observeEmoji: function(floatEmoji) {
+    observeEmojis: function(floatEmoji) {
 
       // メッセージの監視
       db.collection('emojis')
