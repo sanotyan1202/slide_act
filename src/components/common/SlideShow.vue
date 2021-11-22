@@ -1,24 +1,31 @@
 <template>
-  <div class="slide-show">
-    <div @click="next"
+  <div class="pdf-underbar-messages-container">
+    <div class="pdf-underbar-container">
+      <div class="pdf-container"
+        @click="next"
         @click.right.prevent="prev"
         @touchstart="OnTouchStart($event)"
         @touchmove="OnTouchMove($event)"
-        @touchend="OnTouchEnd()">
-      <div id="keypress-group" v-if="parent === 'top'">
-        <Keypress key-event="keyup" :key-code="13" @success="next" /><!-- Enterキー -->
-        <Keypress key-event="keyup" :key-code="37" @success="prev" /><!-- 左矢印キー -->
-        <Keypress key-event="keyup" :key-code="39" @success="next" /><!-- 右矢印キー -->
-        <Keypress key-event="keyup" :key-code="27" @success="start" /><!-- Escキー -->
+        @touchend="OnTouchEnd()"
+      >
+        <pdf id="pdf" class="pdf" v-bind:src="slide.url" :page="page" @num-pages="lastpage = $event" />
+        <EmojiGrid :parent="parent" :slide="slide" v-if="showMessage" />
+        <MessageGrid :parent="parent" :slide="slide" v-if="showMessage" />
+        <div id="keypress-group" v-if="parent === 'top'">
+          <Keypress key-event="keyup" :key-code="13" @success="next" /><!-- Enterキー -->
+          <Keypress key-event="keyup" :key-code="37" @success="prev" /><!-- 左矢印キー -->
+          <Keypress key-event="keyup" :key-code="39" @success="next" /><!-- 右矢印キー -->
+          <Keypress key-event="keyup" :key-code="27" @success="start" /><!-- Escキー -->
+        </div>
       </div>
-      <pdf id="pdf" class="pdf" v-bind:src="slide.url" :page="page" @num-pages="lastpage = $event" />
-      <EmojiGrid :parent="parent" :slide="slide" v-if="showMessage" />
-      <MessageGrid :parent="parent" :slide="slide" v-if="showMessage" />
+      <div class="underbar" v-if="parent !== 'top'">
+        <img src="img/left.jpeg" class="prev" @click="prev" />
+        {{ this.page + "/" + this.lastpage }}
+        <img src="img/right.jpeg"  class="next" @click="next" />
+      </div>
     </div>
-    <div class="menu" v-if="parent !== 'top'">
-      <img src="img/left.jpeg" class="prev" @click="prev" />
-      {{ this.page + "/" + this.lastpage }}
-      <img src="img/right.jpeg"  class="next" @click="next" />
+    <div class="messages-container">
+      <MessageList :slideId="$route.params.slideId" />
     </div>
   </div>
 </template>
@@ -28,6 +35,7 @@ import db from '@/firebase/firestore.js'
 import pdf from 'vue-pdf';
 import MessageGrid from '@/components/common/MessageGrid';
 import EmojiGrid from '@/components/common/EmojiGrid';
+import MessageList from './MessageList';
 
 export default {
 
@@ -35,8 +43,9 @@ export default {
     pdf,
     MessageGrid,
     EmojiGrid,
-    Keypress: () => import('vue-keypress')
-  },
+    Keypress: () => import("vue-keypress"),
+    MessageList
+},
 
   props: [
     'slide', 
@@ -87,6 +96,8 @@ export default {
 
     next: function() {
       
+      console.log(this.page)
+      console.log(this.lastpage)
       // 最終ページでない時だけ、ページ数をインクリメントする
       if (this.page < this.lastpage) {
         this.page++;
@@ -155,11 +166,33 @@ export default {
 </script>
 
 <style scoped>
-.slide-show {
-  position: relative;
+.pdf-underbar-messages-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
 }
 
-.menu {
+.pdf-underbar-container {
+  height: 100%;
+  width: 80%;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+}
+
+.pdf-container {
+  flex-grow: 2;
+  display: flex;
+  align-items: center;
+}
+
+.pdf {
+  width: 100%;
+  max-height: 100%;
+}
+
+.underbar {
+  background-color: white;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -183,6 +216,12 @@ export default {
 
 .next:hover {
   cursor: pointer;
+}
+
+.messages-container {
+  margin-left: 1%;
+  height: 100%;
+  width: 19%;
 }
 
 </style>

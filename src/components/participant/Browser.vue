@@ -4,7 +4,7 @@
       <Navbar :parent="'browser'" />
     </header>
     <main class="content">
-      <div v-if="isSmartPhone" class="form-flex" :class="{narrow: isNarrow}">
+      <div v-if="isSmartPhone" class="form-container" :class="{narrow: isNarrow}">
         <div class="flex-item message" :class="{narrow: isNarrow}">
           <div class="message-box-header">Message</div> 
           <input type="text" class="message-box"
@@ -12,19 +12,13 @@
             placeholder="Input and Enter (Max:30)" maxlength="30" >
         </div>
       </div>
-      <div class="slide-message-container">
-        <div class="slide-show-container" :class="{narrow: isNarrow}" @click.prevent="1">
-          <SlideShow 
-          v-if="get" 
+      <div class="slide-container">
+        <SlideShow 
+          v-if="this.slide != null" 
           :slide="slide" 
           :parent="'browser'"
           :showMessage="!showMessageList"
-          class="slide-show"
-          />
-        </div>
-        <div v-if="showMessageList" class="message-list-container">
-          <MessageList :slideId="$route.params.slideId" />
-        </div>
+        />
       </div>
       <div v-if="!isSmartPhone" class="form-container" :class="{narrow: isNarrow}">
         <div class="flex-item name" :class="{narrow: isNarrow}">
@@ -78,7 +72,6 @@ import Navbar from '@/components/common/Navbar';
 import EmojiAllData from '@kevinfaguiar/vue-twemoji-picker/emoji-data/ja/emoji-all-groups.json';
 import EmojiGroups from '@kevinfaguiar/vue-twemoji-picker/emoji-data/emoji-groups.json';
 import SlideShow from '@/components/common/SlideShow';
-import MessageList from '../common/MessageList.vue';
 import {TwemojiPicker} from '@kevinfaguiar/vue-twemoji-picker';
 
 export default {
@@ -86,7 +79,6 @@ export default {
     Navbar,
     TwemojiPicker,
     SlideShow,
-    MessageList
 },
 
   data: function() {
@@ -181,9 +173,6 @@ export default {
   },
 
   computed: {
-    get: function() {
-      return this.slide !== null;
-    },
     emojiDataAll: function() {
         return EmojiAllData;
     },
@@ -206,27 +195,8 @@ export default {
   flex-direction: column;
 }
 
-.slide-message-container {
+.slide-container {
   height: 70vh;
-  width: 100%;
-  display: flex;
-}
-
-.slide-show-container {
-  height: 100%;
-  min-width: 75%;
-  width: 100%;
-  box-shadow: 0 0 5px #2b3e50;
-}
-
-.slide-show {
-  width:100%;
-}
-
-.message-list-container {
-  margin-left: 1%;
-  height: 100%;
-  min-width: 24%;
 }
 
 /* メッセージ入力欄 */

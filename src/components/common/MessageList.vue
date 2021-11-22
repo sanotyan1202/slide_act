@@ -128,6 +128,7 @@ export default {
 
 .message-list-container {
   width: 100%;
+  height: 100%;
   background-color: #e3eaf1;
   box-sizing: border-box;
   border-radius: 5px;
