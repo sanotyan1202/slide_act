@@ -43,7 +43,6 @@ export default {
     // 絵文字Gridの幅の変更を監視して、絵文字サイズを可変にする
     const river = document.getElementById("emoji-river");    
     const observer = new ResizeObserver(() => {
-      console.log("window resized");
       this.handleResize();
     });
 
@@ -94,8 +93,6 @@ export default {
       // 縦幅に合わせて文字サイズを変更
       const fontsize = cellHeight / 30;
       this.styles = {'--emoji-font-size': fontsize + "em" };
-
-      console.log("emoji-font-size:" + this.styles['--emoji-font-size']);
     },
 
 

@@ -28,7 +28,11 @@
           <a href="javascript:void(0)" class="copy" v-clipboard:copy="browserUrl" @click="copyName = 'copied!'">{{copyName}}</a>
         </p>
         <div id="slide-show-container" :style="styles">
-          <SlideShow :slide="slide" :parent="'top'" />
+          <SlideShow 
+          :slide="slide" 
+          :parent="'top'"
+          :messageShow="true"
+          />
         </div>
         <div class="button-container">
           <a class="button-primary" @click="act">スライドショーの開始</a>&emsp;

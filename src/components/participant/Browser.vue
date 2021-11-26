@@ -17,7 +17,7 @@
           v-if="this.slide != null" 
           :slide="slide" 
           :parent="'browser'"
-          :showMessage="!showMessageList"
+          :messageShow="true"
         />
       </div>
       <div v-if="!isSmartPhone" class="form-container" :class="{narrow: isNarrow}">

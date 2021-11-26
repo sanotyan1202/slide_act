@@ -8,9 +8,11 @@
         @touchmove="OnTouchMove($event)"
         @touchend="OnTouchEnd()"
       >
-        <pdf id="pdf" class="pdf" v-bind:src="slide.url" :page="page" @num-pages="lastpage = $event" />
-        <EmojiGrid :parent="parent" :slide="slide" v-if="showMessage" />
-        <MessageGrid :parent="parent" :slide="slide" v-if="showMessage" />
+        <MaxCentering>
+          <pdf id="pdf" class="pdf" v-bind:src="slide.url" :page="page" @num-pages="lastpage = $event" />
+        </MaxCentering>
+        <EmojiGrid :parent="parent" :slide="slide" v-if="messageShow" />
+        <MessageGrid :parent="parent" :slide="slide" v-if="messageShow" />
         <div id="keypress-group" v-if="parent === 'top'">
           <Keypress key-event="keyup" :key-code="13" @success="next" /><!-- Enterキー -->
           <Keypress key-event="keyup" :key-code="37" @success="prev" /><!-- 左矢印キー -->
@@ -24,7 +26,7 @@
         <img src="img/right.jpeg"  class="next" @click="next" />
       </div>
     </div>
-    <div class="messages-container">
+    <div v-if="!messageShow" class="messages-container">
       <MessageList :slideId="$route.params.slideId" />
     </div>
   </div>
@@ -36,6 +38,7 @@ import pdf from 'vue-pdf';
 import MessageGrid from '@/components/common/MessageGrid';
 import EmojiGrid from '@/components/common/EmojiGrid';
 import MessageList from './MessageList';
+import MaxCentering from './MaxCentering.vue';
 
 export default {
 
@@ -44,19 +47,19 @@ export default {
     MessageGrid,
     EmojiGrid,
     Keypress: () => import("vue-keypress"),
-    MessageList
+    MessageList,
+    MaxCentering
 },
 
   props: [
     'slide', 
     'parent', 
-    'showMessage',
+    'messageShow',
   ],
 
   data: function() {
     return {
       messageGrid: new Array(10),
-      messageShow: true,
       page: 1,
       lastpage: 0,
       swipe: {
@@ -174,21 +177,24 @@ export default {
 
 .pdf-underbar-container {
   height: 100%;
-  width: 80%;
+  width: 100%;
   background-color: black;
   display: flex;
   flex-direction: column;
 }
 
 .pdf-container {
+  position:relative;
+  height: 100%;
+  width: 100%;
   flex-grow: 2;
   display: flex;
+  justify-content: center;
   align-items: center;
 }
 
 .pdf {
   width: 100%;
-  max-height: 100%;
 }
 
 .underbar {
