@@ -1,5 +1,5 @@
 <template>
-  <div class="message-list-container">
+  <div class="message-list-flame">
     <div class="header">
       Messages
     </div>
@@ -126,7 +126,7 @@ export default {
 
 <style scoped>
 
-.message-list-container {
+.message-list-flame {
   width: 100%;
   height: 100%;
   background-color: #e3eaf1;
@@ -140,7 +140,6 @@ export default {
   font-weight: bold;
   padding: 5px;
 }
-
 
 .message-row {
   margin: 0 10px;

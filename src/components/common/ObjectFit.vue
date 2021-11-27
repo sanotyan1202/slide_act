@@ -46,7 +46,6 @@ export default {
       this.containerHeight = Math.floor(entries[0].contentRect.height);
     });
     parentObserver.observe(parentEl);
-
   },
 
 

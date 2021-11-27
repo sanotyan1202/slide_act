@@ -5,8 +5,7 @@
     @touchstart="OnTouchStart($event)"
     @touchmove="OnTouchMove($event)"
     @touchend="OnTouchEnd()"
-    class="pdf-messages-container"
-    id="pdf-messages-container"
+    class="pdf-message-list-container"
   >
     <div class="pdf-container">
       <ObjectFit>
@@ -20,8 +19,8 @@
         <Keypress key-event="keyup" :key-code="39" @success="next" /><!-- 右矢印キー -->
       </div>
     </div>
-    <div v-if="isMessageList && isActing" class="messages-container">
-      <MessageList :slideId="slide.id" />
+    <div v-if="isMessageList && isActing" class="message-list-container">
+      <MessageList :slideId="slide.id" class="messages" :style="pdfSize" />
     </div>
   </div>
 </template>
@@ -57,6 +56,7 @@ export default {
       page: 1,
       lastpage: 0,
       isActing: false,
+      pdfHeight: 100,
       swipe: {
         flag: false,
         threshold: 60,
@@ -87,6 +87,13 @@ export default {
     document.addEventListener("webkitfullscreenchange", this.changeFullscreen, false);
     document.addEventListener("mozfullscreenchange", this.changeFullscreen, false);
     document.addEventListener("MSFullscreenChange", this.changeFullscreen, false);
+    
+    // pdf要素のサイズ変更を監視する
+    const pdfEl = document.querySelector("#pdf");
+    const observer = new ResizeObserver((entries) => {
+      this.pdfHeight = entries[0].contentRect.height;
+    });
+    observer.observe(pdfEl);
   },
 
   methods: {    
@@ -147,11 +154,18 @@ export default {
       this.swipe.flag = false;
     },
   },
+  computed : {
+    pdfSize: function() {
+      return {
+        '--pdfHeight': this.pdfHeight + 'px',
+       };
+    },
+  },
 }
 </script>
 
 <style scoped>
-.pdf-messages-container {
+.pdf-message-list-container {
   display: flex;
   width: 100%;
   height: 100%;
@@ -165,9 +179,16 @@ export default {
   box-shadow: 0 0 5px #2b3e50;
 }
 
-.messages-container {
+.message-list-container {
   margin-left: 1%;
-  height: 100%;
   width: 24%;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.messages {
+  --pdfHeight: 100px;
+  height: var(--pdfHeight);
 }
 </style>

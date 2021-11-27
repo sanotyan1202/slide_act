@@ -1,5 +1,5 @@
 <template>
-  <div class="pdf-underbar-messages-container">
+  <div class="pdf-underbar-message-list-container">
     <div class="pdf-underbar-container">
       <div class="pdf-container"
         @click="next"
@@ -36,7 +36,7 @@
         </div>
       </div>
     </div>
-    <div v-if="isMessageList" class="messages-container">
+    <div v-if="isMessageList" class="message-list-container">
       <MessageList :slideId="slide.id" />
     </div>
   </div>
@@ -159,7 +159,7 @@ export default {
 </script>
 
 <style scoped>
-.pdf-underbar-messages-container {
+.pdf-underbar-message-list-container {
   width: 100%;
   height: 100%;
   display: flex;
@@ -232,7 +232,7 @@ export default {
   cursor: pointer;
 }
 
-.messages-container {
+.message-list-container {
   margin-left: 1%;
   height: 100%;
   width: 24%;
