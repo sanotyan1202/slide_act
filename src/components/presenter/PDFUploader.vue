@@ -53,8 +53,8 @@ export default {
         return;
       }
 
-      if(files[0].size > 20 * 1024 * 1024) {
-        alert("20MB以下のPDFのみアップロード可能です。");
+      if(files[0].size > 50 * 1024 * 1024) {
+        alert("50MB以下のPDFのみアップロード可能です。");
         return;
       }
       

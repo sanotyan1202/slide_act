@@ -27,10 +27,9 @@
           {{browserUrl}}
           <a href="javascript:void(0)" class="copy" v-clipboard:copy="browserUrl" @click="copyName = 'copied!'">{{copyName}}</a>
         </p>
-        <div id="slide-show-container" :style="styles">
+        <div id="slide-show-container">
           <SlideShow 
           :slide="slide" 
-          :parent="'top'"
           :messageShow="true"
           />
         </div>
@@ -51,7 +50,7 @@ import Navbar from '@/components/common/Navbar';
 import Splash from '@/components/presenter/Splash';
 import HowToPdf from '@/components/presenter/HowToPdf';
 import PDFUploader from '@/components/presenter/PDFUploader';
-import SlideShow from '@/components/common/SlideShow';
+import SlideShow from '@/components/presenter/SlideShow';
 import VueClipboard from 'vue-clipboard2';
 import Vue from 'vue';
 
@@ -65,7 +64,7 @@ export default {
     HowToPdf,
     PDFUploader,
     SlideShow,
-  },
+},
 
   data: function() {
     return {
@@ -110,35 +109,6 @@ export default {
     act: function() {
 
       const docEl = document.querySelector("#slide-show-container");
-
-      // 画面サイズ取得
-      const screenWidth = window.parent.screen.width;
-      const screenHeight = window.parent.screen.height;
-
-      // PDFのサイズ取得
-      const pdfHeight = docEl.clientHeight;
-      const pdfWidth = docEl.clientWidth;
-
-      // 横幅Max時の倍率を計算
-      const fullscreenRatio = screenWidth / pdfWidth;
-
-      // 横幅Max時のPDFの高さを計算
-      const fullscreenPdfHeight = pdfHeight * fullscreenRatio;
-
-      // PDF縦幅が画面縦幅より小さい場合は、上下のpaddingのみ設定する
-      if (fullscreenPdfHeight < screenHeight) {
-        this.paddingUpDown = (screenHeight - fullscreenPdfHeight) / 2;
-      }
-
-      // 何倍すれば縦幅が収まるか計算
-      const shrinkRatio = screenHeight / fullscreenPdfHeight;
-
-      // 減らす横幅を計算
-      const padding = screenWidth - (screenWidth * shrinkRatio);
-
-      // 両側のpaddingを設定するので/2
-      this.paddingSide = padding / 2;
-
       let requestFullScreen = docEl.requestFullscreen 
                            || docEl.mozRequestFullScreen 
                            || docEl.webkitRequestFullScreen 
@@ -183,14 +153,6 @@ export default {
       return this.slide !== null
     },
 
-    styles: function() {
-      // CSS変数を設定
-      return {
-        '--paddingSide': this.paddingSide + 'px',
-        '--paddingUpDown': this.paddingUpDown + 'px',
-       };
-    },
-
     browserUrl: function() {
       return location.href + this.slide.id;
     }
@@ -217,22 +179,11 @@ p.description {
 #slide-show-container {
   position: relative;
   content: "";
-  display: block;
+  display: inline-block;
   clear: both;
-  box-shadow: 0 0 5px #2b3e50;
-  width: 20rem;
-  left: 0;
-  right: 0;
   margin: 2rem auto;
-}
-
-#slide-show-container:fullscreen {
-  --paddingSide:0;
-  padding-left: var(--paddingSide);
-  padding-right: var(--paddingSide);
-  --paddingUpDown:0;
-  padding-top: var(--paddingUpDown);
-  padding-bottom: var(--paddingUpDown);
+  width: 20rem;
+  height: 8rem;
 }
 
 /** ボタン系 */

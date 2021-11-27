@@ -1,35 +1,24 @@
 <template>
-  <div class="pdf-underbar-messages-container">
-    <div class="pdf-underbar-container">
-      <div class="pdf-container"
+      <MaxCentering
         @click="next"
         @click.right.prevent="prev"
         @touchstart="OnTouchStart($event)"
         @touchmove="OnTouchMove($event)"
         @touchend="OnTouchEnd()"
       >
-        <MaxCentering>
-          <pdf id="pdf" class="pdf" v-bind:src="slide.url" :page="page" @num-pages="lastpage = $event" />
-        </MaxCentering>
+        <pdf id="pdf" class="pdf" v-bind:src="slide.url" :page="page" @num-pages="lastpage = $event" />
         <EmojiGrid :parent="parent" :slide="slide" v-if="messageShow" />
         <MessageGrid :parent="parent" :slide="slide" v-if="messageShow" />
-        <div id="keypress-group" v-if="parent === 'top'">
+        <div id="keypress-group">
           <Keypress key-event="keyup" :key-code="13" @success="next" /><!-- Enterキー -->
           <Keypress key-event="keyup" :key-code="37" @success="prev" /><!-- 左矢印キー -->
           <Keypress key-event="keyup" :key-code="39" @success="next" /><!-- 右矢印キー -->
           <Keypress key-event="keyup" :key-code="27" @success="start" /><!-- Escキー -->
         </div>
-      </div>
-      <div class="underbar" v-if="parent !== 'top'">
-        <img src="img/left.jpeg" class="prev" @click="prev" />
-        {{ this.page + "/" + this.lastpage }}
-        <img src="img/right.jpeg"  class="next" @click="next" />
-      </div>
-    </div>
-    <div v-if="!messageShow" class="messages-container">
-      <MessageList :slideId="$route.params.slideId" />
-    </div>
-  </div>
+        <div v-if="!messageShow" class="messages-container">
+          <MessageList :slideId="$route.params.slideId" />
+        </div>
+      </MaxCentering>
 </template>
 
 <script>
@@ -37,8 +26,8 @@ import db from '@/firebase/firestore.js'
 import pdf from 'vue-pdf';
 import MessageGrid from '@/components/common/MessageGrid';
 import EmojiGrid from '@/components/common/EmojiGrid';
-import MessageList from './MessageList';
-import MaxCentering from './MaxCentering.vue';
+import MessageList from '@/components/common/MessageList';
+import MaxCentering from '@/components/common/MaxCentering.vue';
 
 export default {
 
@@ -84,9 +73,6 @@ export default {
     for(let row = 0; row < 10; row++){
       this.messageGrid[row] = new Array(4).fill(null);
     }
-
-    // ページの監視
-    this.observePage(this.setPage);
   },
 
   methods: {
@@ -120,24 +106,9 @@ export default {
     },
 
     updatePage: function(page) {
-
-      // TOPページの子コンポーネントの時だけページを更新する
-      if (this.parent !== 'top') {
-        return;
-      }
-
       // ページの更新
       db.collection('pages').doc(this.slide.id)
         .set({ page: page });
-    },
-
-    observePage: function(setPage) {
-
-      // ページの監視
-      db.collection('pages').doc(this.slide.id)
-        .onSnapshot(function(doc) {
-          setPage(doc.data().page);
-      });
     },
 
     setPage: function(page) {
@@ -169,59 +140,9 @@ export default {
 </script>
 
 <style scoped>
-.pdf-underbar-messages-container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-}
-
-.pdf-underbar-container {
-  height: 100%;
-  width: 100%;
-  background-color: black;
-  display: flex;
-  flex-direction: column;
-}
-
-.pdf-container {
-  position:relative;
-  height: 100%;
-  width: 100%;
-  flex-grow: 2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .pdf {
   width: 100%;
-}
-
-.underbar {
-  background-color: white;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  padding: 0.5rem;
-  border: solid 2px #eaedf1;
-}
-
-.prev {
-  width: 1rem;
-  height: 1rem;
-}
-
-.prev:hover {
-  cursor: pointer;
-}
-
-.next {
-  width: 1rem;
-  height: 1rem;
-}
-
-.next:hover {
-  cursor: pointer;
+  box-shadow: 0 0 5px #2b3e50;
 }
 
 .messages-container {

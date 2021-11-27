@@ -16,7 +16,6 @@
         <SlideShow 
           v-if="this.slide != null" 
           :slide="slide" 
-          :parent="'browser'"
           :messageShow="true"
         />
       </div>
@@ -71,7 +70,7 @@ import db from '@/firebase/firestore.js';
 import Navbar from '@/components/common/Navbar';
 import EmojiAllData from '@kevinfaguiar/vue-twemoji-picker/emoji-data/ja/emoji-all-groups.json';
 import EmojiGroups from '@kevinfaguiar/vue-twemoji-picker/emoji-data/emoji-groups.json';
-import SlideShow from '@/components/common/SlideShow';
+import SlideShow from '@/components/participant/SlideShow';
 import {TwemojiPicker} from '@kevinfaguiar/vue-twemoji-picker';
 
 export default {

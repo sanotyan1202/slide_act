@@ -42,6 +42,17 @@ export default {
       }
     });
     contentObserver.observe(slotEl);
+
+
+    const parentEl = document.querySelector("#content-container").parentElement;
+
+    // slotに入る要素が非同期でサイズ変更される可能性があるのでslot要素を監視する
+    const parentObserver = new ResizeObserver((entries) => {
+      this.containerWidth = Math.floor(entries[0].contentRect.width);
+      this.containerHeight = Math.floor(entries[0].contentRect.height);
+    });
+    parentObserver.observe(parentEl);
+
   },
 
 
