@@ -21,15 +21,17 @@
           <img src="img/right.jpeg"  class="next" @click="next" />
         </div>
         <div>
-          <span class="material-icons comment-list" 
+          <span class="material-icons message-list-icon" 
             @click="isMessageList = true"
             v-show="!isMessageList"
+            v-tooltip="'メッセージをリスト表示に切り替えます'"
           >
             list_alt
           </span>
-          <span class="material-icons comment-babble"
+          <span class="material-icons message-babble-icon"
             @click="isMessageList = false"
             v-show="isMessageList"
+            v-tooltip="'メッセージを吹き出し表示に切り替えます'"
           >
             chat_bubble_outline
           </span>
@@ -49,6 +51,12 @@ import MessageGrid from '@/components/common/MessageGrid';
 import EmojiGrid from '@/components/common/EmojiGrid';
 import MessageList from '@/components/common/MessageList';
 import ObjectFit from '@/components/common/ObjectFit.vue';
+import VTooltip from 'v-tooltip';
+import Vue from 'vue';
+import 'v-tooltip/dist/v-tooltip.css';
+
+
+Vue.use(VTooltip)
 
 export default {
 
@@ -159,6 +167,7 @@ export default {
 </script>
 
 <style scoped>
+/* @import 'v-tooltip/dist/v-tooltip.css'; */
 .pdf-underbar-message-list-container {
   width: 100%;
   height: 100%;
@@ -225,10 +234,10 @@ export default {
   margin: auto 10px;
 }
 
-.comment-list:hover {
+.message-list-icon:hover {
   cursor: pointer;
 }
-.comment-babble:hover {
+.message-babble-icon:hover {
   cursor: pointer;
 }
 
