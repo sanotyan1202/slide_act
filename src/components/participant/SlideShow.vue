@@ -11,17 +11,33 @@
         <ObjectFit>
           <pdf id="pdf" class="pdf" v-bind:src="slide.url" :page="page" @num-pages="lastpage = $event" />
         </ObjectFit>
-        <EmojiGrid :parent="parent" :slide="slide" v-if="messageShow" />
-        <MessageGrid :parent="parent" :slide="slide" v-if="messageShow" />
+        <EmojiGrid :parent="parent" :slide="slide" v-show="!isMessageList" />
+        <MessageGrid :parent="parent" :slide="slide" v-show="!isMessageList" />
       </div>
       <div class="underbar">
-        <img src="img/left.jpeg" class="prev" @click="prev" />
-        {{ this.page + "/" + this.lastpage }}
-        <img src="img/right.jpeg"  class="next" @click="next" />
+        <div class="page-container">
+          <img src="img/left.jpeg" class="prev" @click="prev" />
+         <span class="pagenum">{{ this.page + "/" + this.lastpage }}</span>
+          <img src="img/right.jpeg"  class="next" @click="next" />
+        </div>
+        <div>
+          <span class="material-icons comment-list" 
+            @click="isMessageList = true"
+            v-show="!isMessageList"
+          >
+            list_alt
+          </span>
+          <span class="material-icons comment-babble"
+            @click="isMessageList = false"
+            v-show="isMessageList"
+          >
+            chat_bubble_outline
+          </span>
+        </div>
       </div>
     </div>
-    <div v-if="!messageShow" class="messages-container">
-      <MessageList :slideId="$route.params.slideId" />
+    <div v-if="isMessageList" class="messages-container">
+      <MessageList :slideId="slide.id" />
     </div>
   </div>
 </template>
@@ -47,12 +63,12 @@ export default {
   props: [
     'slide', 
     'parent', 
-    'messageShow',
   ],
 
   data: function() {
     return {
       messageGrid: new Array(10),
+      isMessageList: false,
       page: 1,
       lastpage: 0,
       swipe: {
@@ -87,19 +103,14 @@ export default {
     // 最初のページに戻る
     start: function() {
       this.page = 1;
-      this.updatePage(this.page);
     },
 
     next: function() {
       
-      console.log(this.page)
-      console.log(this.lastpage)
       // 最終ページでない時だけ、ページ数をインクリメントする
       if (this.page < this.lastpage) {
         this.page++;
       }
-
-      this.updatePage(this.page);
     },
 
     prev: function() {
@@ -108,8 +119,6 @@ export default {
       if (this.page > 1) {
         this.page--;
       }
-
-      this.updatePage(this.page);
     },
 
     observePage: function(setPage) {
@@ -159,6 +168,7 @@ export default {
 .pdf-underbar-container {
   height: 100%;
   width: 100%;
+  min-width: 75%; /* メッセージリスト表示時 */
   display: flex;
   flex-direction: column;
 }
@@ -185,11 +195,17 @@ export default {
   flex-wrap: wrap;
   padding: 0.5rem;
   border: solid 2px #eaedf1;
+  z-index: 1; /* スライドが微妙にはみ出ることがあるので被せて隠す */
+}
+
+.page-container {
+  display: inline-flex;
+  align-items: center;
 }
 
 .prev {
+  margin-bottom: -1.5px;
   width: 1rem;
-  height: 1rem;
 }
 
 .prev:hover {
@@ -197,18 +213,29 @@ export default {
 }
 
 .next {
+  margin-bottom: -1.5px;
   width: 1rem;
-  height: 1rem;
 }
 
 .next:hover {
   cursor: pointer;
 }
 
+.pagenum {
+  margin: auto 10px;
+}
+
+.comment-list:hover {
+  cursor: pointer;
+}
+.comment-babble:hover {
+  cursor: pointer;
+}
+
 .messages-container {
   margin-left: 1%;
   height: 100%;
-  width: 19%;
+  width: 24%;
 }
 
 </style>

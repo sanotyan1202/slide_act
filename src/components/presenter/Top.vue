@@ -20,7 +20,6 @@
           <HowToPdf />
         </div>
       </div>
-      
       <div v-if="uploaded" class="uploaded">  
         <p class="description"> 参加者に以下の参加者用URLを配布してスライドショーを開始してください</p>
         <p class="description">
@@ -182,7 +181,7 @@ p.description {
   display: inline-block;
   clear: both;
   margin: 2rem auto;
-  width: 20rem;
+  width: 25rem;
   height: 8rem;
 }
 

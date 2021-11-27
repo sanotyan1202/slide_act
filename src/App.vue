@@ -11,6 +11,8 @@ export default {
 </script>
 
 <style>
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
+
 #app {
   font-family: YakuHanJP, "Noto Sans JP", "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
   -webkit-font-smoothing: antialiased;

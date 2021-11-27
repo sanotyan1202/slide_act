@@ -16,7 +16,6 @@
         <SlideShow 
           v-if="this.slide != null" 
           :slide="slide" 
-          :messageShow="true"
         />
       </div>
       <div v-if="!isSmartPhone" class="form-container" :class="{narrow: isNarrow}">
@@ -43,6 +42,7 @@
               searchEmojiPlaceholder="Search here."
               searchEmojiNotFound="Emojis not found."
               isLoadingLabel="Loading..."
+              class="emoji-picker"
             />
         </div>
         <div class="flex-item emoji">
@@ -56,6 +56,7 @@
               searchEmojiPlaceholder="Search here."
               searchEmojiNotFound="Emojis not found."
               isLoadingLabel="Loading..."
+              class="emoji-picker"
             />
             <span class="direct">direct</span>
         </div>
