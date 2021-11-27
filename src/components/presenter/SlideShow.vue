@@ -1,5 +1,5 @@
 <template>
-      <MaxCentering
+      <ObjectFit
         @click="next"
         @click.right.prevent="prev"
         @touchstart="OnTouchStart($event)"
@@ -18,7 +18,7 @@
         <div v-if="!messageShow" class="messages-container">
           <MessageList :slideId="$route.params.slideId" />
         </div>
-      </MaxCentering>
+      </ObjectFit>
 </template>
 
 <script>
@@ -27,7 +27,7 @@ import pdf from 'vue-pdf';
 import MessageGrid from '@/components/common/MessageGrid';
 import EmojiGrid from '@/components/common/EmojiGrid';
 import MessageList from '@/components/common/MessageList';
-import MaxCentering from '@/components/common/MaxCentering.vue';
+import ObjectFit from '@/components/common/ObjectFit.vue';
 
 export default {
 
@@ -37,7 +37,7 @@ export default {
     EmojiGrid,
     Keypress: () => import("vue-keypress"),
     MessageList,
-    MaxCentering
+    ObjectFit
 },
 
   props: [

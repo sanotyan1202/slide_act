@@ -8,9 +8,9 @@
         @touchmove="OnTouchMove($event)"
         @touchend="OnTouchEnd()"
       >
-        <MaxCentering>
+        <ObjectFit>
           <pdf id="pdf" class="pdf" v-bind:src="slide.url" :page="page" @num-pages="lastpage = $event" />
-        </MaxCentering>
+        </ObjectFit>
         <EmojiGrid :parent="parent" :slide="slide" v-if="messageShow" />
         <MessageGrid :parent="parent" :slide="slide" v-if="messageShow" />
       </div>
@@ -32,7 +32,7 @@ import pdf from 'vue-pdf';
 import MessageGrid from '@/components/common/MessageGrid';
 import EmojiGrid from '@/components/common/EmojiGrid';
 import MessageList from '@/components/common/MessageList';
-import MaxCentering from '@/components/common/MaxCentering.vue';
+import ObjectFit from '@/components/common/ObjectFit.vue';
 
 export default {
 
@@ -41,7 +41,7 @@ export default {
     MessageGrid,
     EmojiGrid,
     MessageList,
-    MaxCentering
+    ObjectFit,
 },
 
   props: [

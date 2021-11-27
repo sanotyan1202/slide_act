@@ -14,8 +14,8 @@ export default {
     return {
       containerWidth: 100,
       containerHeight: 100,
-      contentWidth: 100,
-      contentHeight: 100,
+      slotWidth: 100,
+      slotHeight: 100,
     }
   },
 
@@ -24,29 +24,23 @@ export default {
     // コンテナのサイズを親要素に合わせる
     this.resizeContainer();
 
-    const slotEl = document.querySelector("#slot-container").children[0];
-
-    let count = 0;
     // slotに入る要素が非同期でサイズ変更される可能性があるのでslot要素を監視する
-    const contentObserver = new ResizeObserver((entries, observer) => {
-      this.contentWidth = Math.floor(entries[0].contentRect.width);
-      this.contentHeight = Math.floor(entries[0].contentRect.height);
+    const slotEl = document.querySelector("#slot-container").children[0];
+    let count = 0;
+    const slotObserver = new ResizeObserver((entries, observer) => {
+      this.slotWidth = Math.floor(entries[0].contentRect.width);
+      this.slotHeight = Math.floor(entries[0].contentRect.height);
 
-      console.log(this.contentWidth)
-      console.log(this.contentHeight)
       // 自分自身の変更で無限ループするので適当なところで止める
       count++;
-      console.log(count)
       if (count > 10) {
         observer.disconnect();
       }
     });
-    contentObserver.observe(slotEl);
+    slotObserver.observe(slotEl);
 
-
+    // 親要素のサイズ変更を監視する
     const parentEl = document.querySelector("#content-container").parentElement;
-
-    // slotに入る要素が非同期でサイズ変更される可能性があるのでslot要素を監視する
     const parentObserver = new ResizeObserver((entries) => {
       this.containerWidth = Math.floor(entries[0].contentRect.width);
       this.containerHeight = Math.floor(entries[0].contentRect.height);
@@ -76,7 +70,7 @@ export default {
     },
     contentAspect: function() {    
       return  { 
-        '--contentAspect': this.contentWidth + '/' + this.contentHeight
+        '--contentAspect': this.slotWidth + '/' + this.slotHeight
       };
     }
   }
@@ -100,7 +94,7 @@ export default {
     position: absolute;
     width: 100%;
     max-height: 100%;
-    --contentAspect: 800/450;
+    --contentAspect: 2/1;
     aspect-ratio: var(--contentAspect);
   }
 </style>
