@@ -46,13 +46,13 @@ export default {
 
   props: [
     'slide', 
-    'parent', 
+    'parent',
+    'isMessageList',
   ],
 
   data: function() {
     return {
       messageGrid: new Array(10),
-      isMessageList: true,
       page: 1,
       lastpage: 0,
       isActing: false,

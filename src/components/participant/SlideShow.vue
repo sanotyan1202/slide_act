@@ -31,7 +31,7 @@
           <span class="material-icons message-babble-icon"
             @click="isMessageList = false"
             v-show="isMessageList"
-            v-tooltip="'メッセージを吹き出し表示に切り替えます'"
+            v-tooltip="'メッセージをふきだし表示に切り替えます'"
           >
             chat_bubble_outline
           </span>

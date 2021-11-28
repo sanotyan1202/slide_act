@@ -30,9 +30,20 @@
           <SlideShow 
           :slide="slide" 
           :messageShow="true"
+          :isMessageList="messageType === 'list'"
           />
         </div>
-        <div class="button-container">
+        <div class="message-button-container">
+          <label>
+            <input type="radio" name="message" value="babble" v-model="messageType">
+            <span class="label-body">ふきだし表示</span>
+          </label>
+          <label>
+            <input type="radio" name="message" value="list" v-model="messageType">
+            <span class="label-body">リスト表示</span>
+          </label> 
+       </div>
+        <div class="act-button-container">
           <a class="button-primary" @click="act">スライドショーの開始</a>&emsp;
           <a class="button-danger" @click="del">削除</a>
         </div>
@@ -63,7 +74,7 @@ export default {
     HowToPdf,
     PDFUploader,
     SlideShow,
-},
+  },
 
   data: function() {
     return {
@@ -71,7 +82,8 @@ export default {
       userId: '',
       paddingSide: 0,
       paddingUpDown: 0,
-      copyName: "copy",
+      copyName: 'copy',
+      messageType: 'babble',
     }
   },
 
@@ -183,6 +195,10 @@ p.description {
   margin: 2rem auto;
   width: 25rem;
   height: 8rem;
+}
+
+.message-button-container {
+  margin: 0 auto 2rem auto;
 }
 
 /** ボタン系 */
