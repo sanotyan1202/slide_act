@@ -46,14 +46,14 @@ export default {
       this.dragging = false;
 
       // ドラッグされた、または選択されたファイルを取得
-      let files = event.target.files ? event.target.files : event.dataTransfer.files;
+      const files = event.target.files ? event.target.files : event.dataTransfer.files;
 
       // ファイルが1つ以外の場合は終了
-      if(files.length !== 1) {
+      if (files.length !== 1) {
         return;
       }
 
-      if(files[0].size > 50 * 1024 * 1024) {
+      if (files[0].size > 50 * 1024 * 1024) {
         alert("50MB以下のPDFのみアップロード可能です。");
         return;
       }
