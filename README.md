@@ -25,9 +25,7 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-### TODO
-必須
-    エラーキャッチ
-    Keynoteの日本語表示されない問題
-やりたい
-    絵文字
+### Issues
+- try-catch
+- ログ出力
+- Keynoteの日本語フォント
