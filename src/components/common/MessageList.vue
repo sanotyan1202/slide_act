@@ -133,6 +133,11 @@ export default {
   box-sizing: border-box;
   border-radius: 5px;
   overflow-y: scroll;
+  -ms-overflow-style: none;    /* IE, Edge 対応 */
+  scrollbar-width: none;       /* Firefox 対応 */
+}
+.message-list-flame::-webkit-scrollbar {  /* Chrome, Safari 対応 */
+  display: none;
 }
 .header {
   background-color: #2b3e4f;
@@ -149,4 +154,5 @@ export default {
   border-bottom: 1px dotted #c1c1c1;
   margin-bottom: -1px;
 }
+
 </style>
