@@ -1,6 +1,6 @@
 <template>
     <div id="content-container" class="content-container" :style="containerSize">
-      <div id="slot-container" class="slot-container" :style="contentAspect">
+      <div id="slot-container" class="slot-container" :style="slotSize">
           <slot  />
       </div>
     </div>
@@ -14,8 +14,8 @@ export default {
     return {
       containerWidth: 100,
       containerHeight: 100,
-      slotWidth: 100,
-      slotHeight: 100,
+      contentWidth: 100,
+      contentHeight: 100,
     }
   },
 
@@ -24,22 +24,30 @@ export default {
     // コンテナのサイズを親要素に合わせる
     this.resizeContainer();
 
-    // slotに入る要素が非同期でサイズ変更される可能性があるのでslot要素を監視する
-    const slotEl = document.querySelector("#slot-container").children[0];
-    let count = 0;
-    const slotObserver = new ResizeObserver((entries, observer) => {
-      this.slotWidth = Math.floor(entries[0].contentRect.width);
-      this.slotHeight = Math.floor(entries[0].contentRect.height);
+    // PDF（コンテンツ）のサイズ取得
+    // ただしmounted時はPDFのサイズが100/50であり、その後自動調整されるので、
+    // 自動調整を監視して、サイズを取得し直す
+    const contentEl = document.querySelector("#slot-container").children[0];
+    const slotObserver = new ResizeObserver((entries) => {
+      console.log(entries);
+      console.log("objectFit  :  " + this.contentWidth + "/" + this.contentHeight)
 
-      // 自分自身の変更で無限ループするので適当なところで止める
-      count++;
-      if (count > 10) {
-        observer.disconnect();
+      let changedContentWidth = Math.floor(entries[0].contentRect.width);
+      let changedContentHeight = Math.floor(entries[0].contentRect.height);
+
+      // 誤差レベルのサイズ変更で無限ループするので小さい差は無視
+      if(Math.abs(this.contentWidth - changedContentWidth) < 5 && Math.abs(this.contentHeight - changedContentHeight) < 5) {
+        return;
       }
-    });
-    slotObserver.observe(slotEl);
 
-    // 親要素のサイズ変更を監視する
+      this.contentWidth = Math.floor(entries[0].contentRect.width);
+      this.contentHeight = Math.floor(entries[0].contentRect.height);
+
+    });
+    slotObserver.observe(contentEl);
+
+
+    // 親要素のサイズ変更を監視し、コンテナを親要素のサイズに常に合わせる
     const parentEl = document.querySelector("#content-container").parentElement;
     const parentObserver = new ResizeObserver((entries) => {
       this.containerWidth = Math.floor(entries[0].contentRect.width);
@@ -67,16 +75,34 @@ export default {
         '--containerHeight': this.containerHeight + 'px',
        };
     },
+    slotSize: function() {
+      // コンテナの方が横広の場合
+      if (this.containerAspect > this.contentAspect) {
+        return {
+          '--contentWidth': 'none',
+          '--contentHeight': this.containerHeight + 'px',
+          '--contentAspect': this.contentWidth +  '/' + this.contentHeight
+        };
+      // コンテナの方が縦長の場合
+      } else {
+        return {
+          '--contentWidth': this.containerWidth + 'px',
+          '--contentHeight': 'none',
+          '--contentAspect': this.contentWidth +  '/' + this.contentHeight
+        };
+      }
+    },
+    containerAspect: function() {    
+      return  this.containerWidth / this.containerHeight;
+    },
     contentAspect: function() {    
-      return  { 
-        '--contentAspect': this.slotWidth + '/' + this.slotHeight
-      };
+      return this.contentWidth / this.contentHeight;
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
   .content-container {
     box-sizing: border-box;
     --containerWidth: 0px;
@@ -91,8 +117,10 @@ export default {
 
   .slot-container {
     position: absolute;
-    width: 100%;
-    max-height: 100%;
+    --contentWidth: 0px;
+    --contentHeight: 0px;
+    width: var(--contentWidth);
+    height: var(--contentHeight);
     --contentAspect: 2/1;
     aspect-ratio: var(--contentAspect);
   }
